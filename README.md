@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 style="text-align: center; font-size: 3.2rem; font-weight: bold;">PDFizado</h1>
+<p style="text-align: center; font-size: 1.6rem; font-weight: normal;">Habla con una Inteligencia Artificial para extraer la información de tus PDFs y facilitar tu lectura.</p>
 
-## Getting Started
+<img src="https://sansilvestre.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsansil.991df359.webp&w=828&q=75" alt="Landing de PDFizado" width="100%" height="100%" style="border-radius: 1.6rem;" />
 
-First, run the development server:
+## Una aplicación para facilitar tu estudio
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Con [**PDFizado**](https://pdfizado.com) podrás interactuar mediante un chat con una IA para extraer la información que sea de tu interés y hacer mucho más fácil tu estudio simplemente preguntando lo que requieras en específico y recibirás una respuesta concisa con justo lo que preguntaste.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Planes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Existen 2 planes disponibles para poder utilizar [**PDFizado**](https://pdfizado.com):
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Gratis
+2. $50.000,00\*
 
-## Learn More
+_\*: Precio en Pesos Colombianos y en una frecuencia mensual._
 
-To learn more about Next.js, take a look at the following resources:
+Utilizamos MercadoPago para el procesamiento de la suscripción mensual o anual que adquieras.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Plan Gratis
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Podrás tener acceso a subir PDFs con un máximo de 5 páginas y un tamaño de 4MB, además de hacer una cantidad limitada de preguntas para extraer información.
 
-## Deploy on Vercel
+## Plan de pago
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Podrás tener acceso a subir PDFs con un máximo de 16 páginas y un tamaño de 16MB, además de hacer una cantidad ilimitada de preguntas para extraer información.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Creado por Andrés Rodríguez en Colombia.
