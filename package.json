@@ -48,7 +48,6 @@
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.5",
-    "eslint-plugin-tailwindcss": "^3.13.0",
     "postcss": "^8",
     "prisma": "^5.4.2",
     "tailwindcss": "^3",

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { User } from "@prisma/client"
 import { compare } from "bcrypt"
 
 import { db } from "@/database/db"
@@ -20,7 +19,7 @@ export const POST = async (req: NextRequest) => {
         }
     })
 
-    const { password: userPassword, ...rest } = user as User
+    const { password: userPassword, ...rest } = user as any
 
     if (user && (await compare(password, user.password))) {
         return NextResponse.json(rest, { status: 201 })

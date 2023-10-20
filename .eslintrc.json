@@ -1,7 +1,6 @@
 {
   "extends": [
-    "next/core-web-vitals",
-    "tailwindcss/recommended"
+    "next/core-web-vitals"
   ],
   "overrides": [
     {
