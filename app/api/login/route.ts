@@ -14,13 +14,15 @@ export const POST = async (req: NextRequest) => {
     if (!email) return new NextResponse('Email is missing', { status: 400 })
     if (!password) return new NextResponse('Password is missing', { status: 400 })
 
-    const { password: userPassword, ...rest } = await db.user.findUnique({
+    const user = await db.user.findUnique({
         where: {
             email
         }
-    }) as User
+    })
 
-    if (rest && (await compare(password, userPassword))) {
+    const { password: userPassword, ...rest } = user as User
+
+    if (user && (await compare(password, user.password))) {
         return NextResponse.json(rest, { status: 201 })
     } else {
         return NextResponse.json('Invalid credentials', { status: 401 })
