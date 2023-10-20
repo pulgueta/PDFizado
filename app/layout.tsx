@@ -1,11 +1,15 @@
+import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import { ThemeProvider } from '@/providers/theme-provider'
+import { AuthProvider } from '@/providers/auth-session'
 import Navbar from '@/components/navbar/navbar'
-import { Layout } from '@/types'
+import type { Layout } from '@/types'
 
 import './globals.css'
+import { Toaster } from 'sonner'
+import { PaypalProvider } from '@/providers/paypal-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +20,7 @@ export const metadata: Metadata = {
     title: 'PDFizado - Haz tu estudio más fácil',
     siteName: 'PDFizado',
     description: 'Una aplicación para interactuar con el contenido de tus archivos PDF y poder hacer tu estudio más sencillo.',
+    url: `http${process.env.NODE_ENV === 'production' ? 's' : ''}://${process.env.VERCEL_URL ?? 'localhost:3000'}`,
     countryName: 'Colombia',
     locale: 'es_CO',
     type: 'website',
@@ -26,7 +31,7 @@ export const metadata: Metadata = {
       height: 630,
     }
   },
-  metadataBase: new URL(`https://${process.env.VERCEL_URL ?? 'localhost:3000'}`),
+  metadataBase: new URL(`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${process.env.VERCEL_URL ?? 'localhost:3000'}`),
   alternates: {
     canonical: '/',
   },
@@ -58,9 +63,15 @@ const RootLayout: React.FC<Layout> = ({ children }) => {
       <meta name="theme-color" content="#E11D48" />
       <body className={inter.className}>
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-          <Navbar />
-          {children}
+          <AuthProvider>
+            <PaypalProvider>
+              <Navbar />
+              <Toaster richColors />
+              {children}
+            </PaypalProvider>
+          </AuthProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )

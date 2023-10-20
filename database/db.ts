@@ -7,7 +7,7 @@ declare global {
 export const db = globalThis.prisma || new PrismaClient({
     datasources: {
         db: {
-            url: process.env.DATABASE_URL
+            url: process.env.DATABASE_URL ?? ''
         }
     }
 })

@@ -9,16 +9,16 @@ export const noAuthRoutes: NavbarRoutes[] = [
         href: '/login',
         label: 'Iniciar sesión'
     },
+    {
+        href: '/register',
+        label: 'Crear cuenta'
+    },
 ]
 
 export const authRoutes: NavbarRoutes[] = [
     {
         href: '/pricing',
         label: 'Precio'
-    },
-    {
-        href: '/login',
-        label: 'Iniciar sesión'
     },
     {
         href: '/dasboard',
