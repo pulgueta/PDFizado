@@ -1,3 +1,7 @@
+import { NextResponse } from "next/server"
+
 export const GET = () => {
-    return 'Hello World'
+    return NextResponse.json({
+        message: 'MercadoPago Response'
+    })
 }
