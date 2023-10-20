@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { hash } from "bcrypt";
 
 import { db } from "@/database/db";
-import { User } from "@prisma/client";
 
 export const POST = async (req: NextRequest) => {
     if (req.method !== 'POST') return new NextResponse('Method not allowed', { status: 405 })
@@ -17,7 +16,7 @@ export const POST = async (req: NextRequest) => {
 
     const userExists = await db.user.findUnique({
         where: { email }
-    }) as User
+    })
 
     if (userExists) return new NextResponse('Email is already in use', { status: 400 })
 
