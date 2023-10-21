@@ -68,7 +68,7 @@ export const RegisterForm = () => {
             <CardContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
                             <FormField
                                 control={form.control}
                                 name="name"

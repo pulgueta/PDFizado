@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { compare } from "bcrypt"
 
 import { db } from "@/database/db"
+import { User } from "@prisma/client"
 
 export const POST = async (req: NextRequest) => {
     if (req.method !== 'POST') return NextResponse.json('Method not allowed', { status: 405 })
@@ -13,16 +14,15 @@ export const POST = async (req: NextRequest) => {
     if (!email) return new NextResponse('Email is missing', { status: 400 })
     if (!password) return new NextResponse('Password is missing', { status: 400 })
 
-    const user = await db.user.findUnique({
+    const { password: userPassword, ...rest } = await db.user.findUnique({
         where: {
             email
         }
-    })
+    }) as User
 
-    const { password: userPassword, ...rest } = user as any
 
-    if (user && (await compare(password, user.password))) {
-        return NextResponse.json(rest, { status: 201 })
+    if (rest && (await compare(password, userPassword))) {
+        return NextResponse.json(rest, { status: 200 })
     } else {
         return NextResponse.json('Invalid credentials', { status: 401 })
     }

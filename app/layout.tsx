@@ -2,14 +2,17 @@ import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { Toaster } from 'sonner'
+
 import { ThemeProvider } from '@/providers/theme-provider'
 import { AuthProvider } from '@/providers/auth-session'
+import { PaypalProvider } from '@/providers/paypal-provider'
 import Navbar from '@/components/navbar/navbar'
 import type { Layout } from '@/types'
 
 import './globals.css'
-import { Toaster } from 'sonner'
-import { PaypalProvider } from '@/providers/paypal-provider'
+import { serverSession } from '@/lib/auth'
+import Footer from '@/components/footer/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,6 +34,14 @@ export const metadata: Metadata = {
       height: 630,
     }
   },
+  themeColor: [
+    {
+      media: '(prefers-color-scheme: dark)', color: '#E11D48',
+    },
+    {
+      media: '(prefers-color-scheme: light)', color: '#FFFFFF',
+    }
+  ],
   metadataBase: new URL(`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${process.env.VERCEL_URL ?? 'localhost:3000'}`),
   alternates: {
     canonical: '/',
@@ -53,14 +64,17 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   icons: {
-    apple: '/icon.png'
+    icon: '/favicon.ico',
+    shortcut: '/icon-192x192.png',
+    apple: '/icon-192x192.png'
   }
 }
 
-const RootLayout: React.FC<Layout> = ({ children }) => {
+const RootLayout: React.FC<Layout> = async ({ children }) => {
+  const user = await serverSession()
+
   return (
-    <html lang="es">
-      <meta name="theme-color" content="#E11D48" />
+    <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
           <AuthProvider>
@@ -68,6 +82,7 @@ const RootLayout: React.FC<Layout> = ({ children }) => {
               <Navbar />
               <Toaster richColors />
               {children}
+              {!user?.user && <Footer />}
             </PaypalProvider>
           </AuthProvider>
         </ThemeProvider>

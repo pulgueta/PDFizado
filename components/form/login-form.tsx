@@ -109,7 +109,7 @@ export const LoginForm = () => {
             <CardFooter className="flex flex-col items-center justify-center">
                 <Separator />
                 <Button
-                    className="w-full my-4"
+                    className="my-4 w-full"
                     variant='secondary'
                     size='lg'
                     onClick={() => signIn('google')}

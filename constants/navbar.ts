@@ -3,7 +3,7 @@ import { NavbarRoutes } from "@/types";
 export const noAuthRoutes: NavbarRoutes[] = [
     {
         href: '/pricing',
-        label: 'Precio'
+        label: 'Precios'
     },
     {
         href: '/login',
@@ -18,10 +18,25 @@ export const noAuthRoutes: NavbarRoutes[] = [
 export const authRoutes: NavbarRoutes[] = [
     {
         href: '/pricing',
-        label: 'Precio'
+        label: 'Precios'
     },
     {
         href: '/dasboard',
         label: 'Dashboard'
+    },
+]
+
+export const footerRoutes: NavbarRoutes[] = [
+    {
+        href: '/pricing',
+        label: 'Precios'
+    },
+    {
+        href: '/dasboard',
+        label: 'Dashboard'
+    },
+    {
+        href: '/terms-of-service',
+        label: 'Términos y condiciones'
     },
 ]

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { User } from "@prisma/client";
 import { hash } from "bcrypt";
 
 import { db } from "@/database/db";
@@ -16,7 +17,7 @@ export const POST = async (req: NextRequest) => {
 
     const userExists = await db.user.findUnique({
         where: { email }
-    })
+    }) as User
 
     if (userExists) return new NextResponse('Email is already in use', { status: 400 })
 
@@ -28,7 +29,11 @@ export const POST = async (req: NextRequest) => {
             password: hashedPassword,
             name,
         }
-    })
+    }) as User
 
-    return NextResponse.json(rest, { status: 201 })
+    return NextResponse.json({
+        message: 'User created successfully!',
+        rest
+    }, { status: 201 }
+    )
 }

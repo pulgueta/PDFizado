@@ -8,6 +8,13 @@
     "name": "PDFizado",
     "description": "Una aplicaci\u00f3n para interactuar con el contenido de tus archivos PDF y poder hacer tu estudio m\u00e1s sencillo.",
     "short_name": "PDFizado",
+    "orientation": "any",
+    "add_to_home_screen": {
+        "prompt": "\u00bfQuieres instalar PDFizado en tu dispositivo?",
+        "accept": "Instalar",
+        "deny": "No, gracias"
+    },
+    "splash_pages": "/landing.webp",
     "icons": [
         {
             "src": "/icon-192x192.png",
