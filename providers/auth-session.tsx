@@ -1,7 +1,9 @@
-'use client'
+'use client';
 
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from 'next-auth/react';
 
-import type { Layout } from "@/types"
+import type { Layout } from '@/types';
 
-export const AuthProvider: React.FC<Layout> = ({ children }) => <SessionProvider>{children}</SessionProvider>
+export const AuthProvider: React.FC<Layout> = ({ children }) => (
+    <SessionProvider>{children}</SessionProvider>
+);

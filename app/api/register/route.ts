@@ -15,25 +15,29 @@ export const POST = async (req: NextRequest) => {
     if (!email) return new NextResponse('Email is missing', { status: 400 })
     if (!password) return new NextResponse('Password is missing', { status: 400 })
 
-    const userExists = await db.user.findUnique({
-        where: { email }
-    }) as User
+    try {
+        const userExists = await db.user.findUnique({
+            where: { email }
+        }) as User
 
-    if (userExists) return new NextResponse('Email is already in use', { status: 400 })
+        if (userExists) return new NextResponse('Email is already in use', { status: 400 })
 
-    const hashedPassword = await hash(password, 12)
+        const hashedPassword = await hash(password, 12)
 
-    const { password: userPassword, ...rest } = await db.user.create({
-        data: {
-            email,
-            password: hashedPassword,
-            name,
-        }
-    }) as User
+        const { password: userPassword, ...rest } = await db.user.create({
+            data: {
+                email,
+                password: hashedPassword,
+                name,
+            }
+        }) as User
 
-    return NextResponse.json({
-        message: 'User created successfully!',
-        rest
-    }, { status: 201 }
-    )
+        return NextResponse.json({
+            message: 'User created successfully!',
+            rest
+        }, { status: 201 }
+        )
+    } catch (error) {
+        console.log(error);
+    }
 }

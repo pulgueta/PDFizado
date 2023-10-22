@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import type { Layout } from '@/types';
 
 export const metadata: Metadata = {
-    title: 'PDFizado - Autenticación',
+    title: 'PDFizado - Dashboard',
     description:
-        'Ingresa tus datos para poder acceder a las funcionalidades de PDFizado',
+        'Este es tu perfil, donde podrás acceder a las funcionalidades de PDFizado',
     robots: {
         index: false,
         follow: false,
@@ -13,13 +13,13 @@ export const metadata: Metadata = {
         googleBot: {
             index: true,
             follow: true,
-            notranslate: false,
+            notranslate: true,
         },
     },
 };
 
-const AuthLayout: React.FC<Layout> = ({ children }) => {
+const DashboardLayout: React.FC<Layout> = ({ children }) => {
     return children;
 };
 
-export default AuthLayout;
+export default DashboardLayout;

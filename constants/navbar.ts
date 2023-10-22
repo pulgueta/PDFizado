@@ -21,7 +21,7 @@ export const authRoutes: NavbarRoutes[] = [
         label: 'Precios'
     },
     {
-        href: '/dasboard',
+        href: '/dashboard',
         label: 'Dashboard'
     },
 ]
@@ -32,7 +32,7 @@ export const footerRoutes: NavbarRoutes[] = [
         label: 'Precios'
     },
     {
-        href: '/dasboard',
+        href: '/dashboard',
         label: 'Dashboard'
     },
     {

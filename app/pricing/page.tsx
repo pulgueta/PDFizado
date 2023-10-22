@@ -1,21 +1,26 @@
-'use client'
+'use client';
 
-import { PriceCards } from "@/components/prices/card-details"
-import { useCountry } from "@/hooks"
+import { PriceCards } from '@/components/prices/card-details';
+import { useCountry } from '@/hooks';
 
 const Pricing = () => {
-    const country = useCountry()
+    const country = useCountry();
 
     return (
-        <div className="min-h-[calc(100vh-80px)] p-4 bg-white dark:bg-[#1C1917] relative">
-            <div className="w-full md:w-11/12 mx-auto my-16">
-                <h1 className="text-center text-3xl md:text-5xl font-black mb-8 md:mb-8">Tenemos 3 planes para que puedas utilizar <span className="text-primary">PDF</span>izado</h1>
-                <p className="text-center text-muted-foreground mb-8">*Precio en {country === 'CO' ? 'COP' : 'USD'}</p>
-                <div className="flex flex-col md:flex-row md:flex-wrap w-full mx-auto gap-8">
+        <div className='relative min-h-[calc(100vh-80px)] bg-white p-4 dark:bg-[#1C1917]'>
+            <div className='mx-auto my-16 w-full md:w-11/12'>
+                <h1 className='mb-8 text-center text-3xl font-black md:mb-8 md:text-5xl'>
+                    Tenemos 3 planes para que puedas utilizar{' '}
+                    <span className='text-primary'>PDF</span>izado
+                </h1>
+                <p className='mb-8 text-center text-muted-foreground'>
+                    *Precio en {country === 'CO' ? 'COP' : 'USD'}
+                </p>
+                <div className='mx-auto flex w-full flex-col gap-8 md:flex-row md:flex-wrap'>
                     <PriceCards />
                 </div>
             </div>
         </div>
-    )
-}
-export default Pricing
+    );
+};
+export default Pricing;

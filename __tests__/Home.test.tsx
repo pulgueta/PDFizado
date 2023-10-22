@@ -1,12 +1,12 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react';
 
-import Landing from '@/app/page'
+import Landing from '@/app/page';
 
 describe('Landing Page', () => {
     it('Should render the Landing Page', () => {
-        render(<Landing />)
+        render(<Landing />);
 
         //fails
-        expect(screen.getByText('PDFizado')).toBeInTheDocument()
-    })
-})
+        expect(screen.getByText('PDFw')).toBeInTheDocument();
+    });
+});
