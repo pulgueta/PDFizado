@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
+import { Loader2Icon } from 'lucide-react';
 
 import {
     Form,
@@ -25,23 +26,7 @@ import {
 } from '@/shadcn/card';
 import { Input } from '@/shadcn/input';
 import { Button, buttonVariants } from '@/shadcn/button';
-import { Loader2Icon } from 'lucide-react';
-
-const registerSchema = z
-    .object({
-        name: z.string().min(6, 'El nombre debe tener al menos 6 caracteres.'),
-        email: z.string().email({ message: 'Debes ingresar un email válido' }),
-        password: z
-            .string()
-            .min(4, 'La contraseña debe ser de al menos 6 caracteres.'),
-        confirmPassword: z
-            .string()
-            .min(4, 'La contraseña debe ser de al menos 6 caracteres.'),
-    })
-    .refine(({ password, confirmPassword }) => password === confirmPassword, {
-        message: 'Las contraseñas deben coincidir',
-        path: ['confirmPassword'],
-    });
+import { registerSchema } from '@/schemas';
 
 export const RegisterForm = () => {
     const { push } = useRouter();
@@ -56,17 +41,14 @@ export const RegisterForm = () => {
         },
     });
 
-    const onSubmit = async ({
-        confirmPassword,
-        ...rest
-    }: z.infer<typeof registerSchema>) => {
+    const onSubmit = async (data: z.infer<typeof registerSchema>) => {
         try {
             const fetch_res = await fetch('/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(rest),
+                body: JSON.stringify(data),
             });
 
             if (!fetch_res.ok) {

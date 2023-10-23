@@ -1,18 +1,26 @@
-import { Button } from '@/shadcn/button';
+import { redirect } from 'next/navigation';
 
-const Dashboard = async () => {
-    return (
-        <main className='min-h-[calc(100vh-80px)]'>
-            <div className='mx-auto max-w-7xl bg-red-50 p-4'>
-                <h1 className='mb-8 text-3xl font-black'>Dashboard de</h1>
+import { User as PrismaUser } from '@prisma/client';
+import { Session } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
 
-                <p>
-                    Bienvenido a tu dashboard, aquí podrás acceder a todas las
-                    funcionalidades de PDFizado
-                </p>
-                <Button className='mt-2 font-bold'>Subir PDF</Button>
-            </div>
-        </main>
-    );
+import { db } from '@/database/db';
+import { authOptions } from '@/lib/auth';
+
+const DashboardRedirect = async () => {
+    const session = (await getServerSession(authOptions)) as Session | null;
+
+    if (!session || !session.user) {
+        redirect('/login');
+    }
+
+    const { id } = (await db.user.findUnique({
+        where: {
+            email: session.user.email as string,
+        },
+    })) as PrismaUser;
+
+    session ? redirect(`/dashboard/${id}`) : <h1>Loading...</h1>;
 };
-export default Dashboard;
+
+export default DashboardRedirect;

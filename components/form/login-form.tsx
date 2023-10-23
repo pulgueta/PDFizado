@@ -9,7 +9,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
 import { Loader2Icon } from 'lucide-react';
-import axios, { AxiosError } from 'axios';
 
 import {
     Form,
@@ -29,16 +28,11 @@ import {
 import { Input } from '@/shadcn/input';
 import { Separator } from '@/shadcn/separator';
 import { Button, buttonVariants } from '@/shadcn/button';
-
-const loginSchema = z.object({
-    email: z.string().email({ message: 'Debes ingresar un email válido' }),
-    password: z
-        .string()
-        .min(4, 'La contraseña debe ser de al menos 4 caracteres.'),
-});
+import { loginSchema } from '@/schemas';
 
 export const LoginForm = () => {
     const { push } = useRouter();
+
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -47,36 +41,28 @@ export const LoginForm = () => {
         },
     });
 
-    const onSubmit = async (data: z.infer<typeof loginSchema>) => {
-        await fetch('/api/login', {
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST',
-        })
-            .then(async () => {
-                await signIn('credentials', {
-                    callbackUrl: '/dashboard',
-                    redirect: true,
-                    email: data.email,
-                    password: data.password,
+    const onSubmit = form.handleSubmit(
+        async (data: z.infer<typeof loginSchema>) => {
+            const res = await signIn('credentials', {
+                email: data.email,
+                password: data.password,
+                redirect: false,
+            });
+
+            if (!res?.ok || res?.error === 'CredentialsSignin') {
+                toast.error('Error de autenticación', {
+                    dismissible: true,
+                    description: 'Credenciales incorrectas.',
                 });
+            } else {
                 toast.success('Inicio de sesión', {
                     dismissible: true,
                     description: 'Bienvenido de vuelta.',
                 });
-            })
-            .catch((error) => {
-                if (error instanceof AxiosError) {
-                    toast.error(error.response?.status === 401 && 'Error', {
-                        dismissible: true,
-                        description:
-                            'Credenciales incorrectas, por favor verifica tus datos.',
-                    });
-                }
-            });
-    };
+                push('/dashboard');
+            }
+        }
+    );
 
     return (
         <>
@@ -88,10 +74,7 @@ export const LoginForm = () => {
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className='space-y-6'
-                    >
+                    <form onSubmit={onSubmit} className='space-y-6'>
                         <FormField
                             control={form.control}
                             name='email'
@@ -142,9 +125,12 @@ export const LoginForm = () => {
                     </form>
                 </Form>
             </CardContent>
+            {/* 
+                // TODO: Implement Google Auth with next-auth
+            */}
             <CardFooter className='flex flex-col items-center justify-center'>
-                <Separator />
-                <Button
+                <Separator className='mb-4' />
+                {/* <Button
                     className='my-4 w-full'
                     variant='secondary'
                     size='lg'
@@ -175,7 +161,7 @@ export const LoginForm = () => {
                         <path d='M1 1h22v22H1z' fill='none' />
                     </svg>
                     Inicia sesión con Google
-                </Button>
+                </Button> */}
                 <span className='text-muted-foreground'>
                     Aún no tienes cuenta?{' '}
                     <Link

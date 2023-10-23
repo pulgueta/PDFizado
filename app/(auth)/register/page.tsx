@@ -1,18 +1,16 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import { useRouter } from 'next/navigation';
-
-import { useSession } from 'next-auth/react';
+import { Session, getServerSession } from 'next-auth';
 
 import { Card } from '@/shadcn/card';
 import { RegisterForm } from '@/components/form/register-form';
+import { authOptions } from '@/lib/auth';
 
-const Register = () => {
-    const { push } = useRouter();
-    const { status } = useSession();
+const Register = async () => {
+    const session = (await getServerSession(authOptions)) as Session | null;
 
-    if (status === 'authenticated') {
-        push('/dashboard');
+    if (session && session.user) {
+        redirect('/dashboard');
     }
 
     return (

@@ -23,9 +23,9 @@ const Navbar = () => {
             </Link>
 
             <div className='flex items-center gap-x-6 md:gap-x-12'>
-                <ul className='hidden md:flex md:items-center md:gap-x-12'>
-                    {status === 'unauthenticated'
-                        ? noAuthRoutes.map(({ href, label }) => (
+                <ul className='hidden md:flex md:items-center md:gap-x-6 lg:gap-x-12'>
+                    {status && status === 'authenticated'
+                        ? authRoutes.map(({ href, label }) => (
                               <li key={href}>
                                   <Link
                                       href={href}
@@ -35,7 +35,7 @@ const Navbar = () => {
                                   </Link>
                               </li>
                           ))
-                        : authRoutes.map(({ href, label }) => (
+                        : noAuthRoutes.map(({ href, label }) => (
                               <li key={href}>
                                   <Link
                                       href={href}

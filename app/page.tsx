@@ -70,7 +70,7 @@ const Home: NextPage = () => {
                 </div>
             </section>
 
-            <div className='mx-auto my-16 w-full md:w-11/12'>
+            <div className='mx-auto my-16 w-full animate-fade-up md:w-11/12'>
                 <h1 className='mb-8 text-center text-3xl font-black md:mb-8 md:text-5xl'>
                     Tenemos 3 planes para que puedas utilizar{' '}
                     <span className='text-primary'>PDF</span>izado

@@ -13,6 +13,7 @@ import type { Layout } from '@/types';
 import Footer from '@/components/footer/footer';
 import { authOptions } from '@/lib/auth';
 
+import '@radix-ui/themes/styles.css';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });

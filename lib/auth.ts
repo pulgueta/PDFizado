@@ -1,28 +1,47 @@
-import NextAuth from 'next-auth/next'
-import { DefaultSession, type NextAuthOptions, type User } from "next-auth";
-import { getServerSession } from "next-auth/next";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import Google from 'next-auth/providers/google'
-import Credentials from "next-auth/providers/credentials";
-import { compare } from "bcrypt";
+import NextAuth from 'next-auth/next';
+import type { NextAuthOptions } from 'next-auth';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+// import Google from 'next-auth/providers/google';
+import Credentials from 'next-auth/providers/credentials';
+import { compare } from 'bcrypt';
+// import { User as PrismaUser } from '@prisma/client';
 
-import { db } from "@/database/db";
+import { db } from '@/database/db';
 import { env } from '@/env';
-declare module 'next-auth' {
-    interface Session {
-        user: {
-            id: string
-        } & DefaultSession['user']
-    }
-}
+
+// const oAuthUser = async (email: string, OAuthName: string) => {
+//     const user = await db.user.findUnique({
+//         where: {
+//             email,
+//         },
+//     });
+
+//     const { email: oAuthEmail, id: oAuthId } = user as PrismaUser;
+
+//     if (user) {
+//         return user;
+//     }
+
+//     const oAuthedUser = await db.user.create({
+//         data: {
+//             id: oAuthId,
+//             email: oAuthEmail,
+//             name: OAuthName,
+//             password: '@OAuthPassword',
+//         },
+//     });
+
+//     return oAuthedUser;
+// };
 
 export const authOptions = NextAuth({
     adapter: PrismaAdapter(db),
     providers: [
-        Google({
-            clientId: env.GOOGLE_PUBLIC_ID,
-            clientSecret: env.GOOGLE_SECRET_ID,
-        }),
+        // TODO: Properly set up Google Auth with email.
+        // Google({
+        //     clientId: env.GOOGLE_PUBLIC_ID,
+        //     clientSecret: env.GOOGLE_SECRET_ID,
+        // }),
         Credentials({
             name: 'Credentials',
             credentials: {
@@ -32,42 +51,63 @@ export const authOptions = NextAuth({
             async authorize(credentials) {
                 const user = await db.user.findUnique({
                     where: {
-                        email: credentials?.email
+                        email: credentials?.email,
                     },
                     select: {
                         id: true,
                         email: true,
                         name: true,
                         password: true,
-                    }
-                })
+                    },
+                });
 
-                if (!user) throw new Error('User not found')
+                if (!user) throw new Error('User not found');
 
-                const valid = await compare(credentials?.password as string, user.password)
+                const valid = await compare(
+                    credentials?.password as string,
+                    user.password
+                );
 
-                if (!valid) throw new Error('Invalid password')
+                if (!valid) throw new Error('Invalid password');
 
                 return {
-                    ...user,
-                    id: user.id.toString()
-                }
-            }
-        })
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                };
+            },
+        }),
     ],
     session: {
         strategy: 'jwt',
-        maxAge: 60 * 60 * 48 * 3,
-        updateAge: 24 * 60 * 60 * 2,
+        maxAge: 60 * 60 * 24 * 30,
+        updateAge: 60 * 60 * 24,
     },
     callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-                token.id = user.id
+        async jwt({ token, user, account }) {
+            if (account) {
+                token.accessToken = account.accessToken;
             }
 
-            return token
-        }
+            switch (account?.type) {
+                case 'credentials':
+                    token.user = user;
+                    break;
+                // case 'oauth':
+                //     token.user = await oAuthUser(
+                //         account.email as string,
+                //         account.name as string
+                //     );
+                //     break;
+            }
+
+            return token;
+        },
+        async session({ session, token, user }) {
+            session.user = token.user as any;
+
+            return session;
+        },
     },
     secret: env.NEXTAUTH_SECRET,
     pages: {
@@ -87,7 +127,7 @@ export const authOptions = NextAuth({
                 sameSite: 'lax',
                 path: '/',
                 secure: true,
-            }
+            },
         },
         callbackUrl: {
             name: 'next-auth.callback-url',
@@ -95,7 +135,7 @@ export const authOptions = NextAuth({
                 sameSite: 'lax',
                 path: '/',
                 secure: true,
-            }
+            },
         },
         csrfToken: {
             name: 'next-auth.csrf-token',
@@ -103,7 +143,7 @@ export const authOptions = NextAuth({
                 sameSite: 'lax',
                 path: '/',
                 secure: true,
-            }
+            },
         },
     },
 }) satisfies NextAuthOptions;
