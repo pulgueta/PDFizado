@@ -10,7 +10,7 @@ import { authOptions } from '@/lib/auth';
 const DashboardRedirect = async () => {
     const session = (await getServerSession(authOptions)) as Session | null;
 
-    if (!session || !session.user) {
+    if (!session?.user) {
         redirect('/login');
     }
 
@@ -20,7 +20,13 @@ const DashboardRedirect = async () => {
         },
     })) as PrismaUser;
 
-    session ? redirect(`/dashboard/${id}`) : <h1>Loading...</h1>;
+    session.user ? redirect(`/dashboard/${id}`) : redirect('/login');
+
+    return (
+        <div className='flex min-h-screen items-center justify-center'>
+            <p className='text-2xl font-bold'>Redireccionando...</p>
+        </div>
+    );
 };
 
 export default DashboardRedirect;

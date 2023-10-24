@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { Button } from '@/shadcn/button';
 import {
     Card,
-    CardDescription,
+    CardContent,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -19,15 +19,15 @@ const Dashboard = () => {
     return (
         <main className='min-h-[calc(100vh-80px)]'>
             <div className='mx-auto max-w-7xl p-4'>
-                <h1 className='mb-8 flex items-center gap-x-4 text-3xl font-bold md:text-4xl lg:text-5xl'>
-                    {session.data?.user?.name ? (
-                        `Dashboard de ${session.data?.user?.name}`
-                    ) : (
-                        <Skeleton className='h-10 w-80' />
-                    )}
-                </h1>
+                {session.data?.user?.name ? (
+                    <h1 className='mb-8 flex items-center gap-x-4 text-3xl font-bold md:text-4xl lg:text-5xl'>
+                        Dashboard de {session.data?.user?.name}
+                    </h1>
+                ) : (
+                    <Skeleton className='mb-8 h-10 w-80 md:w-96' />
+                )}
 
-                <p>
+                <p className='mb-4'>
                     Bienvenido a tu dashboard, aquí podrás acceder a todas las
                     funcionalidades de PDFizado
                 </p>
@@ -36,75 +36,28 @@ const Dashboard = () => {
                     columns={{ initial: '1', md: '2', lg: '3' }}
                     style={{
                         gap: 16,
-                        margin: '16px 0px',
+                        margin: '32px 0px',
                     }}
                 >
-                    <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
-                        <CardHeader className='text-center'>
-                            <CardTitle className='text-3xl font-bold'>
-                                historia.pdf
-                            </CardTitle>
-                            <CardDescription>Historias largas</CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Button className='w-full'>Interactuar</Button>
-                        </CardFooter>
-                    </Card>
-                    <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
-                        <CardHeader className='text-center'>
-                            <CardTitle className='text-3xl font-bold'>
-                                historia.pdf
-                            </CardTitle>
-                            <CardDescription>Historias cortas</CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Button className='w-full'>Interactuar</Button>
-                        </CardFooter>
-                    </Card>
-                    <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
-                        <CardHeader className='text-center'>
-                            <CardTitle className='text-3xl font-bold'>
-                                notas.pdf
-                            </CardTitle>
-                            <CardDescription>UDI</CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Button className='w-full'>Interactuar</Button>
-                        </CardFooter>
-                    </Card>
-                    <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
-                        <CardHeader className='text-center'>
-                            <CardTitle className='text-3xl font-bold'>
-                                notas.pdf
-                            </CardTitle>
-                            <CardDescription>UCC</CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Button className='w-full'>Interactuar</Button>
-                        </CardFooter>
-                    </Card>
-                    <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
-                        <CardHeader className='text-center'>
-                            <CardTitle className='text-3xl font-bold'>
-                                notas.pdf
-                            </CardTitle>
-                            <CardDescription>UdeA</CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Button className='w-full'>Interactuar</Button>
-                        </CardFooter>
-                    </Card>
-                    <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
-                        <CardHeader className='text-center'>
-                            <CardTitle className='text-3xl font-bold'>
-                                notas.pdf
-                            </CardTitle>
-                            <CardDescription>UNAL</CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Button className='w-full'>Interactuar</Button>
-                        </CardFooter>
-                    </Card>
+                    {
+                        Array.from({ length: 6 }, (_, i) => (
+                            <Card key={i} className='mx-auto w-96'>
+                                <CardHeader>
+                                    <CardTitle>
+                                        <Skeleton className='h-24' />
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <Skeleton className='mb-2 h-4' />
+                                    <Skeleton className='mb-2 h-4' />
+                                    <Skeleton className='mb-2 h-4' />
+                                </CardContent>
+                                <CardFooter>
+                                    <Skeleton className='h-6 w-full' />
+                                </CardFooter>
+                            </Card>
+                        )) as JSX.Element[]
+                    }
                 </Grid>
             </div>
         </main>

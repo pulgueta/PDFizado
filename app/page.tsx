@@ -32,12 +32,12 @@ const Home: NextPage = () => {
                 </p>
                 <div className='absolute right-0 z-10 h-48 w-48 animate-pulse rounded-full bg-primary/20 blur-xl' />
                 <div className='absolute -left-16 top-0 h-48 w-48 animate-pulse rounded-full bg-primary/20 blur-xl' />
-                {/* <Badge
+                <Badge
                     className='absolute left-1/2 top-0 z-40 -translate-x-1/2 -translate-y-1/2'
                     aria-label='Demostración'
                 >
                     En desarrollo a día de {new Date().toLocaleDateString()}
-                </Badge> */}
+                </Badge>
             </div>
 
             <section className='relative mt-16 w-full animate-fade-up p-4 animate-once animate-ease-in-out'>
