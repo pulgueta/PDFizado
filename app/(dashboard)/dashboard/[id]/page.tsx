@@ -42,79 +42,67 @@ const Dashboard = () => {
                     <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
                         <CardHeader className='text-center'>
                             <CardTitle className='text-3xl font-bold'>
-                                Gratis
+                                historia.pdf
                             </CardTitle>
-                            <CardDescription>
-                                Para documentos simples
-                            </CardDescription>
+                            <CardDescription>Historias largas</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button className='w-full'>Adquirir</Button>
+                            <Button className='w-full'>Interactuar</Button>
                         </CardFooter>
                     </Card>
                     <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
                         <CardHeader className='text-center'>
                             <CardTitle className='text-3xl font-bold'>
-                                Gratis
+                                historia.pdf
                             </CardTitle>
-                            <CardDescription>
-                                Para documentos simples
-                            </CardDescription>
+                            <CardDescription>Historias cortas</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button className='w-full'>Adquirir</Button>
+                            <Button className='w-full'>Interactuar</Button>
                         </CardFooter>
                     </Card>
                     <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
                         <CardHeader className='text-center'>
                             <CardTitle className='text-3xl font-bold'>
-                                Gratis
+                                notas.pdf
                             </CardTitle>
-                            <CardDescription>
-                                Para documentos simples
-                            </CardDescription>
+                            <CardDescription>UDI</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button className='w-full'>Adquirir</Button>
+                            <Button className='w-full'>Interactuar</Button>
                         </CardFooter>
                     </Card>
                     <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
                         <CardHeader className='text-center'>
                             <CardTitle className='text-3xl font-bold'>
-                                Gratis
+                                notas.pdf
                             </CardTitle>
-                            <CardDescription>
-                                Para documentos simples
-                            </CardDescription>
+                            <CardDescription>UCC</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button className='w-full'>Adquirir</Button>
+                            <Button className='w-full'>Interactuar</Button>
                         </CardFooter>
                     </Card>
                     <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
                         <CardHeader className='text-center'>
                             <CardTitle className='text-3xl font-bold'>
-                                Gratis
+                                notas.pdf
                             </CardTitle>
-                            <CardDescription>
-                                Para documentos simples
-                            </CardDescription>
+                            <CardDescription>UdeA</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button className='w-full'>Adquirir</Button>
+                            <Button className='w-full'>Interactuar</Button>
                         </CardFooter>
                     </Card>
                     <Card className='mx-auto w-[21rem] bg-neutral-50 dark:bg-[#131110]'>
                         <CardHeader className='text-center'>
                             <CardTitle className='text-3xl font-bold'>
-                                Gratis
+                                notas.pdf
                             </CardTitle>
-                            <CardDescription>
-                                Para documentos simples
-                            </CardDescription>
+                            <CardDescription>UNAL</CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button className='w-full'>Adquirir</Button>
+                            <Button className='w-full'>Interactuar</Button>
                         </CardFooter>
                     </Card>
                 </Grid>

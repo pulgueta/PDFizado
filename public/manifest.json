@@ -3,6 +3,57 @@
     "theme_color": "#E11D48",
     "background_color": "#0C0A09",
     "display": "standalone",
+    "display_override": [
+        "fullscreen",
+        "standalone"
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshots/phone-1.webp",
+            "sizes": "376x666",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/phone-2.webp",
+            "sizes": "376x666",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/phone-3.webp",
+            "sizes": "376x666",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/tabelet-1.webp",
+            "sizes": "575x827",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/tabelet-2.webp",
+            "sizes": "575x827",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/tabelet-3.webp",
+            "sizes": "575x827",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/desktop-1.webp",
+            "sizes": "1920x961",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/desktop-2.webp",
+            "sizes": "1920x961",
+            "type": "image/webp"
+        },
+        {
+            "src": "/screenshots/desktop-3.webp",
+            "sizes": "1920x961",
+            "type": "image/webp"
+        }
+    ],
     "scope": "/",
     "start_url": "/",
     "name": "PDFizado",
