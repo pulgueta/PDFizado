@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { Loader2Icon } from 'lucide-react';
 
@@ -32,6 +32,12 @@ import { loginSchema } from '@/schemas';
 
 export const LoginForm = () => {
     const { push } = useRouter();
+
+    const { status } = useSession();
+
+    if (status === 'authenticated') {
+        push('/dashboard');
+    }
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),

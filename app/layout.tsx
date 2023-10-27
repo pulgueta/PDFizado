@@ -15,6 +15,7 @@ import { authOptions } from '@/lib/auth';
 
 import '@radix-ui/themes/styles.css';
 import './globals.css';
+import ReactQueryProvider from '@/providers/tanstack-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -104,10 +105,12 @@ const RootLayout: React.FC<Layout> = async ({ children }) => {
                 >
                     <AuthProvider>
                         <PaypalProvider>
-                            <Navbar />
-                            <Toaster richColors />
-                            {children}
-                            {!user && <Footer />}
+                            <ReactQueryProvider>
+                                <Navbar />
+                                <Toaster richColors />
+                                {children}
+                                {!user && <Footer />}
+                            </ReactQueryProvider>
                         </PaypalProvider>
                     </AuthProvider>
                 </ThemeProvider>

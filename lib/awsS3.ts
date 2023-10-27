@@ -1,21 +1,15 @@
-import aws from 'aws-sdk';
+import { S3 } from '@aws-sdk/client-s3';
 
 import { env } from '@/env';
 
 export const uploadToS3 = async (file: File) => {
     try {
-        aws.config.update({
+        const s3 = new S3({
             credentials: {
                 accessKeyId: env.NEXT_PUBLIC_S3_PUBLIC,
                 secretAccessKey: env.NEXT_PUBLIC_S3_SECRET,
             },
-        });
-
-        const s3 = new aws.S3({
-            params: {
-                Bucket: env.NEXT_PUBLIC_S3_BUCKET,
-            },
-            region: 'us-east-1',
+            region: 'us-east-2',
         });
 
         const key = `uploads/${Date.now().toString()}-${file.name.replace(
@@ -29,25 +23,20 @@ export const uploadToS3 = async (file: File) => {
             Body: file,
         };
 
-        const upload = s3
+        await s3
             .putObject(params)
-            .on('httpUploadProgress', (progress) => {
+            .then((data) => {
                 console.log(
-                    `Uploading to S3: ${progress.loaded}/${progress.total}`
+                    `Uploading with status: ${data.$metadata.httpStatusCode?.toString()}`
                 );
             })
-            .promise();
+            .catch((err) => {
+                return Promise.reject(err);
+            });
 
-        await upload.then((data) => {
-            console.log(
-                `Uploaded to S3 correctly: ${data.$response.httpResponse.statusCode}`,
-                key
-            );
-        });
-
-        return Promise.resolve({ key, file_name: file.name });
+        return Promise.resolve({ key, name: file.name });
     } catch (e) {
-        console.log('Error uploading to S3', e);
+        console.log('Error uploading to S3,', e);
 
         return Promise.reject(e);
     }

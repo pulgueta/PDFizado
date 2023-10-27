@@ -8,6 +8,7 @@ import { MenuIcon } from 'lucide-react';
 import { ThemeSwitcher } from '@/shadcn/theme-switcher';
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '@/shadcn/sheet';
 import { Button } from '@/shadcn/button';
+import { Skeleton } from '@/shadcn/skeleton';
 import { authRoutes, noAuthRoutes } from '@/constants/navbar';
 
 const Navbar = () => {
@@ -24,27 +25,31 @@ const Navbar = () => {
 
             <div className='flex items-center gap-x-6 md:gap-x-12'>
                 <ul className='hidden md:flex md:items-center md:gap-x-6 lg:gap-x-12'>
-                    {status && status === 'authenticated'
-                        ? authRoutes.map(({ href, label }) => (
-                              <li key={href}>
-                                  <Link
-                                      href={href}
-                                      className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
-                                  >
-                                      {label}
-                                  </Link>
-                              </li>
-                          ))
-                        : noAuthRoutes.map(({ href, label }) => (
-                              <li key={href}>
-                                  <Link
-                                      href={href}
-                                      className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
-                                  >
-                                      {label}
-                                  </Link>
-                              </li>
-                          ))}
+                    {status && status === 'loading' ? (
+                        <Skeleton className='h-10 w-24' />
+                    ) : status === 'authenticated' ? (
+                        authRoutes.map(({ href, label }) => (
+                            <li key={href}>
+                                <Link
+                                    href={href}
+                                    className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
+                                >
+                                    {label}
+                                </Link>
+                            </li>
+                        ))
+                    ) : (
+                        noAuthRoutes.map(({ href, label }) => (
+                            <li key={href}>
+                                <Link
+                                    href={href}
+                                    className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
+                                >
+                                    {label}
+                                </Link>
+                            </li>
+                        ))
+                    )}
                     {status === 'authenticated' && (
                         <Button
                             onClick={() => signOut({ callbackUrl: '/' })}

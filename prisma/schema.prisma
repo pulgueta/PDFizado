@@ -93,3 +93,9 @@ enum UploadStatus {
   FAILED
   SUCCESS
 }
+
+enum Plan {
+  FREE
+  STANDARD
+  PROFESSIONAL
+}

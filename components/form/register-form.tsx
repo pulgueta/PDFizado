@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { useSession } from 'next-auth/react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,6 +31,12 @@ import { registerSchema } from '@/schemas';
 
 export const RegisterForm = () => {
     const { push } = useRouter();
+
+    const { status } = useSession();
+
+    if (status === 'authenticated') {
+        push('/dashboard');
+    }
 
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
