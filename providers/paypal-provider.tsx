@@ -5,8 +5,8 @@ import {
     ScriptProviderProps,
 } from '@paypal/react-paypal-js';
 
-import { Layout } from '@/types';
-import { env } from '@/env';
+import { Layout } from '~/types';
+import { env } from '~/env';
 
 const options: ScriptProviderProps['options'] = {
     clientId: env.NEXT_PUBLIC_DEV_PAYPAL_CLIENT_ID,

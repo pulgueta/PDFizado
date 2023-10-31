@@ -1,7 +1,7 @@
 'use client';
 
-import { PriceCards } from '@/components/prices/card-details';
-import { useCountry } from '@/hooks';
+import { PriceCards } from '~/components/prices/card-details';
+import { useCountry } from '~/hooks';
 
 const Pricing = () => {
     const country = useCountry();

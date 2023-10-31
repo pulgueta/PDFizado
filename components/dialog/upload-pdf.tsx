@@ -6,15 +6,15 @@ import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 import axios from 'axios';
 
-import { Button } from '@/shadcn/button';
+import { Button } from '~/shadcn/button';
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from '@/shadcn/dialog';
-import { uploadToS3 } from '@/lib/awsS3';
+} from '~/shadcn/dialog';
+import { uploadToS3 } from '~/lib/awsS3';
 
 const UploadPDF = () => {
     const { push } = useRouter();

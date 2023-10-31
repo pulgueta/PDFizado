@@ -1,18 +1,23 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { loadAWStoPinecone } from '@/lib/pinecone';
+import { loadAWStoPinecone } from '~/lib/pinecone';
 
 export const POST = async (req: NextRequest) => {
-    try {
-        const body = await req.json();
-        const { key, name } = body;
+    const body = await req.json();
+    const { key, name } = body;
+    const pages = await loadAWStoPinecone(key);
 
-        const pages = await loadAWStoPinecone(key);
+    return NextResponse.json({ key, name, pages }, { status: 200 });
+    // try {
+    //     const body = await req.json();
+    //     const { key, name } = body;
 
-        console.log(pages);
+    //     const pages = await loadAWStoPinecone(key);
 
-        return NextResponse.json({ key, name }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
-    }
+    //     console.log(pages);
+
+    //     return NextResponse.json({ key, name }, { status: 200 });
+    // } catch (error) {
+    //     return NextResponse.json({ error }, { status: 500 });
+    // }
 };

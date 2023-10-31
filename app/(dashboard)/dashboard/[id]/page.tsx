@@ -11,9 +11,9 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from '@/shadcn/card';
-import { Skeleton } from '@/shadcn/skeleton';
-import UploadPDF from '@/components/dialog/upload-pdf';
+} from '~/shadcn/card';
+import { Skeleton } from '~/shadcn/skeleton';
+import UploadPDF from '~/components/dialog/upload-pdf';
 
 const Dashboard = () => {
     const [loading] = useState<boolean>(true);

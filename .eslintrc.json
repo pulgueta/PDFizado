@@ -4,7 +4,9 @@
     "prettier",
     "plugin:tailwindcss/recommended",
     "plugin:testing-library/react",
-    "plugin:jest-dom/recommended"
+    "plugin:jest-dom/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "@tanstack/query"
   ],
   "overrides": [
     {
@@ -15,5 +17,9 @@
       ],
       "parser": "@typescript-eslint/parser"
     }
-  ]
+  ],
+  "rules": {
+    "@tanstack/query/exhaustive-deps": "error",
+    "@tanstack/query/stable-query-client": "error"
+  }
 }

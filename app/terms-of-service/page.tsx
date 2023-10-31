@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { ArrowLeftCircleIcon } from 'lucide-react';
 
-import { buttonVariants } from '@/shadcn/button';
+import { buttonVariants } from '~/shadcn/button';
 
 export const metadata: Metadata = {
     title: 'PDFizado - Términos de Servicio',

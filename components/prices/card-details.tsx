@@ -9,17 +9,17 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from '@/shadcn/card';
+} from '~/shadcn/card';
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from '@/shadcn/tooltip';
-import { Separator } from '@/shadcn/separator';
-import { Button } from '@/shadcn/button';
-import { Badge } from '@/shadcn/badge';
-import { usePrice } from '@/hooks';
+} from '~/shadcn/tooltip';
+import { Separator } from '~/shadcn/separator';
+import { Button } from '~/shadcn/button';
+import { Badge } from '~/shadcn/badge';
+import { usePrice } from '~/hooks';
 
 export const PriceCards = () => {
     const standard = usePrice(25000);

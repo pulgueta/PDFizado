@@ -5,17 +5,17 @@ import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { getServerSession } from 'next-auth';
 
-import { ThemeProvider } from '@/providers/theme-provider';
-import { AuthProvider } from '@/providers/auth-session';
-import { PaypalProvider } from '@/providers/paypal-provider';
-import Navbar from '@/components/navbar/navbar';
-import type { Layout } from '@/types';
-import Footer from '@/components/footer/footer';
-import { authOptions } from '@/lib/auth';
+import { ThemeProvider } from '~/providers/theme-provider';
+import { AuthProvider } from '~/providers/auth-session';
+import { PaypalProvider } from '~/providers/paypal-provider';
+import Navbar from '~/components/navbar/navbar';
+import type { Layout } from '~/types';
+import Footer from '~/components/footer/footer';
+import { authOptions } from '~/lib/auth';
 
 import '@radix-ui/themes/styles.css';
 import './globals.css';
-import ReactQueryProvider from '@/providers/tanstack-provider';
+import ReactQueryProvider from '~/providers/tanstack-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 

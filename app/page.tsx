@@ -6,10 +6,10 @@ import Link from 'next/link';
 
 import { ArrowRightIcon } from 'lucide-react';
 
-import { Badge } from '@/shadcn/badge';
-import { buttonVariants } from '@/shadcn/button';
-import { PriceCards } from '@/components/prices/card-details';
-import { useCountry } from '@/hooks';
+import { Badge } from '~/shadcn/badge';
+import { buttonVariants } from '~/shadcn/button';
+import { PriceCards } from '~/components/prices/card-details';
+import { useCountry } from '~/hooks';
 
 const Home: NextPage = () => {
     const country = useCountry();

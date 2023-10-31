@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { User } from '@prisma/client';
 import { hash } from 'bcrypt';
 
-import { db } from '@/database/db';
-import { registerSchema } from '@/schemas';
+import { db } from '~/database/db';
+import { registerSchema } from '~/schemas';
 
 export const POST = async (req: NextRequest) => {
     if (req.method !== 'POST')

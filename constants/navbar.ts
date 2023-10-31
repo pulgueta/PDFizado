@@ -1,4 +1,4 @@
-import { NavbarRoutes } from '@/types';
+import { NavbarRoutes } from '~/types';
 
 export const noAuthRoutes: NavbarRoutes[] = [
     {
@@ -25,7 +25,7 @@ export const authRoutes: NavbarRoutes[] = [
         label: 'Dashboard',
     },
     {
-        href: '/plan',
+        href: '/dashboard/plan',
         label: 'Tu plan',
     },
 ];

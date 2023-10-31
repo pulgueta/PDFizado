@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import type { Layout } from '@/types';
+import type { Layout } from '~/types';
 
 export const metadata: Metadata = {
     title: 'PDFizado - Autenticación',

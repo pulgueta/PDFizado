@@ -1,6 +1,6 @@
 import { S3 } from '@aws-sdk/client-s3';
 
-import { env } from '@/env';
+import { env } from '~/env';
 
 export const uploadToS3 = async (file: File) => {
     try {

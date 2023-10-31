@@ -17,18 +17,18 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '@/shadcn/form';
+} from '~/shadcn/form';
 import {
     CardContent,
     CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
-} from '@/shadcn/card';
-import { Input } from '@/shadcn/input';
-import { Separator } from '@/shadcn/separator';
-import { Button, buttonVariants } from '@/shadcn/button';
-import { loginSchema } from '@/schemas';
+} from '~/shadcn/card';
+import { Input } from '~/shadcn/input';
+import { Separator } from '~/shadcn/separator';
+import { Button, buttonVariants } from '~/shadcn/button';
+import { loginSchema } from '~/schemas';
 
 export const LoginForm = () => {
     const { push } = useRouter();

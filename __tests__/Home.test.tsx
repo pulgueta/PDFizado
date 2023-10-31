@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import Landing from '@/app/page';
+import Landing from '~/app/page';
 
 describe('Landing Page', () => {
     it('Should render the Landing Page', () => {

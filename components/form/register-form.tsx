@@ -17,17 +17,17 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '@/shadcn/form';
+} from '~/shadcn/form';
 import {
     CardContent,
     CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
-} from '@/shadcn/card';
-import { Input } from '@/shadcn/input';
-import { Button, buttonVariants } from '@/shadcn/button';
-import { registerSchema } from '@/schemas';
+} from '~/shadcn/card';
+import { Input } from '~/shadcn/input';
+import { Button, buttonVariants } from '~/shadcn/button';
+import { registerSchema } from '~/schemas';
 
 export const RegisterForm = () => {
     const { push } = useRouter();
@@ -59,6 +59,11 @@ export const RegisterForm = () => {
             });
 
             if (!fetch_res.ok) {
+                toast.error(
+                    fetch_res.statusText === 'Internal Server Error'
+                        ? 'Ocurrió un error inesperado'
+                        : fetch_res.statusText
+                );
                 return;
             }
 
@@ -69,7 +74,7 @@ export const RegisterForm = () => {
             });
             push('/login');
         } catch (error) {
-            console.log(error);
+            toast.error('Ocurrió un error inesperado');
         }
     };
 

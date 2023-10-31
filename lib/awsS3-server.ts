@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import { S3 } from '@aws-sdk/client-s3';
 
-import { env } from '@/env';
+import { env } from '~/env';
 
 export const downloadFromS3 = async (file_key: string): Promise<string> => {
     return new Promise(async (resolve, reject) => {

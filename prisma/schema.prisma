@@ -42,14 +42,19 @@ model User {
   password                    String
   emailVerified               DateTime?
   image                       String?
+  plan                        Plan      @default(FREE)
   File                        File[]
   Message                     Message[]
   accounts                    Account[]
   sessions                    Session[]
-  mercadopagoCustomerId       String?   @unique @map(name: "mercadopago_customer_id")
-  mercadopagoSubscriptionId   String?   @unique @map(name: "mercadopago_subscription_id")
-  mercadopagoPriceId          String?   @unique @map(name: "mercadopago_price_id")
-  mercadopagoCurrentPeriodEnd DateTime? @unique @map(name: "mercadopago_current_period_end")
+  mercadopagoCustomerId       String?   @unique
+  mercadopagoSubscriptionId   String?   @unique
+  mercadopagoPriceId          String?   @unique
+  mercadopagoCurrentPeriodEnd DateTime? @unique
+  paypalCustomerId            String?   @unique
+  paypalSubscriptionId        String?   @unique
+  paypalPriceId               String?   @unique
+  paypalCurrentPeriodEnd      DateTime? @unique
   createdAt                   DateTime  @default(now())
   updatedAt                   DateTime  @updatedAt
 }

@@ -1,8 +1,8 @@
 import { Pinecone } from '@pinecone-database/pinecone';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 
-import { env } from '@/env';
-import { downloadFromS3 } from './awsS3-server';
+import { env } from '~/env';
+import { downloadFromS3 } from '~/lib/awsS3-server';
 
 type PDFPage = {
     pageContent: string;

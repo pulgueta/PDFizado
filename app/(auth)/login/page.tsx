@@ -2,9 +2,9 @@ import { redirect } from 'next/navigation';
 
 import { Session, getServerSession } from 'next-auth';
 
-import { Card } from '@/shadcn/card';
-import { LoginForm } from '@/components/form/login-form';
-import { authOptions } from '@/lib/auth';
+import { Card } from '~/shadcn/card';
+import { LoginForm } from '~/components/form/login-form';
+import { authOptions } from '~/lib/auth';
 
 const Login = async () => {
     const session = (await getServerSession(authOptions)) as Session | null;

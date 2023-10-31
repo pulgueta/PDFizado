@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { MenuIcon } from 'lucide-react';
 
-import { ThemeSwitcher } from '@/shadcn/theme-switcher';
-import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '@/shadcn/sheet';
-import { Button } from '@/shadcn/button';
-import { Skeleton } from '@/shadcn/skeleton';
-import { authRoutes, noAuthRoutes } from '@/constants/navbar';
+import { ThemeSwitcher } from '~/shadcn/theme-switcher';
+import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '~/shadcn/sheet';
+import { Button } from '~/shadcn/button';
+import { Skeleton } from '~/shadcn/skeleton';
+import { authRoutes, noAuthRoutes } from '~/constants/navbar';
 
 const Navbar = () => {
     const { status } = useSession();
