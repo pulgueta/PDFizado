@@ -1,4 +1,4 @@
-const nextJest = require('next/jest')
+import nextJest from 'next/jest'
 
 const jestConfig = nextJest({
     dir: './',
@@ -11,4 +11,4 @@ const config = {
     preset: 'ts-jest',
 }
 
-module.exports = jestConfig(config)
+export default jestConfig(config)

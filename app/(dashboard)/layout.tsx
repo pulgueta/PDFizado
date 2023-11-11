@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import type { Layout } from '~/types';
 
 export const metadata: Metadata = {
-    title: 'PDFizado - Dashboard',
+    title: 'Dashboard',
     description:
         'Este es tu perfil, donde podrás acceder a las funcionalidades de PDFizado',
     robots: {

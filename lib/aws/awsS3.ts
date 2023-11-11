@@ -34,6 +34,7 @@ export const uploadToS3 = async (file: File) => {
                 return Promise.reject(err);
             });
 
+        console.log(getFileUrl(key));
         return Promise.resolve({ key, name: file.name });
     } catch (e) {
         console.log('Error uploading to S3,', e);
@@ -43,4 +44,4 @@ export const uploadToS3 = async (file: File) => {
 };
 
 export const getFileUrl = (key: string) =>
-    `https://${env.NEXT_PUBLIC_S3_BUCKET}.s3.us-east-1.amazonaws.com/${key}`;
+    `https://${env.NEXT_PUBLIC_S3_BUCKET}.s3.us-east-2.amazonaws.com/${key}`;

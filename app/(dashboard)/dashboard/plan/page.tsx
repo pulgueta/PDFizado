@@ -13,6 +13,12 @@ import {
 import { db } from '~/database/db';
 import { authOptions } from '~/lib/auth';
 
+enum Plans {
+    FREE = 'Gratis',
+    STANDARD = 'Estándar',
+    PROFESSIONAL = 'Profesional',
+}
+
 const Plan = async () => {
     const session = (await getServerSession(authOptions)) as Session | null;
 
@@ -22,21 +28,7 @@ const Plan = async () => {
         },
     })) as User;
 
-    let planType: string;
-
-    switch (plan) {
-        case 'FREE':
-            planType = 'Gratis';
-            break;
-        case 'STANDARD':
-            planType = 'Estándar';
-            break;
-        case 'PROFESSIONAL':
-            planType = 'Profesional';
-            break;
-        default:
-            planType = '';
-    }
+    const planType = Plans[plan] ?? 'Gratis';
 
     return (
         <section className='min-h-[calc(100vh-80px)] px-4 py-8'>

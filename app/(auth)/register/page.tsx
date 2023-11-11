@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { Session, getServerSession } from 'next-auth';
 
 import { Card } from '~/shadcn/card';
-import { RegisterForm } from '~/components/form/register-form';
+import { RegisterForm } from '~/components/client/form/register-form';
 import { authOptions } from '~/lib/auth';
 
 const Register = async () => {

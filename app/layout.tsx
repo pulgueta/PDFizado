@@ -1,26 +1,25 @@
-import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
+import { GeistSans } from 'geist/font';
 
 import { Toaster } from 'sonner';
-import { getServerSession } from 'next-auth';
 
 import { ThemeProvider } from '~/providers/theme-provider';
 import { AuthProvider } from '~/providers/auth-session';
 import { PaypalProvider } from '~/providers/paypal-provider';
-import Navbar from '~/components/navbar/navbar';
+import ReactQueryProvider from '~/providers/tanstack-provider';
+import Navbar from '~/components/client/navbar/navbar';
+import Footer from '~/components/server/footer/footer';
 import type { Layout } from '~/types';
-import Footer from '~/components/footer/footer';
-import { authOptions } from '~/lib/auth';
 
 import '@radix-ui/themes/styles.css';
-import './globals.css';
-import ReactQueryProvider from '~/providers/tanstack-provider';
-
-const inter = Inter({ subsets: ['latin'] });
+import '~/app/globals.css';
 
 export const metadata: Metadata = {
-    title: 'PDFizado - Haz tu estudio más fácil',
+    title: {
+        template: 'PDFizado - %s',
+        default: 'PDFizado - Haz tu estudio más fácil',
+    },
     description:
         'Una aplicación para interactuar con el contenido de tus archivos PDF y poder hacer tu estudio más sencillo.',
     openGraph: {
@@ -92,12 +91,10 @@ export const metadata: Metadata = {
     },
 };
 
-const RootLayout: React.FC<Layout> = async ({ children }) => {
-    const user = await getServerSession(authOptions);
-
+const RootLayout: React.FC<Layout> = ({ children }) => {
     return (
         <html lang='es' suppressHydrationWarning>
-            <body className={inter.className}>
+            <body className={GeistSans.className}>
                 <ThemeProvider
                     attribute='class'
                     defaultTheme='system'
@@ -109,7 +106,7 @@ const RootLayout: React.FC<Layout> = async ({ children }) => {
                                 <Navbar />
                                 <Toaster richColors />
                                 {children}
-                                {!user && <Footer />}
+                                <Footer />
                             </ReactQueryProvider>
                         </PaypalProvider>
                     </AuthProvider>

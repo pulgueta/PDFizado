@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 import { S3 } from '@aws-sdk/client-s3';
 
@@ -16,12 +16,19 @@ export const downloadFromS3 = async (file_key: string): Promise<string> => {
             });
 
             const params = {
-                Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
+                Bucket: env.NEXT_PUBLIC_S3_BUCKET,
                 Key: file_key,
             };
 
             const obj = await s3.getObject(params);
-            const file_name = `/tmp/pdf-${Date.now().toString()}.pdf`;
+
+            const tmpDir = '/tmp';
+
+            if (!fs.existsSync(tmpDir)) {
+                fs.mkdirSync(tmpDir);
+            }
+
+            const file_name = `${tmpDir}/pdf-${Date.now().toString()}.pdf`;
 
             if (obj.Body instanceof require('stream').Readable) {
                 const file = fs.createWriteStream(file_name);

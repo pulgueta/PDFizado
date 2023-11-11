@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import type { Layout } from '~/types';
 
 export const metadata: Metadata = {
-    title: 'PDFizado - Autenticación',
+    title: 'Autenticación',
     description:
         'Ingresa tus datos para poder acceder a las funcionalidades de PDFizado',
     robots: {

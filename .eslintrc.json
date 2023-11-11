@@ -5,8 +5,7 @@
     "plugin:tailwindcss/recommended",
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended",
-    "@tanstack/query"
+    "plugin:@tanstack/eslint-plugin-query/recommended"
   ],
   "overrides": [
     {

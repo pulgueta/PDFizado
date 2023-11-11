@@ -39,6 +39,7 @@
     "next.config.mjs",
     "jest.setup.js",
     "jest.config.js",
+    "build/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

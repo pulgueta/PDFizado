@@ -18,6 +18,7 @@ const Navbar = () => {
         <nav className='sticky top-0 z-50 flex h-20 items-center justify-between border-b bg-white/80 px-4 backdrop-blur dark:bg-[#0C0A09]/80 md:px-8 lg:px-16 xl:px-40 2xl:px-64'>
             <Link
                 href='/'
+                aria-label='PDFizado - Inicio'
                 className='text-3xl font-black text-black dark:text-white md:text-4xl'
             >
                 <span className='text-primary'>PDF</span>izado
@@ -32,6 +33,7 @@ const Navbar = () => {
                             <li key={href}>
                                 <Link
                                     href={href}
+                                    aria-label={label}
                                     className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
                                 >
                                     {label}
@@ -43,6 +45,7 @@ const Navbar = () => {
                             <li key={href}>
                                 <Link
                                     href={href}
+                                    aria-label={label}
                                     className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
                                 >
                                     {label}
@@ -53,6 +56,7 @@ const Navbar = () => {
                     {status === 'authenticated' && (
                         <Button
                             onClick={() => signOut({ callbackUrl: '/' })}
+                            aria-label='Cerrar sesión'
                             variant='destructive'
                         >
                             Cerrar sesión
@@ -66,7 +70,7 @@ const Navbar = () => {
                             size='icon'
                             aria-label='Mobile navbar menu button'
                         >
-                            <MenuIcon />
+                            <MenuIcon aria-label='Mobile navbar menu button' />
                         </Button>
                     </SheetTrigger>
                     <SheetContent className='bg-white dark:bg-[#1C1917]'>
@@ -76,6 +80,7 @@ const Navbar = () => {
                                       <li key={href}>
                                           <Link
                                               href={href}
+                                              aria-label={label}
                                               className='text-center text-lg font-semibold duration-200 ease-in-out hover:text-primary'
                                           >
                                               {label}
@@ -86,6 +91,7 @@ const Navbar = () => {
                                       <li key={href}>
                                           <Link
                                               href={href}
+                                              aria-label={label}
                                               className='text-center text-lg font-semibold duration-200 ease-in-out hover:text-primary'
                                           >
                                               {label}
@@ -97,6 +103,7 @@ const Navbar = () => {
                             <SheetFooter className='mt-4'>
                                 <Button
                                     className='w-full font-medium'
+                                    aria-label='Cerrar sesión'
                                     onClick={() =>
                                         signOut({ callbackUrl: '/' })
                                     }

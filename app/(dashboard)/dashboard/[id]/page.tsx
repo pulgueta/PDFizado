@@ -2,23 +2,24 @@
 
 import { useState } from 'react';
 
+import { notFound, useParams } from 'next/navigation';
+
 import { Grid } from '@radix-ui/themes';
 import { useSession } from 'next-auth/react';
 
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '~/shadcn/card';
 import { Skeleton } from '~/shadcn/skeleton';
-import UploadPDF from '~/components/dialog/upload-pdf';
+import UploadPDF from '~/components/client/dialog/pdf/upload-pdf';
 
 const Dashboard = () => {
     const [loading] = useState<boolean>(true);
 
+    const params = useParams();
+
     const session = useSession();
+
+    if (session.data?.user.id !== params.id) {
+        notFound();
+    }
 
     return (
         <main className='min-h-[calc(100vh-80px)]'>
@@ -39,6 +40,7 @@ const Dashboard = () => {
 
                     <UploadPDF />
                 </header>
+                <h3 className='mt-6 text-xl font-semibold'>Tus PDFs:</h3>
                 <Grid
                     columns={{ initial: '1', md: '2', lg: '3' }}
                     style={{
@@ -47,22 +49,21 @@ const Dashboard = () => {
                     }}
                 >
                     {!loading ? (
-                        (Array.from({ length: 6 }, (_, i) => (
-                            <Card key={i} className='mx-auto w-96'>
-                                <CardHeader>
-                                    <CardTitle>
-                                        <Skeleton className='h-24' />
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <Skeleton className='mb-2 h-4' />
-                                    <Skeleton className='mb-2 h-4' />
-                                    <Skeleton className='mb-2 h-4' />
-                                </CardContent>
-                                <CardFooter>
-                                    <Skeleton className='h-6 w-full' />
-                                </CardFooter>
-                            </Card>
+                        (Array.from({ length: 3 }, (_, i) => (
+                            <div
+                                key={i}
+                                className='mx-auto w-[22rem] rounded-2xl border p-4'
+                            >
+                                <Skeleton className='mb-8 h-32' />
+
+                                <Skeleton className='mb-2 h-2' />
+                                <Skeleton className='mb-2 h-2' />
+                                <Skeleton className='mb-2 h-2' />
+                                <Skeleton className='mb-2 h-2' />
+                                <Skeleton className='mb-8 h-2' />
+
+                                <Skeleton className='h-16 w-full' />
+                            </div>
                         )) as JSX.Element[])
                     ) : (
                         <h3 className='text-xl font-semibold'>Tus PDFs:</h3>

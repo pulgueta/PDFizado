@@ -7,6 +7,7 @@ const nextConfig = {
         register: true,
         skipWaiting: true,
     }),
+    distDir: 'build',
 }
 
 export default nextConfig

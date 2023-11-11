@@ -1,6 +1,6 @@
 'use client';
 
-import { PriceCards } from '~/components/prices/card-details';
+import { PriceCards } from '~/components/client/prices/card-details';
 import { useCountry } from '~/hooks';
 
 const Pricing = () => {
