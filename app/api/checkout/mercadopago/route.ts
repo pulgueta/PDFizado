@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { MercadoPagoConfig, Payment } from 'mercadopago';
 
 import { env } from '~/env';
 
-export const POST = async (req: NextRequest) => {
+export const POST = async () => {
     try {
         const mercadopago = new MercadoPagoConfig({
             accessToken: env.MERCADOPAGO_SECRET,
@@ -20,8 +20,6 @@ export const POST = async (req: NextRequest) => {
                 },
             },
         });
-
-        (await payment).operation_type;
 
         return NextResponse.json({ payment });
     } catch (error) {

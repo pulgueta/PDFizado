@@ -9,6 +9,7 @@ import { db } from '~/database/db';
 import { env } from '~/env';
 
 declare module 'next-auth' {
+    // eslint-disable-next-line no-unused-vars
     interface Session extends DefaultSession {
         user: {
             id: string;
@@ -29,6 +30,7 @@ declare module 'next-auth' {
 }
 
 declare module 'next-auth/jwt' {
+    // eslint-disable-next-line no-unused-vars
     interface JWT {
         id: string;
     }
@@ -146,7 +148,7 @@ export const authOptions: NextAuthOptions = {
 
             return token;
         },
-        async session({ session, token, user }) {
+        async session({ session, token }) {
             session.user = token.user as any;
 
             return session;

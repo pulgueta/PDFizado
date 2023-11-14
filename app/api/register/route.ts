@@ -29,6 +29,7 @@ export const POST = async (req: NextRequest) => {
 
         const hashedPassword = await hash(password, 12);
 
+        // eslint-disable-next-line no-unused-vars
         const { password: userPassword, ...rest } = (await db.user.create({
             data: {
                 email,

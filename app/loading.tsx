@@ -2,7 +2,8 @@ import { Loader2Icon } from 'lucide-react';
 
 const Loading = () => {
     return (
-        <div className='flex min-h-[calc(100vh-80px)] flex-col items-center justify-center '>
+        <div className='flex min-h-[calc(100vh-80px)] flex-col items-center justify-center gap-y-2'>
+            <h2 className='text-center text-2xl font-semibold'>Cargando...</h2>
             <Loader2Icon className='h-8 w-8 animate-spin' />
         </div>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { User } from '@prisma/client';
 import { Session, getServerSession } from 'next-auth';
 
@@ -28,7 +29,7 @@ const Plan = async () => {
         },
     })) as User;
 
-    const planType = Plans[plan] ?? 'Gratis';
+    const currentPlan = Plans[plan] ?? 'Gratis';
 
     return (
         <section className='min-h-[calc(100vh-80px)] px-4 py-8'>
@@ -41,7 +42,7 @@ const Plan = async () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>Tu plan actual es: {planType}</p>
+                    <p>Tu plan actual es: {currentPlan}</p>
                 </CardContent>
                 <CardFooter className='flex flex-col items-center justify-between gap-4 md:flex-row'>
                     <Button>Actualizar a Estándar</Button>

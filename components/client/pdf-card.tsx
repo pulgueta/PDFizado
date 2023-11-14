@@ -4,15 +4,19 @@ import { revalidatePath } from 'next/cache';
 import { File } from '@prisma/client';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
 
 import { Button, buttonVariants } from '~/shadcn/button';
+import { useParams } from 'next/navigation';
 
 export const PDFCard: React.FC<File> = (file) => {
+    const params = useParams();
+
     const session = useSession();
 
-    const { mutate, isPending, isSuccess } = useMutation({
+    const queryClient = useQueryClient();
+    const { mutate, isPending } = useMutation({
         mutationKey: ['deleteFile'],
         mutationFn: async ({ id, key }: { id: string; key: string }) => {
             const res = await fetch('/api/files', {
@@ -24,18 +28,17 @@ export const PDFCard: React.FC<File> = (file) => {
 
             return files;
         },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['deleteFile'],
+            });
+            toast.success('PDF eliminado correctamente');
+            revalidatePath(`/dashboard/${params.id}`, 'page');
+        },
     });
 
     const onDeleteFile = (id: string) => () => {
-        mutate(
-            { id, key: file.awsKey },
-            {
-                onSuccess: () => {
-                    toast.success('PDF eliminado correctamente');
-                    revalidatePath('/dashboard/[id]', 'page');
-                },
-            }
-        );
+        mutate({ id, key: file.awsKey });
     };
 
     return (
