@@ -8,8 +8,6 @@ import { env } from '~/env';
 import { authOptions } from '~/lib/auth';
 import { plan as Plan } from '~/lib/plan-allowance';
 
-export const runtime = 'edge';
-
 const config = new Configuration({
     apiKey: env.OPENAI_SECRET,
     organization: env.OPENAI_ORG,
