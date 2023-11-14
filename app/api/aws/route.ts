@@ -1,25 +1,44 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { getServerSession } from 'next-auth';
+import { type Session, getServerSession } from 'next-auth';
 
 import { authOptions } from '~/lib/auth';
 import { loadAWStoPinecone } from '~/lib/pinecone';
 import { db } from '~/database/db';
+import { awsSchema } from '~/schemas';
 
 export const POST = async (req: NextRequest) => {
-    const body = await req.json();
-    const { key, name } = body;
+    if (req.method !== 'POST')
+        return new NextResponse('Method not allowed', { status: 405 });
 
-    const session = getServerSession(authOptions);
+    const body = await req.json();
+    const validatedBody = awsSchema.safeParse(body);
+
+    if (!validatedBody.success)
+        return NextResponse.json(validatedBody.error.errors, { status: 400 });
+
+    const { key, name, url } = body;
+
+    const session = (await getServerSession(authOptions)) as Session | null;
+
+    if (!session)
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
-        const pages = await loadAWStoPinecone(key);
+        await loadAWStoPinecone(key);
 
-        console.log('next-route', key, name, pages);
+        const file = await db.file.create({
+            data: {
+                awsKey: key,
+                name,
+                url,
+                userId: session.user.id,
+            },
+        });
 
-        return NextResponse.json({ pages, key, name }, { status: 200 });
+        return NextResponse.json(file, { status: 201 });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json({ error }, { status: 500 });
     }
 };

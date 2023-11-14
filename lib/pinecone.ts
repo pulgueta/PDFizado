@@ -3,12 +3,12 @@ import { PineconeStore } from 'langchain/vectorstores/pinecone';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { getServerSession } from 'next-auth';
+import { User } from '@prisma/client';
 
 import { env } from '~/env';
 import { downloadFromS3 } from '~/lib/aws/awsS3-server';
 import { authOptions } from './auth';
 import { db } from '~/database/db';
-import { User } from '@prisma/client';
 
 type PDFPage = {
     pageContent: string;

@@ -27,7 +27,7 @@ const Navbar = () => {
             <div className='flex items-center gap-x-6 md:gap-x-12'>
                 <ul className='hidden md:flex md:items-center md:gap-x-6 lg:gap-x-12'>
                     {status && status === 'loading' ? (
-                        <Skeleton className='h-10 w-24' />
+                        <Skeleton className='h-10 w-96' />
                     ) : status === 'authenticated' ? (
                         authRoutes.map(({ href, label }) => (
                             <li key={href}>

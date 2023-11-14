@@ -25,19 +25,18 @@ export const uploadToS3 = async (file: File) => {
 
         await s3
             .putObject(params)
-            .then((data) => {
-                console.log(
-                    `Uploading with status: ${data.$metadata.httpStatusCode?.toString()}`
-                );
-            })
+            .then(() => {})
             .catch((err) => {
                 return Promise.reject(err);
             });
 
-        console.log(getFileUrl(key));
-        return Promise.resolve({ key, name: file.name });
+        return Promise.resolve({
+            key,
+            name: file.name,
+            url: getFileUrl(key),
+        });
     } catch (e) {
-        console.log('Error uploading to S3,', e);
+        console.error('Error uploading to S3,', e);
 
         return Promise.reject(e);
     }

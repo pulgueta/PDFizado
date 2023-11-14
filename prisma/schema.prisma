@@ -68,16 +68,15 @@ model VerificationToken {
 }
 
 model File {
-  id           String       @unique @default(uuid())
-  name         String
-  uploadStatus UploadStatus @default(PENDING)
-  url          String
-  key          String
-  messages     Message[]
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  User         User?        @relation(fields: [userId], references: [id])
-  userId       String?
+  id        String    @unique @default(uuid())
+  name      String
+  url       String
+  awsKey    String
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  User      User?     @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 model Message {
@@ -90,13 +89,6 @@ model Message {
   userId        String?
   File          File?    @relation(fields: [fileId], references: [id])
   fileId        String?
-}
-
-enum UploadStatus {
-  PENDING
-  PROCESSING
-  FAILED
-  SUCCESS
 }
 
 enum Plan {

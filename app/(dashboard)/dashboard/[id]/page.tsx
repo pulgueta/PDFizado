@@ -1,76 +1,86 @@
+/* eslint-disable @tanstack/query/exhaustive-deps */
 'use client';
 
-import { useState } from 'react';
-
-import { notFound, useParams } from 'next/navigation';
-
 import { Grid } from '@radix-ui/themes';
-import { useSession } from 'next-auth/react';
+import { useQuery } from '@tanstack/react-query';
+import { File } from '@prisma/client';
 
-import { Skeleton } from '~/shadcn/skeleton';
 import UploadPDF from '~/components/client/dialog/pdf/upload-pdf';
+import { PDFCard } from '~/components/client/pdf-card';
+import { PDFLoader } from '~/components/server/pdf-loaders';
+import { HeaderName } from '~/components/server/header-name';
 
 const Dashboard = () => {
-    const [loading] = useState<boolean>(true);
+    const { data, error, isLoading, isSuccess } = useQuery<File[]>({
+        queryKey: ['files'],
+        queryFn: async () => {
+            const res = await fetch('/api/files');
+            const data = await res.json();
 
-    const params = useParams();
-
-    const session = useSession();
-
-    if (session.data?.user.id !== params.id) {
-        notFound();
-    }
+            return data;
+        },
+    });
 
     return (
-        <main className='min-h-[calc(100vh-80px)]'>
-            <div className='mx-auto max-w-7xl p-4'>
-                <header>
-                    {session.data?.user?.name ? (
-                        <h1 className='mb-8 flex items-center gap-x-4 text-3xl font-bold md:text-4xl lg:text-5xl'>
-                            Dashboard de {session.data?.user?.name}
-                        </h1>
-                    ) : (
-                        <Skeleton className='mb-8 h-10 w-80 md:w-96' />
-                    )}
+        <>
+            <header className='mx-auto max-w-7xl p-4'>
+                <HeaderName />
 
-                    <p className='mb-4'>
-                        Bienvenido a tu dashboard, aquí podrás acceder a todas
-                        las funcionalidades de PDFizado
-                    </p>
+                <p className='mb-4'>
+                    Bienvenido a tu dashboard, aquí podrás acceder a todas las
+                    funcionalidades de PDFizado
+                </p>
 
-                    <UploadPDF />
-                </header>
-                <h3 className='mt-6 text-xl font-semibold'>Tus PDFs:</h3>
-                <Grid
-                    columns={{ initial: '1', md: '2', lg: '3' }}
-                    style={{
-                        gap: 16,
-                        margin: '32px 0px',
-                    }}
-                >
-                    {!loading ? (
-                        (Array.from({ length: 3 }, (_, i) => (
-                            <div
-                                key={i}
-                                className='mx-auto w-[22rem] rounded-2xl border p-4'
-                            >
-                                <Skeleton className='mb-8 h-32' />
+                <UploadPDF />
+            </header>
+            <main className='min-h-[calc(100vh-80px)]'>
+                <div className='mx-auto max-w-7xl p-4'>
+                    <h3 className='mt-6 text-xl font-semibold'>Tus PDFs:</h3>
+                    <Grid
+                        columns={{ initial: '1', md: '2', lg: '3' }}
+                        style={{
+                            gap: 16,
+                            margin: '32px 0px',
+                        }}
+                    >
+                        {isLoading && <PDFLoader />}
 
-                                <Skeleton className='mb-2 h-2' />
-                                <Skeleton className='mb-2 h-2' />
-                                <Skeleton className='mb-2 h-2' />
-                                <Skeleton className='mb-2 h-2' />
-                                <Skeleton className='mb-8 h-2' />
+                        {isSuccess &&
+                            data.length > 0 &&
+                            data.map((file) => (
+                                <PDFCard
+                                    key={file.awsKey}
+                                    awsKey={file.awsKey}
+                                    createdAt={file.createdAt}
+                                    name={file.name}
+                                    id={file.id}
+                                    updatedAt={file.updatedAt}
+                                    userId={file.userId}
+                                    url={file.url}
+                                />
+                            ))}
 
-                                <Skeleton className='h-16 w-full' />
+                        {data && data.length === 0 && (
+                            <div className='w-full rounded-lg border p-4'>
+                                <p className='text-center text-base font-semibold'>
+                                    No tienes PDFs
+                                </p>
                             </div>
-                        )) as JSX.Element[])
-                    ) : (
-                        <h3 className='text-xl font-semibold'>Tus PDFs:</h3>
-                    )}
-                </Grid>
-            </div>
-        </main>
+                        )}
+                        {error && (
+                            <div className='flex w-[22rem] flex-col items-center gap-4 rounded-lg border p-4'>
+                                <p className='text-center text-lg font-semibold'>
+                                    Error al cargar tus PDFs
+                                </p>
+                                <p className='text-center'>{error.name}</p>
+                                <p className='text-center'>{error.message}</p>
+                                <p className='text-center'>{error.stack}</p>
+                            </div>
+                        )}
+                    </Grid>
+                </div>
+            </main>
+        </>
     );
 };
 export default Dashboard;

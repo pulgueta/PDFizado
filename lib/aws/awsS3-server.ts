@@ -32,7 +32,7 @@ export const downloadFromS3 = async (file_key: string): Promise<string> => {
 
             if (obj.Body instanceof require('stream').Readable) {
                 const file = fs.createWriteStream(file_name);
-                file.on('open', function (fd) {
+                file.on('open', () => {
                     // @ts-ignore
                     obj.Body?.pipe(file).on('finish', () => {
                         return resolve(file_name);

@@ -22,3 +22,9 @@ export const registerSchema = z
         message: 'Las contraseñas deben coincidir',
         path: ['confirmPassword'],
     });
+
+export const awsSchema = z.object({
+    key: z.string().min(1, 'La llave debe tener al menos 1 caracter.'),
+    name: z.string().min(1, 'El nombre debe tener al menos 1 caracter.'),
+    url: z.string().url({ message: 'Debes ingresar una url válida' }),
+});
