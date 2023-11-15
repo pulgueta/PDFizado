@@ -21,8 +21,10 @@ export const env: Env = {
     NEXT_PUBLIC_S3_SECRET: process.env.NEXT_PUBLIC_S3_SECRET ?? '',
     NEXT_PUBLIC_S3_BUCKET: process.env.NEXT_PUBLIC_S3_BUCKET ?? '',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? '',
-    PINECONE_ENVIRONMENT: process.env.PINECONE_ENVIRONMENT ?? '',
-    PINECONE_API_KEY: process.env.PINECONE_API_KEY ?? '',
+    NEXT_PUBLIC_PINECONE_ENVIRONMENT:
+        process.env.NEXT_PUBLIC_PINECONE_ENVIRONMENT ?? '',
+    NEXT_PUBLIC_PINECONE_API_KEY:
+        process.env.NEXT_PUBLIC_PINECONE_API_KEY ?? '',
     PINECONE_REGION: process.env.PINECONE_REGION ?? '',
     PINECONE_INDEX: process.env.PINECONE_INDEX ?? '',
     OPENAI_SECRET: process.env.OPENAI_SECRET ?? '',

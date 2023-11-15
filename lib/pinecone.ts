@@ -21,8 +21,8 @@ type PDFPage = {
 
 export const getPinecone = () =>
     new Pinecone({
-        apiKey: env.PINECONE_API_KEY,
-        environment: env.PINECONE_ENVIRONMENT,
+        apiKey: env.NEXT_PUBLIC_PINECONE_API_KEY,
+        environment: env.NEXT_PUBLIC_PINECONE_ENVIRONMENT,
     });
 
 export const loadAWStoPinecone = async (fileKey: string) => {
