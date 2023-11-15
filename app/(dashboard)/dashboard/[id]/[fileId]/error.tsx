@@ -16,7 +16,9 @@ const Error = ({ error }: { error: Error & { digest?: string } }) => {
             <p className='text-center'>{`${
                 error.message.includes(
                     `Cannot read properties of null (reading 'url')`
-                ) && 'No hemos encontrado un archivo con esa ID...'
+                )
+                    ? 'No hemos encontrado un archivo con esa ID...'
+                    : `${error.message}`
             }`}</p>
             <Button onClick={back} variant='outline'>
                 Volver al dashboard
