@@ -18,13 +18,12 @@ export const env: Env = {
         process.env.NEXT_PUBLIC_PROD_PAYPAL_CLIENT_ID ?? '',
     PROD_PAYPAL_SECRET_ID: process.env.PROD_PAYPAL_SECRET_ID ?? '',
     NEXT_PUBLIC_S3_PUBLIC: process.env.NEXT_PUBLIC_S3_PUBLIC ?? '',
+    NEXT_PUBLIC_S3_REGION: process.env.NEXT_PUBLIC_S3_REGION ?? '',
     NEXT_PUBLIC_S3_SECRET: process.env.NEXT_PUBLIC_S3_SECRET ?? '',
     NEXT_PUBLIC_S3_BUCKET: process.env.NEXT_PUBLIC_S3_BUCKET ?? '',
     NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? '',
-    NEXT_PUBLIC_PINECONE_ENVIRONMENT:
-        process.env.NEXT_PUBLIC_PINECONE_ENVIRONMENT ?? '',
-    NEXT_PUBLIC_PINECONE_API_KEY:
-        process.env.NEXT_PUBLIC_PINECONE_API_KEY ?? '',
+    PINECONE_ENVIRONMENT: process.env.PINECONE_ENVIRONMENT ?? '',
+    PINECONE_API_KEY: process.env.PINECONE_API_KEY ?? '',
     PINECONE_REGION: process.env.PINECONE_REGION ?? '',
     PINECONE_INDEX: process.env.PINECONE_INDEX ?? '',
     OPENAI_SECRET: process.env.OPENAI_SECRET ?? '',

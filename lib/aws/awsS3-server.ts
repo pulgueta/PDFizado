@@ -12,7 +12,7 @@ export const downloadFromS3 = async (file_key: string): Promise<string> => {
                     accessKeyId: env.NEXT_PUBLIC_S3_PUBLIC,
                     secretAccessKey: env.NEXT_PUBLIC_S3_SECRET,
                 },
-                region: 'us-east-2',
+                region: env.NEXT_PUBLIC_S3_REGION,
             });
 
             const params = {

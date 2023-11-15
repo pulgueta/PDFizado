@@ -9,7 +9,7 @@ export const uploadToS3 = async (file: File) => {
                 accessKeyId: env.NEXT_PUBLIC_S3_PUBLIC,
                 secretAccessKey: env.NEXT_PUBLIC_S3_SECRET,
             },
-            region: 'us-east-2',
+            region: env.NEXT_PUBLIC_S3_REGION,
         });
 
         const key = `uploads/${Date.now().toString()}-${file.name.replace(
@@ -43,4 +43,4 @@ export const uploadToS3 = async (file: File) => {
 };
 
 export const getFileUrl = (key: string) =>
-    `https://${env.NEXT_PUBLIC_S3_BUCKET}.s3.us-east-2.amazonaws.com/${key}`;
+    `https://${env.NEXT_PUBLIC_S3_BUCKET}.s3.${env.NEXT_PUBLIC_S3_REGION}.amazonaws.com/${key}`;
