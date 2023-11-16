@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { Session, getServerSession } from 'next-auth';
+import { type Session, getServerSession } from 'next-auth';
 import { S3 } from '@aws-sdk/client-s3';
 
 import { db } from '~/database/db';
@@ -36,7 +36,7 @@ export const DELETE = async (req: NextRequest) => {
             accessKeyId: env.NEXT_PUBLIC_S3_PUBLIC,
             secretAccessKey: env.NEXT_PUBLIC_S3_SECRET,
         },
-        region: 'us-east-2',
+        region: env.NEXT_PUBLIC_S3_REGION,
     });
 
     const params = {
@@ -78,7 +78,6 @@ export const DELETE = async (req: NextRequest) => {
             { status: 200 }
         );
     } catch (error) {
-        console.log(error);
         return NextResponse.json({ error }, { status: 500 });
     }
 };

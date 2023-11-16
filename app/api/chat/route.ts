@@ -1,6 +1,6 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { Session, getServerSession } from 'next-auth';
+import { type Session, getServerSession } from 'next-auth';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration, OpenAIApi } from 'openai-edge';
 
@@ -30,5 +30,7 @@ export const POST = async (req: NextRequest) => {
         const stream = OpenAIStream(response);
 
         return new StreamingTextResponse(stream);
-    } catch (error) {}
+    } catch (error) {
+        return NextResponse.json({ error }, { status: 500 });
+    }
 };
