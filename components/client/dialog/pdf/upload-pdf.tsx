@@ -14,7 +14,7 @@ const UploadPDF = () => {
             <DialogTrigger asChild>
                 <Button>Subir PDF</Button>
             </DialogTrigger>
-            <DialogContent className='max-w-xs rounded-xl md:max-w-lg lg:max-w-2xl'>
+            <DialogContent className='max-w-xs rounded-xl md:max-w-lg lg:max-w-xl'>
                 <DialogHeader>
                     <DialogTitle>Subir PDF</DialogTitle>
                 </DialogHeader>
