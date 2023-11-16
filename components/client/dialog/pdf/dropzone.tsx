@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation } from '@tanstack/react-query';
 import {
@@ -22,6 +22,7 @@ interface Mutation {
 
 const Dropzone = () => {
     const { push } = useRouter();
+    const { id: userId } = useParams();
 
     const { mutate, isPending, isSuccess } = useMutation({
         mutationKey: ['uploadToS3'],
@@ -38,6 +39,15 @@ const Dropzone = () => {
             const response = await data.json();
 
             return response;
+        },
+        onError: (err) => {
+            toast.error(err.message || 'Error al subir el PDF');
+        },
+        onSuccess: ({ id }) => {
+            toast.success(
+                'Tu PDF se ha procesado correctamente, serás redirigido en unos segundos'
+            );
+            push(`/dashboard/${userId}/${id}`);
         },
         retry: 3,
         retryDelay: 1000,
@@ -84,17 +94,7 @@ const Dropzone = () => {
                         toast.error('Error al subir el PDF');
                     }
 
-                    mutate(res, {
-                        onError: (err) => {
-                            toast.error(err.message || 'Error al subir el PDF');
-                        },
-                        onSuccess: ({ id }) => {
-                            toast.success(
-                                'Tu PDF se ha procesado correctamente, serás redirigido en unos segundos'
-                            );
-                            push(`/dashboard/${session.data?.user.id}/${id}`);
-                        },
-                    });
+                    mutate(res);
                 },
                 {
                     loading: `Subiendo ${file[0].name}...`,
@@ -109,7 +109,7 @@ const Dropzone = () => {
         <div
             {...getRootProps({
                 className:
-                    'border border-dashed border-gray-300 rounded px-4 py-8 my-4 md:py-16 bg-neutral-100 dark:bg-neutral-900 cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors duration-200 ease-in-out',
+                    'mx-auto my-4 w-64 cursor-pointer rounded border border-dashed border-gray-300 bg-neutral-100 px-4 py-8 transition-colors duration-200 ease-in-out hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 md:w-full md:py-16',
             })}
         >
             <input {...getInputProps()} disabled={isPending || isSuccess} />
@@ -136,18 +136,17 @@ const Dropzone = () => {
                         </p>
                         {acceptedFiles && acceptedFiles[0] && (
                             <div className='mx-auto flex max-w-sm items-center gap-4 overflow-hidden rounded border p-4'>
-                                <div>
-                                    <FileIcon className='h-4 w-4 text-primary' />
-                                </div>
-                                <p className='truncate text-center text-sm text-muted-foreground'>
+                                <FileIcon className='h-8 w-8 text-primary' />
+
+                                <span className='truncate text-center text-sm text-muted-foreground'>
                                     {acceptedFiles[0].name}
-                                </p>
-                                <p className='text-center text-sm text-muted-foreground'>
+                                </span>
+                                <span className='text-center text-sm text-muted-foreground'>
                                     {Number(
                                         acceptedFiles[0].size / 1000000
-                                    ).toFixed(2)}{' '}
-                                    MB
-                                </p>
+                                    ).toFixed(2)}
+                                    MB{' '}
+                                </span>
                             </div>
                         )}
                     </>

@@ -1,15 +1,15 @@
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import { File } from '@prisma/client';
 import { toast } from 'sonner';
-import { useSession } from 'next-auth/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
 
 import { Button, buttonVariants } from '~/shadcn/button';
 
 export const PDFCard: React.FC<File> = (file) => {
-    const session = useSession();
+    const { id } = useParams();
 
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
@@ -36,10 +36,10 @@ export const PDFCard: React.FC<File> = (file) => {
     const onDeleteFile = (id: string) => () => mutate(id);
 
     return (
-        <div className='mx-auto flex w-96 flex-col rounded-2xl border p-4'>
+        <div className='mx-auto flex w-80 flex-col rounded-2xl border p-4 md:w-96'>
             <h3 className='truncate text-xl font-semibold'>{file.name}</h3>
             <span className='my-4 text-muted-foreground'>
-                Fecha de creación:{' '}
+                Fecha de subida:{' '}
                 {new Date(file.createdAt).toLocaleDateString('es-ES', {
                     year: 'numeric',
                     month: 'long',
@@ -49,7 +49,7 @@ export const PDFCard: React.FC<File> = (file) => {
 
             <div className='flex w-full items-center justify-between border-t pt-4'>
                 <Link
-                    href={`/dashboard/${session.data?.user.id}/${file.id}`}
+                    href={`/dashboard/${id}/${file.id}`}
                     className={buttonVariants({
                         variant: 'ghost',
                     })}
