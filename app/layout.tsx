@@ -22,6 +22,17 @@ export const metadata: Metadata = {
     },
     description:
         'Una aplicación para interactuar con el contenido de tus archivos PDF y poder hacer tu estudio más sencillo.',
+    applicationName: 'PDFizado',
+    publisher: 'Andrés Rodríguez',
+    formatDetection: {
+        email: true,
+    },
+    authors: [
+        {
+            name: 'Andrés Rodríguez',
+            url: 'https://www.linkedin.com/in/and-rodr/',
+        },
+    ],
     openGraph: {
         title: 'PDFizado - Haz tu estudio más fácil',
         siteName: 'PDFizado',
