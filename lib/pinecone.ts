@@ -15,10 +15,10 @@ type PDFPage = {
     };
 };
 
-export const pinecone = new Pinecone({
+export const pineconeIndex = new Pinecone({
     apiKey: env.PINECONE_API_KEY,
     environment: env.PINECONE_ENVIRONMENT,
-});
+}).Index(env.PINECONE_INDEX);
 
 export const loadAWStoPinecone = async (fileKey: string) => {
     const file = await downloadFromS3(fileKey);
@@ -26,8 +26,6 @@ export const loadAWStoPinecone = async (fileKey: string) => {
     if (!file) {
         throw new Error('Error downloading file from S3');
     }
-
-    const index = pinecone.Index(env.PINECONE_INDEX);
 
     const embeddings = new OpenAIEmbeddings({
         openAIApiKey: env.OPENAI_SECRET,
@@ -37,6 +35,6 @@ export const loadAWStoPinecone = async (fileKey: string) => {
     const pages = (await loader.load()) as PDFPage[];
 
     await PineconeStore.fromDocuments(pages, embeddings, {
-        pineconeIndex: index,
+        pineconeIndex,
     });
 };
