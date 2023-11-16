@@ -10,9 +10,6 @@ import { loadAWStoPinecone } from '~/lib/pinecone';
 import { awsSchema } from '~/schemas';
 
 export const POST = async (req: NextRequest) => {
-    if (req.method !== 'POST')
-        return new NextResponse('Method not allowed', { status: 405 });
-
     const body = await req.json();
     const validatedBody = awsSchema.safeParse(body);
 
