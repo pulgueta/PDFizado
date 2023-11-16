@@ -15,11 +15,10 @@ type PDFPage = {
     };
 };
 
-export const getPinecone = () =>
-    new Pinecone({
-        apiKey: env.PINECONE_API_KEY,
-        environment: env.PINECONE_ENVIRONMENT,
-    });
+export const pinecone = new Pinecone({
+    apiKey: env.PINECONE_API_KEY,
+    environment: env.PINECONE_ENVIRONMENT,
+});
 
 export const loadAWStoPinecone = async (fileKey: string) => {
     const file = await downloadFromS3(fileKey);
@@ -28,9 +27,7 @@ export const loadAWStoPinecone = async (fileKey: string) => {
         throw new Error('Error downloading file from S3');
     }
 
-    const client = getPinecone();
-
-    const index = client.Index(env.PINECONE_INDEX);
+    const index = pinecone.Index(env.PINECONE_INDEX);
 
     const embeddings = new OpenAIEmbeddings({
         openAIApiKey: env.OPENAI_SECRET,
