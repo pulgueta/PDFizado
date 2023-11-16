@@ -46,7 +46,7 @@ export const PriceCards = () => {
                         <li>
                             &#10060; Alojamiento de PDFs de por vida
                             <Tooltip delayDuration={100}>
-                                <TooltipTrigger>
+                                <TooltipTrigger aria-label='Más información'>
                                     <HelpCircleIcon className='ml-2 h-4 w-4' />
                                 </TooltipTrigger>
                                 <TooltipContent>
@@ -86,7 +86,7 @@ export const PriceCards = () => {
                         <li>
                             &#10060; Alojamiento de PDFs de por vida
                             <Tooltip delayDuration={100}>
-                                <TooltipTrigger>
+                                <TooltipTrigger aria-label='Más información'>
                                     <HelpCircleIcon className='ml-2 h-4 w-4' />
                                 </TooltipTrigger>
                                 <TooltipContent>
