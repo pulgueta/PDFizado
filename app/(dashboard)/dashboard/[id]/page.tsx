@@ -32,7 +32,7 @@ const Dashboard = () => {
 
                 <UploadPDF />
             </header>
-            <main className='min-h-[calc(100vh-80px)]'>
+            <main className='min-h-[calc(100vh-270px)]'>
                 <div className='mx-auto max-w-7xl p-4'>
                     <h3 className='mt-6 text-xl font-semibold'>Tus PDFs:</h3>
                     <Grid
