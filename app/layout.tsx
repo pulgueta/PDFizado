@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { GeistSans } from 'geist/font';
 
@@ -40,16 +40,6 @@ export const metadata: Metadata = {
             height: 630,
         },
     },
-    themeColor: [
-        {
-            media: '(prefers-color-scheme: dark)',
-            color: '#E11D48',
-        },
-        {
-            media: '(prefers-color-scheme: light)',
-            color: '#FFFFFF',
-        },
-    ],
     metadataBase: new URL(
         `http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
             process.env.VERCEL_URL ?? 'localhost:3000'
@@ -89,6 +79,23 @@ export const metadata: Metadata = {
         shortcut: '/icon-192x192.png',
         apple: '/icon-192x192.png',
     },
+};
+
+export const viewport: Viewport = {
+    themeColor: [
+        {
+            media: '(prefers-color-scheme: dark)',
+            color: '#E11D48',
+        },
+        {
+            media: '(prefers-color-scheme: light)',
+            color: '#FFFFFF',
+        },
+    ],
+    colorScheme: 'light dark',
+    initialScale: 1,
+    height: 'device-height',
+    minimumScale: 1,
 };
 
 const RootLayout: React.FC<Layout> = ({ children }) => {
