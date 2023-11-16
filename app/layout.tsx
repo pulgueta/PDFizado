@@ -95,6 +95,7 @@ export const viewport: Viewport = {
     colorScheme: 'light dark',
     initialScale: 1,
     height: 'device-height',
+    width: 'device-width',
     minimumScale: 1,
 };
 
