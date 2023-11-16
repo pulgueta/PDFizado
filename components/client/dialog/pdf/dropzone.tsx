@@ -1,3 +1,5 @@
+import { useRouter } from 'next/navigation';
+
 import { useMutation } from '@tanstack/react-query';
 import {
     CheckCircle2Icon,
@@ -6,7 +8,6 @@ import {
     UploadCloudIcon,
 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 

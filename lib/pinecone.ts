@@ -54,13 +54,13 @@ export const loadAWStoPinecone = async (fileKey: string) => {
 
     switch (plan) {
         case 'FREE':
-            if (noOfPages > 12) {
+            if (noOfPages > 24) {
                 return Promise.reject({
                     error: 'You have exceeded the page limit for free plan',
                 });
             }
         case 'STANDARD':
-            if (noOfPages > 32) {
+            if (noOfPages > 64) {
                 return Promise.reject({
                     error: 'You have exceeded the page limit for standard plan',
                 });

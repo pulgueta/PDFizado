@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { revalidatePath } from 'next/cache';
 
 import { File } from '@prisma/client';
 import { toast } from 'sonner';
@@ -8,11 +7,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
 
 import { Button, buttonVariants } from '~/shadcn/button';
-import { useParams } from 'next/navigation';
 
 export const PDFCard: React.FC<File> = (file) => {
-    const params = useParams();
-
     const session = useSession();
 
     const queryClient = useQueryClient();
@@ -33,7 +29,6 @@ export const PDFCard: React.FC<File> = (file) => {
                 queryKey: ['deleteFile'],
             });
             toast.success('PDF eliminado correctamente');
-            revalidatePath(`/dashboard/${params.id}`, 'page');
         },
     });
 
