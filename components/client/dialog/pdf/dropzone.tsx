@@ -136,7 +136,7 @@ const Dropzone = () => {
                         </p>
                         {acceptedFiles && acceptedFiles[0] && (
                             <div className='mx-auto flex max-w-sm items-center gap-4 overflow-hidden rounded border p-4'>
-                                <FileIcon className='h-8 w-8 text-primary' />
+                                <FileIcon className='h-6 w-6 text-primary' />
 
                                 <span className='truncate text-center text-sm text-muted-foreground'>
                                     {acceptedFiles[0].name}
