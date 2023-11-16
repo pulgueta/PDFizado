@@ -6,7 +6,7 @@ import { ArrowLeftCircleIcon } from 'lucide-react';
 import { buttonVariants } from '~/shadcn/button';
 
 export const metadata: Metadata = {
-    title: 'PDFizado - Términos de Servicio',
+    title: 'Términos de Servicio',
     description: 'Términos de servicio por el uso de PDFizado.',
     robots: {
         index: false,
@@ -26,7 +26,7 @@ const TOS: NextPage = () => {
                 <h1 className='mb-8 text-3xl font-bold md:text-5xl'>
                     Términos de Servicio
                 </h1>
-                <p className='text-base text-muted-foreground md:text-lg'>
+                <p className='text-base text-muted-foreground'>
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                     Voluptatibus nesciunt provident tenetur inventore impedit
                     totam vero eligendi voluptatem, dolore doloribus hic
@@ -34,7 +34,7 @@ const TOS: NextPage = () => {
                     minima.
                 </p>
                 <br />
-                <p className='text-base text-muted-foreground md:text-lg'>
+                <p className='text-base text-muted-foreground'>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Officiis ex placeat alias atque quisquam saepe, odio libero
                     nostrum eos ipsa aut quas voluptas tenetur quos suscipit
@@ -46,7 +46,7 @@ const TOS: NextPage = () => {
                     debitis in. Error suscipit impedit perferendis dicta?
                 </p>
                 <br />
-                <p className='text-base text-muted-foreground md:text-lg'>
+                <p className='text-base text-muted-foreground'>
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                     Esse, aperiam. Ut quam consequuntur laudantium est itaque
                     hic laboriosam. Deserunt, vel eaque, quas perspiciatis iure
@@ -63,7 +63,7 @@ const TOS: NextPage = () => {
                     ipsum distinctio.
                 </p>
                 <br />
-                <p className='text-base text-muted-foreground md:text-lg'>
+                <p className='text-base text-muted-foreground'>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                     Minus explicabo deleniti reprehenderit placeat sint
                     reiciendis omnis delectus! Minima ipsum blanditiis laborum
@@ -71,7 +71,7 @@ const TOS: NextPage = () => {
                     libero nesciunt nulla!
                 </p>
                 <br />
-                <p className='text-base text-muted-foreground md:text-lg'>
+                <p className='text-base text-muted-foreground'>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Omnis exercitationem illum mollitia maxime. Odit ad nesciunt
                     voluptas, exercitationem itaque maxime ea quibusdam
