@@ -104,10 +104,12 @@ export const viewport: Viewport = {
         },
     ],
     colorScheme: 'light dark',
+    minimumScale: 1,
     initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
     height: 'device-height',
     width: 'device-width',
-    minimumScale: 1,
 };
 
 const RootLayout: React.FC<Layout> = ({ children }) => {
