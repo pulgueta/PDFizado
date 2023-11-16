@@ -19,14 +19,6 @@ const DashboardRedirect = async () => {
     if (session !== null && session.user?.email !== '') {
         redirect(`/dashboard/${id}`);
     }
-
-    return (
-        <div className='flex min-h-[calc(100vh-80px)] items-center justify-center'>
-            <p className='text-center text-2xl font-bold'>
-                Redirigiendo a tu dashboard...
-            </p>
-        </div>
-    );
 };
 
 export default DashboardRedirect;
