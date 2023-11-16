@@ -27,7 +27,7 @@ const Dropzone = () => {
     const { mutate, isPending, isSuccess } = useMutation({
         mutationKey: ['uploadToS3'],
         mutationFn: async ({ key, name, url }: Mutation) => {
-            const data = await fetch('/api/aws', {
+            const data = await fetch('/api/files', {
                 body: JSON.stringify({
                     key,
                     name,
