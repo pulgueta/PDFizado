@@ -37,8 +37,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next.config.mjs",
-    "jest.setup.js",
-    "jest.config.js",
+    "jest.setup.ts",
+    "jest.config.ts",
     "build/types/**/*.ts"
   ],
   "exclude": [

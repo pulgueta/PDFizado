@@ -1,14 +1,14 @@
-import nextJest from 'next/jest'
+import { Config } from 'jest';
+import nextJest from 'next/jest';
 
 const jestConfig = nextJest({
     dir: './',
-})
+});
 
-/** @type { import('jest').Config } */
-const config = {
+const config: Config = {
     testEnvironment: 'jest-environment-jsdom',
     setupFilesAfterEnv: ['<rootDir>jest.setup.js'],
     preset: 'ts-jest',
-}
+};
 
-export default jestConfig(config)
+export default jestConfig(config);
