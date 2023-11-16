@@ -2,13 +2,9 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { PineconeStore } from 'langchain/vectorstores/pinecone';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
-import { getServerSession } from 'next-auth';
-import { User } from '@prisma/client';
 
 import { env } from '~/env';
 import { downloadFromS3 } from '~/lib/aws/awsS3-server';
-import { authOptions } from './auth';
-import { db } from '~/database/db';
 
 type PDFPage = {
     pageContent: string;
@@ -27,7 +23,6 @@ export const getPinecone = () =>
 
 export const loadAWStoPinecone = async (fileKey: string) => {
     const file = await downloadFromS3(fileKey);
-    const session = await getServerSession(authOptions);
 
     if (!file) {
         throw new Error('Error downloading file from S3');
@@ -44,30 +39,7 @@ export const loadAWStoPinecone = async (fileKey: string) => {
     const loader = new PDFLoader(file);
     const pages = (await loader.load()) as PDFPage[];
 
-    const noOfPages = pages.length;
-
-    const { plan } = (await db.user.findFirst({
-        where: {
-            id: session?.user.id,
-        },
-    })) as User;
-
-    switch (plan) {
-        case 'FREE':
-            if (noOfPages > 24) {
-                return Promise.reject({
-                    error: 'You have exceeded the page limit for free plan',
-                });
-            }
-        case 'STANDARD':
-            if (noOfPages > 64) {
-                return Promise.reject({
-                    error: 'You have exceeded the page limit for standard plan',
-                });
-            }
-        default:
-            await PineconeStore.fromDocuments(pages, embeddings, {
-                pineconeIndex: index,
-            });
-    }
+    await PineconeStore.fromDocuments(pages, embeddings, {
+        pineconeIndex: index,
+    });
 };
