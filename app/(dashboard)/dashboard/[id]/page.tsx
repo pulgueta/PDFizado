@@ -1,4 +1,3 @@
-/* eslint-disable @tanstack/query/exhaustive-deps */
 'use client';
 
 import { Grid } from '@radix-ui/themes';

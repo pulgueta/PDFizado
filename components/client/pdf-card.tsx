@@ -14,41 +14,40 @@ export const PDFCard: React.FC<File> = (file) => {
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationKey: ['deleteFile'],
-        mutationFn: async ({ id, key }: { id: string; key: string }) => {
+        mutationFn: async (id: string) => {
             const res = await fetch('/api/files', {
                 method: 'DELETE',
-                body: JSON.stringify({ id, key }),
+                body: JSON.stringify({ id, key: file.awsKey }),
             });
 
             const files = await res.json();
 
             return files;
         },
+
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ['deleteFile'],
+                queryKey: ['files'],
             });
             toast.success('PDF eliminado correctamente');
         },
     });
 
-    const onDeleteFile = (id: string) => () => {
-        mutate({ id, key: file.awsKey });
-    };
+    const onDeleteFile = (id: string) => () => mutate(id);
 
     return (
         <div className='mx-auto flex w-96 flex-col rounded-2xl border p-4'>
             <h3 className='truncate text-xl font-semibold'>{file.name}</h3>
-            <p className='mt-4 text-muted-foreground'>
+            <span className='my-4 text-muted-foreground'>
                 Fecha de creación:{' '}
                 {new Date(file.createdAt).toLocaleDateString('es-ES', {
                     year: 'numeric',
-                    month: 'numeric',
+                    month: 'long',
                     day: 'numeric',
                 })}
-            </p>
+            </span>
 
-            <div className='mt-6 flex w-full items-center justify-between border-t pt-4'>
+            <div className='flex w-full items-center justify-between border-t pt-4'>
                 <Link
                     href={`/dashboard/${session.data?.user.id}/${file.id}`}
                     className={buttonVariants({
