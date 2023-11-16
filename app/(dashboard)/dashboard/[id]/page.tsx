@@ -4,10 +4,10 @@ import { Grid } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import { File } from '@prisma/client';
 
-import UploadPDF from '~/components/client/dialog/pdf/upload-pdf';
 import { PDFCard } from '~/components/client/pdf-card';
 import { PDFLoader } from '~/components/server/pdf-loaders';
 import { HeaderName } from '~/components/server/header-name';
+import { UploadPDF } from '~/components/client/dialog/pdf/upload-pdf';
 
 const Dashboard = () => {
     const { data, error, isLoading, isSuccess } = useQuery<File[]>({

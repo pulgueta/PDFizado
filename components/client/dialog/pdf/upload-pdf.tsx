@@ -6,9 +6,9 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '~/shadcn/dialog';
-import Dropzone from './dropzone';
+import { Dropzone } from './dropzone';
 
-const UploadPDF = () => {
+export const UploadPDF = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -23,5 +23,3 @@ const UploadPDF = () => {
         </Dialog>
     );
 };
-
-export default UploadPDF;

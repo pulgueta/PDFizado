@@ -20,7 +20,7 @@ interface Mutation {
     url: string;
 }
 
-const Dropzone = () => {
+export const Dropzone = () => {
     const { push } = useRouter();
     const { id: userId } = useParams();
 
@@ -155,4 +155,3 @@ const Dropzone = () => {
         </div>
     );
 };
-export default Dropzone;
