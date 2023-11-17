@@ -31,6 +31,9 @@ export const PDFCard: React.FC<File> = (file) => {
             });
             toast.success('PDF eliminado correctamente');
         },
+        onError: () => {
+            toast.error('Error al eliminar el PDF');
+        },
     });
 
     const onDeleteFile = (id: string) => () => mutate(id);
