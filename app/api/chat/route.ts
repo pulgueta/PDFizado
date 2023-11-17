@@ -55,7 +55,7 @@ export const POST = async (req: NextRequest) => {
         const response = await gpt.createChatCompletion({
             model: Plan(session?.user.plan || 'FREE'),
             stream: true,
-            temperature: 0,
+            temperature: 0.2,
             messages: [
                 prompt,
                 ...messages.filter(
