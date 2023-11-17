@@ -1,44 +1,44 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useParams } from 'next/navigation';
 import { useChat } from 'ai/react';
 
 import { useQuery } from '@tanstack/react-query';
 import { Loader2Icon, SendIcon } from 'lucide-react';
+import axios from 'axios';
 
-import { Button } from '~/components/ui/button';
-import { Textarea } from '~/components/ui/textarea';
+import { Button } from '~/shadcn/button';
+import { Textarea } from '~/shadcn/textarea';
+import { ScrollArea } from '~/shadcn/scroll-area';
 import { MessageList } from './message-list';
-import { useEffect } from 'react';
-import { ScrollArea } from '~/components/ui/scroll-area';
+import { Message } from 'ai';
 
 export const Chat = () => {
     const { fileId } = useParams();
 
-    const { data } = useQuery({
-        // eslint-disable-next-line @tanstack/query/exhaustive-deps
-        queryKey: ['messages'],
+    const { data, isLoading } = useQuery({
+        queryKey: ['messages', fileId],
         queryFn: async () => {
-            const data = await fetch(`/api/chat/${fileId}`, {
-                method: 'POST',
-                body: JSON.stringify({
+            const { data } = await axios.post<Message[]>(
+                `/api/chat/${fileId}`,
+                {
                     fileId,
-                }),
-            });
-            const res = await data.json();
+                }
+            );
 
-            return res;
+            return data;
         },
     });
 
-    const { input, handleInputChange, handleSubmit, messages, isLoading } =
-        useChat({
-            api: '/api/chat',
-            body: {
-                fileId,
-            },
-            initialMessages: data?.messages || [],
-        });
+    const { input, handleInputChange, handleSubmit, messages } = useChat({
+        api: '/api/chat',
+        body: {
+            fileId,
+        },
+        initialMessages: data || [],
+    });
 
     useEffect(() => {
         const messagesScroll = document.getElementById(
@@ -51,7 +51,7 @@ export const Chat = () => {
             behavior: 'smooth',
             block: 'end',
         });
-    });
+    }, [messages]);
 
     return (
         <div className='flex-1 p-4'>

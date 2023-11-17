@@ -108,6 +108,7 @@ export const DELETE = async (req: NextRequest) => {
         await db.message.deleteMany({
             where: {
                 fileId: body.id,
+                userId: session?.user.id,
             },
         });
 
@@ -118,6 +119,6 @@ export const DELETE = async (req: NextRequest) => {
             { status: 200 }
         );
     } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
+        return NextResponse.json(error, { status: 500 });
     }
 };
