@@ -37,7 +37,7 @@ export const POST = async (req: NextRequest) => {
 
         return NextResponse.json(file, { status: 201 });
     } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
+        return NextResponse.json(error, { status: 500 });
     }
 };
 
@@ -102,6 +102,12 @@ export const DELETE = async (req: NextRequest) => {
         await db.file.delete({
             where: {
                 id: body.id,
+            },
+        });
+
+        await db.message.deleteMany({
+            where: {
+                fileId: body.id,
             },
         });
 
