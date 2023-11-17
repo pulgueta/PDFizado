@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { useChat } from 'ai/react';
 
 import { useQuery } from '@tanstack/react-query';
-import { SendIcon } from 'lucide-react';
+import { Loader2Icon, SendIcon } from 'lucide-react';
 
 import { Button } from '~/components/ui/button';
 import { Textarea } from '~/components/ui/textarea';
@@ -58,11 +58,11 @@ export const Chat = () => {
             <ScrollArea className='relative h-[calc(45vh)] max-h-screen py-4 md:h-[calc(100vh-180px)]'>
                 <MessageList messages={messages} />
                 {isLoading && (
-                    <div
-                        className='flex w-full items-center justify-center'
-                        id='scroller'
-                    >
-                        <div className='h-16 w-16 animate-spin rounded-full border-y-2 border-primary'></div>
+                    <div className='relative mb-4 mr-auto flex w-max animate-fade-up rounded-lg bg-neutral-600 animate-duration-[400ms] animate-ease-in-out'>
+                        <div className='relative max-w-sm rounded-lg px-4 py-2 text-white md:max-w-md lg:max-w-lg'>
+                            <Loader2Icon className='h-4 w-4 animate-spin' />
+                            <div className='absolute bottom-0 left-1 h-3 w-3 rotate-45 bg-neutral-600'></div>
+                        </div>
                     </div>
                 )}
             </ScrollArea>
