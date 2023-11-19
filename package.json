@@ -69,6 +69,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
     "@types/bcrypt": "^5.0.1",
+    "@types/mdx": "^2.0.10",
     "@types/node": "^20",
     "@types/paypal__checkout-server-sdk": "^1.0.7",
     "@types/react": "^18",

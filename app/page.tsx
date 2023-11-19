@@ -58,7 +58,7 @@ const Home: NextPage = () => {
                             height={500}
                             priority
                             quality={100}
-                            className='relative z-40 mx-auto rounded-xl shadow-xl'
+                            className='relative z-40 mx-auto h-auto w-auto rounded-xl shadow-xl'
                         />
                         <Badge
                             className='absolute -bottom-2 left-1/2 z-40 -translate-x-1/2'

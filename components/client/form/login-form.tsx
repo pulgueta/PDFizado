@@ -168,6 +168,14 @@ export const LoginForm = () => {
                     </svg>
                     Inicia sesión con Google
                 </Button> */}
+
+                <Link
+                    href='/forgot-password'
+                    className={buttonVariants({ variant: 'link', size: 'sm' })}
+                >
+                    Olvidé mi contraseña
+                </Link>
+
                 <span className='text-muted-foreground'>
                     Aún no tienes cuenta?{' '}
                     <Link
