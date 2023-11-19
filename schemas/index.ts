@@ -28,3 +28,7 @@ export const awsSchema = z.object({
     name: z.string().min(1, 'El nombre debe tener al menos 1 caracter.'),
     url: z.string().url({ message: 'Debes ingresar una url válida' }),
 });
+
+export const emailSchema = z.object({
+    email: z.string().email({ message: 'Debes ingresar un email válido' }),
+});

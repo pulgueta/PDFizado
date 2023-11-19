@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { env } from '~/env';
+import { emailSchema } from '~/schemas';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
@@ -8,7 +9,15 @@ export const dynamic = 'force-dynamic';
 export const POST = async (req: NextRequest) => {
     const body = await req.json();
 
-    console.log(body.email);
+    const validatedBody = emailSchema.safeParse(body);
+
+    if (!validatedBody.success) {
+        return NextResponse.json(validatedBody.error.errors, { status: 400 });
+    }
+
+    const { email } = body;
+
+    console.log(email);
 
     const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -25,6 +34,7 @@ export const POST = async (req: NextRequest) => {
     });
 
     console.log(res);
+    const data = await res.json();
 
-    return NextResponse.json(res);
+    return NextResponse.json(data);
 };

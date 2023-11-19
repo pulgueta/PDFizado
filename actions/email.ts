@@ -1,12 +1,16 @@
 'use server';
 
-export const sendEmail = async (e: FormData) => {
-    const email = e.get('email') as string;
+import { env } from '~/env';
 
-    await fetch(`${process.env.BASE_URL}/api/email`, {
+export const sendEmail = async (e: FormData) => {
+    const email = e.get('email');
+
+    const res = await fetch(`${env.BASE_URL}/api/email`, {
         method: 'POST',
         body: JSON.stringify({ email }),
     });
 
-    // console.log(res);
+    e.delete('email');
+
+    console.log(res);
 };

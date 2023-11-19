@@ -29,4 +29,5 @@ export const env: Env = {
     OPENAI_SECRET: process.env.OPENAI_SECRET ?? '',
     OPENAI_ORG: process.env.OPENAI_ORG ?? '',
     RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
+    BASE_URL: process.env.BASE_URL ?? '',
 };
