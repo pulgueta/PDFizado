@@ -28,4 +28,5 @@ export const env: Env = {
     PINECONE_INDEX: process.env.PINECONE_INDEX ?? '',
     OPENAI_SECRET: process.env.OPENAI_SECRET ?? '',
     OPENAI_ORG: process.env.OPENAI_ORG ?? '',
+    RESEND_API_KEY: process.env.RESEND_API_KEY ?? '',
 };
