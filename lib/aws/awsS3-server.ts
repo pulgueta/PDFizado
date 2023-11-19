@@ -1,20 +1,11 @@
 import fs from 'node:fs';
 
-import { S3 } from '@aws-sdk/client-s3';
-
 import { env } from '~/env';
+import { s3 } from './s3.config';
 
 export const downloadFromS3 = async (file_key: string): Promise<string> => {
     return new Promise(async (resolve, reject) => {
         try {
-            const s3 = new S3({
-                credentials: {
-                    accessKeyId: env.NEXT_PUBLIC_S3_PUBLIC,
-                    secretAccessKey: env.NEXT_PUBLIC_S3_SECRET,
-                },
-                region: env.NEXT_PUBLIC_S3_REGION,
-            });
-
             const params = {
                 Bucket: env.NEXT_PUBLIC_S3_BUCKET,
                 Key: file_key,

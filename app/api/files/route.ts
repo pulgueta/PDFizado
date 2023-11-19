@@ -1,13 +1,13 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { type Session, getServerSession } from 'next-auth';
-import { S3 } from '@aws-sdk/client-s3';
 
 import { db } from '~/database/db';
 import { authOptions } from '~/lib/auth';
 import { env } from '~/env';
 import { loadAWStoPinecone } from '~/lib/pinecone';
 import { awsSchema } from '~/schemas';
+import { s3 } from '~/lib/aws/s3.config';
 
 export const POST = async (req: NextRequest) => {
     const body = await req.json();
@@ -64,14 +64,6 @@ export const DELETE = async (req: NextRequest) => {
     const body = await req.json();
 
     const session = (await getServerSession(authOptions)) as Session | null;
-
-    const s3 = new S3({
-        credentials: {
-            accessKeyId: env.NEXT_PUBLIC_S3_PUBLIC,
-            secretAccessKey: env.NEXT_PUBLIC_S3_SECRET,
-        },
-        region: env.NEXT_PUBLIC_S3_REGION,
-    });
 
     const params = {
         Bucket: env.NEXT_PUBLIC_S3_BUCKET,
