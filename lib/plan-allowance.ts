@@ -16,9 +16,9 @@ export const plan = (plan: string) => {
         case 'FREE':
             return 'gpt-3.5-turbo-1106';
         case 'STANDARD':
-            return 'gpt-4-32k';
+            return 'gpt-4 turbo';
         case 'PROFESSIONAL':
-            return 'gpt-4-32k';
+            return 'gpt-4 turbo';
         default:
             return 'gpt-3.5-turbo-1106';
     }
