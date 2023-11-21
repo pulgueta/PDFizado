@@ -65,6 +65,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.47.0",
+    "resend": "^2.0.0",
     "sharp": "^0.32.6",
     "sonner": "^1.0.3",
     "tailwind-merge": "^1.14.0",

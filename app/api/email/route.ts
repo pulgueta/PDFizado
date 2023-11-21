@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { Resend } from 'resend';
+
 import { ResetPasswordEmail } from '~/components/email/email-template';
 import { env } from '~/env';
 import { emailSchema } from '~/schemas';
+
+const resend = new Resend(env.RESEND_API_KEY).emails;
 
 export const POST = async (req: NextRequest) => {
 	const body = await req.json();
@@ -16,24 +20,19 @@ export const POST = async (req: NextRequest) => {
 	const { email } = body;
 
 	try {
-		const res = await fetch('https://api.resend.com/emails', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${env.RESEND_API_KEY}`,
-			},
-			body: JSON.stringify({
-				from: 'PDFizado <onboarding@resend.dev>',
-				to: [email],
-				subject: 'PDFizado - Recuperación de contraseña',
-				html: ResetPasswordEmail({
-					resetLink: 'https://resend.dev',
-					userName: 'John',
-				}),
+		const { data, error } = await resend.send({
+			from: 'PDFizado <onboarding@resend.dev>',
+			to: [email],
+			subject: 'PDFizado - Recuperación de contraseña',
+			html: ResetPasswordEmail({
+				resetLink: 'https://resend.dev',
+				userName: 'John',
 			}),
 		});
 
-		const data = await res.json();
+		if (error) {
+			return NextResponse.json(error, { status: 500 });
+		}
 
 		return NextResponse.json(data, { status: 200 });
 	} catch (error) {
