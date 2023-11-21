@@ -1,91 +1,137 @@
-/* eslint-disable @next/next/no-img-element */
-type ResetPasswordEmailProps = {
-	user_name?: string;
-	resetPasswordLink?: string;
+import { Body } from '@react-email/body';
+import { Html } from '@react-email/html';
+import { Container } from '@react-email/container';
+import { render } from '@react-email/render';
+import { Heading } from '@react-email/heading';
+import { Head } from '@react-email/head';
+import { Font } from '@react-email/font';
+import { Img } from '@react-email/img';
+import { Text } from '@react-email/text';
+import { Link } from '@react-email/link';
+import { Hr } from '@react-email/hr';
+
+interface ResetEmailProps {
+	resetLink: string;
+	userName: string;
+}
+
+const ResetPassword = ({
+	resetLink,
+	userName = 'Usuario',
+}: ResetEmailProps) => {
+	return (
+		<Html lang='es'>
+			<Head>
+				<Font
+					fontFamily='Inter'
+					fallbackFontFamily='Verdana'
+					webFont={{
+						format: 'woff2',
+						url: 'https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap',
+					}}
+				/>
+			</Head>
+			<Body style={main}>
+				<Container style={container}>
+					<Img
+						src='https://pdfizado.s3.us-east-2.amazonaws.com/assets/icon-192x192.png'
+						width='100'
+						height='100'
+						alt='PDFizado - Logo'
+						style={{
+							borderRadius: '8px',
+							margin: '0 auto',
+						}}
+					/>
+					<Heading as='h2' style={heading}>
+						Recuperación de contraseña
+					</Heading>
+					<Hr />
+					<Text style={subHeading}>Hola, {userName}</Text>
+					<Text style={text}>
+						Se ha solicitado un cambio de contraseña para tu cuenta.
+					</Text>
+
+					<Text style={text}>
+						Haciendo click en el siguiente botón podrás cambiar tu
+						contraseña, el link expira en 24 horas.
+					</Text>
+
+					<Link href={resetLink} style={button}>
+						Click aquí
+					</Link>
+
+					<Text style={text}>
+						Si no has sido tú, puedes ignorar este correo.
+					</Text>
+					<Text style={footerCopyright}>
+						Copyright &copy; {new Date().getFullYear()} PDFizado
+					</Text>
+				</Container>
+			</Body>
+		</Html>
+	);
 };
 
-const styles = {
-	container: {
-		margin: '0 auto',
-		maxWidth: '576px',
-		borderRadius: '12px',
-		padding: '32px',
-		border: '1px solid #b3b3b3',
-		color: '#1C1917',
-	},
-	title: {
-		fontSize: '1.875rem',
-		lineHeight: '2rem',
-		fontWeight: '800',
-		letterSpacing: '-0.025em',
-	},
-	text_loose: {
-		fontSize: '1.125rem',
-		lineHeight: '2rem',
-	},
-	text_leading: {
-		fontSize: '1.125rem',
-		lineHeight: '2rem',
-	},
-	image: {
-		margin: '0 auto',
-		width: '96px',
-		height: '96px',
-		border: '1px solid #b3b3b3',
-		borderRadius: '8px',
-	},
-	button: {
-		display: 'inline-flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		borderRadius: '8px',
-		backgroundColor: '#e21d48',
-		color: '#fff',
-		fontSize: '1rem',
-		fontWeight: '400',
-		padding: '8px 16px',
-		textDecoration: 'none',
-	},
-	buttonContainer: {
-		margin: '16px 0',
-		width: '100%',
-	},
+export const ResetPasswordEmail = (props: ResetEmailProps) =>
+	render(<ResetPassword {...props} />, { pretty: true });
+
+const main = {
+	fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
+	backgroundColor: '#ffffff',
+	border: '1px solid #b3b3b3',
+	borderRadius: '8px',
+	maxWidth: '600px',
+	margin: '0 auto',
 };
 
-export const ResetPasswordEmail = ({
-	user_name,
-	resetPasswordLink,
-}: ResetPasswordEmailProps) => (
-	<div style={styles.container}>
-		<img
-			src='https://pdfizado.s3.us-east-2.amazonaws.com/assets/icon-192x192.png'
-			width={96}
-			height={96}
-			alt='PDFizado - Logo'
-			style={styles.image}
-		/>
-		<section>
-			<h1 style={styles.title}>Hola {user_name},</h1>
-			<p style={styles.text_loose}>
-				Se ha solicitado un cambio de contraseña para tu cuenta.
-			</p>
-			<p style={styles.text_leading}>
-				Haciendo click en el siguiente botón podrás cambiar tu
-				contraseña, el link expira en 24 horas.
-			</p>
-			<div style={styles.buttonContainer}>
-				<a
-					href={resetPasswordLink}
-					target='_blank'
-					style={styles.button}
-				>
-					Cambiar contraseña
-				</a>
-			</div>
-			<p style={styles.text_leading}>
-				Si no has solicitado un cambio de contraseña, puedes ignorar
-				este correo.
-			</p>
-		</section>
-	</div>
-);
+const container = {
+	margin: '0 auto',
+	padding: '24px 12px',
+	width: '600px',
+};
+
+const button = {
+	display: 'inline-flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	borderRadius: '8px',
+	backgroundColor: '#e21d48',
+	color: '#fff',
+	fontSize: '1rem',
+	fontWeight: '600',
+	padding: '8px 24px',
+	textDecoration: 'none',
+	cursor: 'pointer',
+};
+
+const heading = {
+	fontSize: '24px',
+	fontWeight: '700',
+	letterSpacing: '-0.025em',
+	lineHeight: '32px',
+	color: '#1c1917',
+};
+
+const subHeading = {
+	fontSize: '18px',
+	fontWeight: '700',
+	letterSpacing: '-0.025em',
+	lineHeight: '32px',
+	color: '#1c1917',
+};
+
+const text = {
+	fontSize: '16px',
+	fontWeight: '400',
+	letterSpacing: '0.01em',
+	lineHeight: '24px',
+	color: '#1c1917',
+};
+
+const footerCopyright = {
+	margin: '8px 0 0 0',
+	textAlign: 'center' as const,
+	fontSize: '12px',
+	color: 'rgb(102,102,102)',
+};

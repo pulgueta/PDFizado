@@ -84,6 +84,9 @@ export const ForgotPasswordForm = () => {
 											autoComplete='Correo'
 											placeholder='Tu correo registrado'
 											type='email'
+											disabled={
+												form.formState.isSubmitting
+											}
 											{...field}
 										/>
 									</FormControl>

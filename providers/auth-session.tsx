@@ -1,9 +1,9 @@
 'use client';
 
+import { PropsWithChildren } from 'react';
+
 import { SessionProvider } from 'next-auth/react';
 
-import type { Layout } from '~/types';
-
-export const AuthProvider: React.FC<Layout> = ({ children }) => (
-    <SessionProvider>{children}</SessionProvider>
+export const AuthProvider = ({ children }: PropsWithChildren) => (
+	<SessionProvider>{children}</SessionProvider>
 );
