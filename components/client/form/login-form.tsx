@@ -11,19 +11,20 @@ import { toast } from 'sonner';
 import { Loader2Icon } from 'lucide-react';
 
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
 } from '~/shadcn/form';
 import {
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from '~/shadcn/card';
 import { Input } from '~/shadcn/input';
 import { Separator } from '~/shadcn/separator';
@@ -31,112 +32,112 @@ import { Button, buttonVariants } from '~/shadcn/button';
 import { loginSchema } from '~/schemas';
 
 export const LoginForm = () => {
-    const { push } = useRouter();
+	const { push } = useRouter();
 
-    const { status } = useSession();
+	const { status } = useSession();
 
-    if (status === 'authenticated') {
-        push('/dashboard');
-    }
+	if (status === 'authenticated') {
+		push('/dashboard');
+	}
 
-    const form = useForm<z.infer<typeof loginSchema>>({
-        resolver: zodResolver(loginSchema),
-        defaultValues: {
-            email: '',
-            password: '',
-        },
-    });
+	const form = useForm<z.infer<typeof loginSchema>>({
+		resolver: zodResolver(loginSchema),
+		defaultValues: {
+			email: '',
+			password: '',
+		},
+	});
 
-    const onSubmit = form.handleSubmit(
-        async (data: z.infer<typeof loginSchema>) => {
-            const res = await signIn('credentials', {
-                email: data.email,
-                password: data.password,
-                redirect: false,
-            });
+	const onSubmit = form.handleSubmit(
+		async (data: z.infer<typeof loginSchema>) => {
+			const res = await signIn('credentials', {
+				email: data.email,
+				password: data.password,
+				redirect: false,
+			});
 
-            if (!res?.ok || res?.error === 'CredentialsSignin') {
-                toast.error('Error de autenticación', {
-                    dismissible: true,
-                    description: 'Credenciales incorrectas.',
-                });
-            } else {
-                toast.success('Inicio de sesión', {
-                    dismissible: true,
-                    description: 'Bienvenido de vuelta.',
-                });
-                push('/dashboard');
-            }
-        }
-    );
+			if (!res?.ok || res?.error === 'CredentialsSignin') {
+				toast.error('Error de autenticación', {
+					dismissible: true,
+					description: 'Credenciales incorrectas.',
+				});
+			} else {
+				toast.success('Inicio de sesión', {
+					dismissible: true,
+					description: 'Bienvenido de vuelta.',
+				});
+				push('/dashboard');
+			}
+		}
+	);
 
-    return (
-        <>
-            <CardHeader>
-                <CardTitle>Iniciar sesión</CardTitle>
-                <CardDescription>
-                    Accede a tu cuenta para iniciar a interactuar.
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Form {...form}>
-                    <form onSubmit={onSubmit} className='space-y-6'>
-                        <FormField
-                            control={form.control}
-                            name='email'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Correo electrónico</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            autoComplete='Correo'
-                                            placeholder='Tu correo registrado'
-                                            type='email'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name='password'
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Contraseña</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            autoComplete='Contraseña'
-                                            placeholder='Tu contraseña'
-                                            type='password'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button
-                            type='submit'
-                            className='w-full'
-                            disabled={form.formState.isSubmitting}
-                        >
-                            {form.formState.isSubmitting ? (
-                                <Loader2Icon className='mr-2 animate-spin' />
-                            ) : (
-                                'Iniciar sesión'
-                            )}
-                        </Button>
-                    </form>
-                </Form>
-            </CardContent>
-            {/* 
+	return (
+		<Card className='w-full md:w-[512px]'>
+			<CardHeader>
+				<CardTitle>Iniciar sesión</CardTitle>
+				<CardDescription>
+					Accede a tu cuenta para iniciar a interactuar.
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<Form {...form}>
+					<form onSubmit={onSubmit} className='space-y-6'>
+						<FormField
+							control={form.control}
+							name='email'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Correo electrónico</FormLabel>
+									<FormControl>
+										<Input
+											autoComplete='Correo'
+											placeholder='Tu correo registrado'
+											type='email'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='password'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Contraseña</FormLabel>
+									<FormControl>
+										<Input
+											autoComplete='Contraseña'
+											placeholder='Tu contraseña'
+											type='password'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button
+							type='submit'
+							className='w-full'
+							disabled={form.formState.isSubmitting}
+						>
+							{form.formState.isSubmitting ? (
+								<Loader2Icon className='mr-2 animate-spin' />
+							) : (
+								'Iniciar sesión'
+							)}
+						</Button>
+					</form>
+				</Form>
+			</CardContent>
+			{/*
                 // TODO: Implement Google Auth with next-auth
             */}
-            <CardFooter className='flex flex-col items-center justify-center'>
-                <Separator className='mb-4' />
-                {/* <Button
+			<CardFooter className='flex flex-col items-center justify-center'>
+				<Separator className='mb-4' />
+				{/* <Button
                     className='my-4 w-full'
                     variant='secondary'
                     size='lg'
@@ -169,23 +170,23 @@ export const LoginForm = () => {
                     Inicia sesión con Google
                 </Button> */}
 
-                <Link
-                    href='/forgot-password'
-                    className={buttonVariants({ variant: 'link', size: 'sm' })}
-                >
-                    Olvidé mi contraseña
-                </Link>
+				<Link
+					href='/forgot-password'
+					className={buttonVariants({ variant: 'link', size: 'sm' })}
+				>
+					Olvidé mi contraseña
+				</Link>
 
-                <span className='text-muted-foreground'>
-                    Aún no tienes cuenta?{' '}
-                    <Link
-                        href='/register'
-                        className={buttonVariants({ variant: 'link' })}
-                    >
-                        Regístrate
-                    </Link>
-                </span>
-            </CardFooter>
-        </>
-    );
+				<span className='text-muted-foreground'>
+					Aún no tienes cuenta?{' '}
+					<Link
+						href='/register'
+						className={buttonVariants({ variant: 'link' })}
+					>
+						Regístrate
+					</Link>
+				</span>
+			</CardFooter>
+		</Card>
+	);
 };

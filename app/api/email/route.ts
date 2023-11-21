@@ -1,40 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { Resend } from 'resend';
+
+import { ResetPasswordEmail } from '~/components/email/email-template';
 import { env } from '~/env';
 import { emailSchema } from '~/schemas';
 
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
+const resend = new Resend(env.RESEND_API_KEY);
 
 export const POST = async (req: NextRequest) => {
-    const body = await req.json();
+	const body = await req.json();
 
-    const validatedBody = emailSchema.safeParse(body);
+	const validatedBody = emailSchema.safeParse(body);
 
-    if (!validatedBody.success) {
-        return NextResponse.json(validatedBody.error.errors, { status: 400 });
-    }
+	if (!validatedBody.success) {
+		return NextResponse.json(validatedBody.error.errors, { status: 400 });
+	}
 
-    const { email } = body;
+	const { email } = body;
 
-    console.log(email);
+	try {
+		const { data, error } = await resend.emails.send({
+			from: 'PDFizado <onboarding@resend.dev>',
+			to: [email as string],
+			subject: 'Recuperación de contraseña',
+			react: ResetPasswordEmail({
+				resetPasswordLink: 'https://google.com',
+				user_name: 'Jhon Doe',
+			}),
+		});
 
-    const res = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        },
-        body: JSON.stringify({
-            from: 'PDFizado <onboarding@resend.dev>',
-            to: [body.email],
-            subject: 'Recuperación de contraseña',
-            html: '<strong>it works!</strong>',
-        }),
-    });
+		if (error) {
+			console.log(error);
+			return NextResponse.json(error, { status: 500 });
+		}
 
-    console.log(res);
-    const data = await res.json();
-
-    return NextResponse.json(data);
+		return NextResponse.json(data, { status: 200 });
+	} catch (error) {
+		console.log(error);
+		return NextResponse.json(error, { status: 500 });
+	}
 };
