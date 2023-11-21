@@ -121,7 +121,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 					<PaypalProvider>
 						<ReactQueryProvider>
 							<Navbar />
-							<Toaster richColors />
+							<Toaster richColors closeButton />
 							{children}
 							<Footer />
 						</ReactQueryProvider>

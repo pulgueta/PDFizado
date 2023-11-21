@@ -30,6 +30,7 @@ import { Input } from '~/shadcn/input';
 import { Separator } from '~/shadcn/separator';
 import { Button, buttonVariants } from '~/shadcn/button';
 import { loginSchema } from '~/schemas';
+import type { Login } from '~/types';
 
 export const LoginForm = () => {
 	const { push } = useRouter();
@@ -40,7 +41,7 @@ export const LoginForm = () => {
 		push('/dashboard');
 	}
 
-	const form = useForm<z.infer<typeof loginSchema>>({
+	const form = useForm<Login>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
 			email: '',

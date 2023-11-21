@@ -29,6 +29,7 @@ import {
 import { Input } from '~/shadcn/input';
 import { Button, buttonVariants } from '~/shadcn/button';
 import { registerSchema } from '~/schemas';
+import type { Register } from '~/types';
 
 export const RegisterForm = () => {
 	const { push } = useRouter();
@@ -39,7 +40,7 @@ export const RegisterForm = () => {
 		push('/dashboard');
 	}
 
-	const form = useForm<z.infer<typeof registerSchema>>({
+	const form = useForm<Register>({
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
 			email: '',

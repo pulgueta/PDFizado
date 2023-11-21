@@ -22,9 +22,10 @@ import {
 } from '~/shadcn/card';
 import { Input } from '~/shadcn/input';
 import { forgotPasswordSchema } from '~/schemas';
+import type { ForgotPassword } from '~/types';
 
 export const ForgotPasswordForm = () => {
-	const form = useForm<z.infer<typeof forgotPasswordSchema>>({
+	const form = useForm<ForgotPassword>({
 		resolver: zodResolver(forgotPasswordSchema),
 		defaultValues: {
 			email: '',
@@ -43,21 +44,23 @@ export const ForgotPasswordForm = () => {
 				}),
 			});
 
-			if (!res?.ok) {
-				toast.error('Error al enviar', {
+			if (res.status === 404 && !res.ok) {
+				toast.error('No existe el usuario', {
 					dismissible: true,
 					description:
-						'Se ha producido un error al enviar el correo, intenta de nuevo.',
+						'No hay un usuario registrado con ese correo electrónico.',
 				});
-			} else {
-				toast.success('Correo enviado', {
-					dismissible: true,
-					description:
-						'Se ha enviado el correo de recuperación, revisa tu bandeja de entrada.',
-				});
-				form.clearErrors();
-				form.reset();
+
+				return;
 			}
+
+			toast.success('Correo enviado', {
+				dismissible: true,
+				description:
+					'Se ha enviado el correo de recuperación, revisa tu bandeja de entrada.',
+			});
+			form.clearErrors();
+			form.reset();
 		}
 	);
 
