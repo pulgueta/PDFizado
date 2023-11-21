@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
 			from: 'PDFizado <onboarding@resend.dev>',
 			to: [email],
 			subject: 'PDFizado - Recuperación de contraseña',
-			html: ResetPasswordEmail({
+			react: ResetPasswordEmail({
 				resetLink: 'https://resend.dev',
 				userName: 'John',
 			}),
