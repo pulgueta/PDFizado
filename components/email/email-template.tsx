@@ -1,7 +1,6 @@
 import { Body } from '@react-email/body';
 import { Html } from '@react-email/html';
 import { Container } from '@react-email/container';
-import { render } from '@react-email/render';
 import { Heading } from '@react-email/heading';
 import { Head } from '@react-email/head';
 import { Font } from '@react-email/font';
@@ -15,7 +14,7 @@ interface ResetEmailProps {
 	userName: string;
 }
 
-const ResetPassword = ({
+export const ResetPasswordEmail = ({
 	resetLink,
 	userName = 'Usuario',
 }: ResetEmailProps) => {
@@ -72,9 +71,6 @@ const ResetPassword = ({
 		</Html>
 	);
 };
-
-export const ResetPasswordEmail = (props: ResetEmailProps) =>
-	render(<ResetPassword {...props} />, { pretty: true });
 
 const main = {
 	fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
