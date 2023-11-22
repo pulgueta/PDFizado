@@ -37,9 +37,7 @@ export const POST = async (req: NextRequest) => {
 	}
 
 	const { token } = await fetch(
-		process.env.NODE_ENV === 'development'
-			? `http://localhost:3000/api/email/forgot-password/token/${isUserCreated.id}`
-			: `${process.env.VERCEL_URL}/api/email/forgot-password/token/${isUserCreated.id}`,
+		`http://localhost:3000/api/email/forgot-password/token/${isUserCreated.id}`,
 		{
 			method: 'POST',
 			body: JSON.stringify({ id: isUserCreated.id }),
