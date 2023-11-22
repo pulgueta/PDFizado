@@ -50,7 +50,7 @@ export const RegisterForm = () => {
 		},
 	});
 
-	const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+	const onSubmit = async (data: Register) => {
 		try {
 			const fetch_res = await fetch('/api/register', {
 				method: 'POST',
@@ -187,7 +187,7 @@ export const RegisterForm = () => {
 							disabled={form.formState.isSubmitting}
 						>
 							{form.formState.isSubmitting ? (
-								<Loader2Icon className='mr-2 animate-spin' />
+								<Loader2Icon className='animate-spin' />
 							) : (
 								'Registrarme'
 							)}

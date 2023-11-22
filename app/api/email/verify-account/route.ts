@@ -40,7 +40,7 @@ export const POST = async (req: NextRequest) => {
 
 	try {
 		const { data, error } = await resend.send({
-			from: 'PDFizado <onboarding@resend.dev>',
+			from: 'PDFizado <no-reply@pdfizado.com>',
 			to: [isUserCreated.email ?? ''],
 			subject: 'PDFizado - Recuperación de contraseña',
 			react: ResetPasswordEmail({

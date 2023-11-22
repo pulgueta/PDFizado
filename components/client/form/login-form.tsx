@@ -49,28 +49,26 @@ export const LoginForm = () => {
 		},
 	});
 
-	const onSubmit = form.handleSubmit(
-		async (data: z.infer<typeof loginSchema>) => {
-			const res = await signIn('credentials', {
-				email: data.email,
-				password: data.password,
-				redirect: false,
-			});
+	const onSubmit = form.handleSubmit(async (data: Login) => {
+		const res = await signIn('credentials', {
+			email: data.email,
+			password: data.password,
+			redirect: false,
+		});
 
-			if (!res?.ok || res?.error === 'CredentialsSignin') {
-				toast.error('Error de autenticación', {
-					dismissible: true,
-					description: 'Credenciales incorrectas.',
-				});
-			} else {
-				toast.success('Inicio de sesión', {
-					dismissible: true,
-					description: 'Bienvenido de vuelta.',
-				});
-				push('/dashboard');
-			}
+		if (!res?.ok || res?.error === 'CredentialsSignin') {
+			toast.error('Error de autenticación', {
+				dismissible: true,
+				description: 'Credenciales incorrectas.',
+			});
+		} else {
+			toast.success('Inicio de sesión', {
+				dismissible: true,
+				description: 'Bienvenido de vuelta.',
+			});
+			push('/dashboard');
 		}
-	);
+	});
 
 	return (
 		<Card className='w-full md:w-[512px]'>
@@ -125,7 +123,7 @@ export const LoginForm = () => {
 							disabled={form.formState.isSubmitting}
 						>
 							{form.formState.isSubmitting ? (
-								<Loader2Icon className='mr-2 animate-spin' />
+								<Loader2Icon className='animate-spin' />
 							) : (
 								'Iniciar sesión'
 							)}

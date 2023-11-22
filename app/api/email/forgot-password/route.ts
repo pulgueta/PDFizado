@@ -36,6 +36,15 @@ export const POST = async (req: NextRequest) => {
 		);
 	}
 
+	if (!isUserCreated.emailVerified) {
+		return NextResponse.json(
+			{
+				message: 'Email is not verified',
+			},
+			{ status: 401 }
+		);
+	}
+
 	const { token } = await fetch(
 		process.env.NODE_ENV === 'development'
 			? `http://localhost:3000/api/email/forgot-password/token/${isUserCreated.id}`
@@ -48,7 +57,7 @@ export const POST = async (req: NextRequest) => {
 
 	try {
 		const { data, error } = await resend.emails.send({
-			from: 'PDFizado <pdfizado@pdfizado.com>',
+			from: 'PDFizado <no-reply@pdfizado.com>',
 			to: [isUserCreated.email ?? ''],
 			subject: 'PDFizado - Recuperación de contraseña',
 			react: ResetPasswordEmail({

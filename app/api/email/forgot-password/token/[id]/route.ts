@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
 	const { token } = await db.verificationToken.create({
 		data: {
 			token: crypto.randomUUID().toString(),
-			expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+			expires: new Date(Date.now() + 15 * 60 * 1000),
 			identifier: `token_requested_by_${id}`,
 		},
 	});

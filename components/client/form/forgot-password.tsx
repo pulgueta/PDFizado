@@ -34,47 +34,55 @@ export const ForgotPasswordForm = () => {
 		},
 	});
 
-	const onSubmit = form.handleSubmit(
-		async ({ email }: z.infer<typeof forgotPasswordSchema>) => {
-			const res = await fetch('/api/email/forgot-password', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email,
-				}),
-			});
+	const onSubmit = form.handleSubmit(async ({ email }: ForgotPassword) => {
+		const res = await fetch('/api/email/forgot-password', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email,
+			}),
+		});
 
-			if (res.status === 404 && !res.ok) {
-				toast.error('No existe el usuario', {
-					dismissible: true,
-					description:
-						'No hay un usuario registrado con ese correo electrónico.',
-				});
-
-				return;
-			}
-
-			if (res.status === 500 && !res.ok) {
-				toast.error('Error', {
-					dismissible: true,
-					description:
-						'Ocurrió un error al enviar el correo de recuperación.',
-				});
-
-				return;
-			}
-
-			toast.success('Correo enviado', {
+		if (res.status === 404 && !res.ok) {
+			toast.error('No existe el usuario', {
 				dismissible: true,
 				description:
-					'Se ha enviado el correo de recuperación, revisa tu bandeja de entrada.',
+					'No hay un usuario registrado con ese correo electrónico.',
 			});
-			form.clearErrors();
-			form.reset();
+
+			return;
 		}
-	);
+
+		if (res.status === 401 && !res.ok) {
+			toast.error('Usuario no verificado', {
+				dismissible: true,
+				description:
+					'Debes verificar tu correo electrónico para poder cambiar tu contraseña.',
+			});
+
+			return;
+		}
+
+		if (res.status === 500 && !res.ok) {
+			toast.error('Error', {
+				dismissible: true,
+				description:
+					'Ocurrió un error al enviar el correo de recuperación.',
+			});
+
+			return;
+		}
+
+		toast.success('Correo enviado', {
+			dismissible: true,
+			description:
+				'Se ha enviado el correo de recuperación, revisa tu bandeja de entrada.',
+		});
+		form.clearErrors();
+		form.reset();
+	});
 
 	return (
 		<Card className='max-w-md'>

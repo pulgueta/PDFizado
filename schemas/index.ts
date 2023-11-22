@@ -42,3 +42,17 @@ export const forgotPasswordSchema = z.object({
 		.min(6, 'El email debe tener al menos 6 caracteres')
 		.email({ message: 'Debes ingresar un email válido' }),
 });
+
+export const resetSchema = z
+	.object({
+		password: z
+			.string()
+			.min(6, 'La contraseña debe ser de al menos 6 caracteres.'),
+		confirmPassword: z
+			.string()
+			.min(6, 'La contraseña debe ser de al menos 6 caracteres.'),
+	})
+	.refine(({ password, confirmPassword }) => password === confirmPassword, {
+		message: 'Las contraseñas deben coincidir',
+		path: ['confirmPassword'],
+	});

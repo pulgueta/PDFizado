@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { forgotPasswordSchema, loginSchema, registerSchema } from '~/schemas';
+import {
+	forgotPasswordSchema,
+	loginSchema,
+	registerSchema,
+	resetSchema,
+} from '~/schemas';
 
 export type NavbarRoutes = {
 	href: string;
@@ -16,3 +21,5 @@ export type Register = z.infer<typeof registerSchema>;
 export type Login = z.infer<typeof loginSchema>;
 
 export type ForgotPassword = z.infer<typeof forgotPasswordSchema>;
+
+export type ResetPassword = z.infer<typeof resetSchema>;
