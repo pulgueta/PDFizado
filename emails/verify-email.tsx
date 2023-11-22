@@ -68,7 +68,7 @@ export default function VerifyEmailTemplate({ resetLink }: VerifyEmailProps) {
 						}}
 					>
 						<Link
-							href='https://pdfizado.vercel.app/dashboard'
+							href='https://www.pdfizado.com/dashboard'
 							style={{
 								color: '#e21d48',
 								fontWeight: 'semibold',
@@ -79,7 +79,7 @@ export default function VerifyEmailTemplate({ resetLink }: VerifyEmailProps) {
 						</Link>{' '}
 						•{' '}
 						<Link
-							href='https://pdfizado.vercel.app/terms-of-service'
+							href='https://www.pdfizado.com/terms-of-service'
 							style={{
 								color: '#e21d48',
 								fontWeight: 'semibold',

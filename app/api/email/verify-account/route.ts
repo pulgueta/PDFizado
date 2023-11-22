@@ -47,7 +47,7 @@ export const POST = async (req: NextRequest) => {
 				resetLink:
 					process.env.NODE_ENV === 'development'
 						? `http://localhost:3000/reset-password?token=${token}`
-						: `https://pdfizado.vercel.app/reset-password?token=${token}`,
+						: `https://www.pdfizado.com/reset-password?token=${token}`,
 				username: isUserCreated.name ?? '',
 			}),
 		});

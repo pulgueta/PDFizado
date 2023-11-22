@@ -39,7 +39,7 @@ export const POST = async (req: NextRequest) => {
 	const { token } = await fetch(
 		process.env.NODE_ENV === 'development'
 			? `http://localhost:3000/api/email/forgot-password/token/${isUserCreated.id}`
-			: `https://pdfizado.vercel.app/api/email/forgot-password/token/${isUserCreated.id}`,
+			: `https://www.pdfizado.com/api/email/forgot-password/token/${isUserCreated.id}`,
 		{
 			method: 'POST',
 			body: JSON.stringify({ id: isUserCreated.id }),
@@ -55,7 +55,7 @@ export const POST = async (req: NextRequest) => {
 				resetLink:
 					process.env.NODE_ENV === 'development'
 						? `http://localhost:3000/reset-password?token=${token}`
-						: `https://pdfizado.vercel.app/reset-password?token=${token}`,
+						: `https://www.pdfizado.com/reset-password?token=${token}`,
 				username: isUserCreated.name ?? '',
 			}),
 		});

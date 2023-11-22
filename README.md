@@ -5,11 +5,11 @@
 
 ## Una aplicación para facilitar tu estudio
 
-Con [**PDFizado**](https://pdfizado.vercel.app) podrás interactuar mediante un chat con una IA para extraer la información que sea de tu interés y hacer mucho más fácil tu estudio simplemente preguntando lo que requieras en específico y recibirás una respuesta concisa con justo lo que preguntaste.
+Con [**PDFizado**](https://www.pdfizado.com) podrás interactuar mediante un chat con una IA para extraer la información que sea de tu interés y hacer mucho más fácil tu estudio simplemente preguntando lo que requieras en específico y recibirás una respuesta concisa con justo lo que preguntaste.
 
 ### Planes
 
-Existen 3 planes disponibles para poder utilizar [**PDFizado**](https://pdfizado.vercel.app):
+Existen 3 planes disponibles para poder utilizar [**PDFizado**](https://www.pdfizado.com):
 
 1. Gratis
 2. $25.000,00\*
