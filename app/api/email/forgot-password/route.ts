@@ -10,8 +10,6 @@ import { emailSchema } from '~/schemas';
 
 const resend = new Resend(env.RESEND_API_KEY);
 
-resend.domains.create({ name: 'pdfizado.com' });
-
 export const POST = async (req: NextRequest) => {
 	const body = await req.json();
 
@@ -50,7 +48,7 @@ export const POST = async (req: NextRequest) => {
 
 	try {
 		const { data, error } = await resend.emails.send({
-			from: 'PDFizado <onboarding@resend.dev>',
+			from: 'PDFizado <pdfizado@pdfizado.com>',
 			to: [isUserCreated.email ?? ''],
 			subject: 'PDFizado - Recuperación de contraseña',
 			react: ResetPasswordEmail({
