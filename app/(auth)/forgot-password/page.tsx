@@ -1,18 +1,15 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import { useRouter } from 'next/navigation';
-
-import { useSession } from 'next-auth/react';
+import { Session, getServerSession } from 'next-auth';
 
 import { ForgotPasswordForm } from '~/components/client/form/forgot-password';
+import { authOptions } from '~/lib/auth';
 
-const ForgotPassword = () => {
-	const { push } = useRouter();
+const ForgotPassword = async () => {
+	const session = (await getServerSession(authOptions)) as Session | null;
 
-	const { status } = useSession();
-
-	if (status === 'authenticated') {
-		push('/dashboard');
+	if (session) {
+		redirect('/dashboard');
 	}
 
 	return (
@@ -21,4 +18,5 @@ const ForgotPassword = () => {
 		</section>
 	);
 };
+
 export default ForgotPassword;

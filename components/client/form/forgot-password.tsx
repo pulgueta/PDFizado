@@ -1,3 +1,5 @@
+'use client';
+
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,7 +36,7 @@ export const ForgotPasswordForm = () => {
 
 	const onSubmit = form.handleSubmit(
 		async ({ email }: z.infer<typeof forgotPasswordSchema>) => {
-			const res = await fetch('/api/email', {
+			const res = await fetch('/api/email/forgot-password', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
