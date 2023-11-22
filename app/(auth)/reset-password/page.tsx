@@ -12,11 +12,19 @@ type ResetToken = {
 };
 
 const ResetPassword = async ({ searchParams }: ResetToken) => {
+	if (!searchParams.token) {
+		return <NoTokenProvided />;
+	}
+
 	const dbToken = await db.verificationToken.findUnique({
 		where: {
 			token: searchParams.token,
 		},
 	});
+
+	if (!dbToken) {
+		return <InvalidToken />;
+	}
 
 	const isTokenExpired =
 		dbToken?.expires.toISOString()! < new Date().toISOString();
@@ -61,3 +69,37 @@ const ResetPassword = async ({ searchParams }: ResetToken) => {
 };
 
 export default ResetPassword;
+
+const NoTokenProvided = () => (
+	<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
+			No se ha proporcionado un token
+		</h1>
+		<h3 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
+			Necesitas un token válido para reestablecer tu contraseña.
+		</h3>
+		<Link
+			className={buttonVariants({ variant: 'link' })}
+			href='/forgot-password'
+		>
+			Recuperar contraseña
+		</Link>
+	</section>
+);
+
+const InvalidToken = () => (
+	<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
+			No es un token válido
+		</h1>
+		<h3 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
+			Necesitas un token válido para reestablecer tu contraseña.
+		</h3>
+		<Link
+			className={buttonVariants({ variant: 'link' })}
+			href='/forgot-password'
+		>
+			Recuperar contraseña
+		</Link>
+	</section>
+);

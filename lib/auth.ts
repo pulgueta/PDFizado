@@ -9,31 +9,31 @@ import { db } from '~/database/db';
 import { env } from '~/env';
 
 declare module 'next-auth' {
-    // eslint-disable-next-line no-unused-vars
-    interface Session extends DefaultSession {
-        user: {
-            id: string;
-            name: string;
-            email: string;
-            emailVerified: boolean;
-            plan: string;
-            mercadopagoCustomerId: string;
-            mercadopagoSubscriptionId: string;
-            mercadopagoPriceId: string;
-            mercadopagoCurrentPeriodEnd: string;
-            paypalCustomerId: string;
-            paypalSubscriptionId: string;
-            paypalPriceId: string;
-            paypalCurrentPeriodEnd: string;
-        } & DefaultSession['user'];
-    }
+	// eslint-disable-next-line no-unused-vars
+	interface Session extends DefaultSession {
+		user: {
+			id: string;
+			name: string;
+			email: string;
+			emailVerified: boolean;
+			plan: string;
+			mercadopagoCustomerId: string;
+			mercadopagoSubscriptionId: string;
+			mercadopagoPriceId: string;
+			mercadopagoCurrentPeriodEnd: string;
+			paypalCustomerId: string;
+			paypalSubscriptionId: string;
+			paypalPriceId: string;
+			paypalCurrentPeriodEnd: string;
+		} & DefaultSession['user'];
+	}
 }
 
 declare module 'next-auth/jwt' {
-    // eslint-disable-next-line no-unused-vars
-    interface JWT {
-        id: string;
-    }
+	// eslint-disable-next-line no-unused-vars
+	interface JWT {
+		id: string;
+	}
 }
 
 // const oAuthUser = async (email: string, OAuthName: string) => {
@@ -62,156 +62,158 @@ declare module 'next-auth/jwt' {
 // };
 
 export const authOptions: NextAuthOptions = {
-    adapter: PrismaAdapter(db),
-    providers: [
-        // TODO: Properly set up Google Auth with email.
-        // Google({
-        //     clientId: env.GOOGLE_PUBLIC_ID,
-        //     clientSecret: env.GOOGLE_SECRET_ID,
-        // }),
-        Credentials({
-            name: 'Credentials',
-            credentials: {
-                email: {
-                    label: 'Email',
-                    type: 'email',
-                    placeholder: 'Tu email',
-                    value: '',
-                },
-                password: {
-                    label: 'Contraseña',
-                    type: 'password',
-                    placeholder: 'Tu contraseña',
-                    value: '',
-                },
-            },
-            async authorize(
-                credentials: Record<'email' | 'password', string> | undefined
-            ) {
-                const user = (await db.user.findUnique({
-                    where: {
-                        email: credentials?.email,
-                    },
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        password: true,
-                        emailVerified: true,
-                        plan: true,
-                        mercadopagoCustomerId: true,
-                        mercadopagoSubscriptionId: true,
-                        mercadopagoPriceId: true,
-                        mercadopagoCurrentPeriodEnd: true,
-                        paypalCustomerId: true,
-                        paypalSubscriptionId: true,
-                        paypalPriceId: true,
-                        paypalCurrentPeriodEnd: true,
-                    },
-                })) as PrismaUser;
+	adapter: PrismaAdapter(db),
+	providers: [
+		// TODO: Properly set up Google Auth with email.
+		// Google({
+		//     clientId: env.GOOGLE_PUBLIC_ID,
+		//     clientSecret: env.GOOGLE_SECRET_ID,
+		// }),
+		Credentials({
+			name: 'Credentials',
+			credentials: {
+				email: {
+					label: 'Email',
+					type: 'email',
+					placeholder: 'Tu email',
+					value: '',
+				},
+				password: {
+					label: 'Contraseña',
+					type: 'password',
+					placeholder: 'Tu contraseña',
+					value: '',
+				},
+			},
+			async authorize(
+				credentials: Record<'email' | 'password', string> | undefined
+			) {
+				const user = (await db.user.findUnique({
+					where: {
+						email: credentials?.email,
+					},
+					select: {
+						id: true,
+						name: true,
+						email: true,
+						password: true,
+						emailVerified: true,
+						plan: true,
+						mercadopagoCustomerId: true,
+						mercadopagoSubscriptionId: true,
+						mercadopagoPriceId: true,
+						mercadopagoCurrentPeriodEnd: true,
+						paypalCustomerId: true,
+						paypalSubscriptionId: true,
+						paypalPriceId: true,
+						paypalCurrentPeriodEnd: true,
+					},
+				})) as PrismaUser;
 
-                if (!user) throw new Error('User not found');
+				if (!user) throw new Error('User not found');
 
-                const valid = await compare(
-                    credentials?.password as string,
-                    user.password
-                );
+				if (!user.emailVerified) throw new Error('Email not verified');
 
-                if (!valid) throw new Error('Invalid password');
+				const valid = await compare(
+					credentials?.password as string,
+					user.password
+				);
 
-                return user as PrismaUser;
-            },
-        }),
-    ],
-    session: {
-        strategy: 'jwt',
-        maxAge: 60 * 60 * 24 * 30,
-        updateAge: 60 * 60 * 24,
-    },
-    callbacks: {
-        async jwt({ token, user, account }) {
-            if (account) {
-                token.accessToken = account.accessToken;
-            }
+				if (!valid) throw new Error('Invalid password');
 
-            switch (account?.type) {
-                case 'credentials':
-                    token.user = user;
-                    break;
-                // case 'oauth':
-                //     token.user = await oAuthUser(
-                //         account.email as string,
-                //         account.name as string
-                //     );
-                //     break;
-            }
+				return user as PrismaUser;
+			},
+		}),
+	],
+	session: {
+		strategy: 'jwt',
+		maxAge: 60 * 60 * 24 * 30,
+		updateAge: 60 * 60 * 24,
+	},
+	callbacks: {
+		async jwt({ token, user, account }) {
+			if (account) {
+				token.accessToken = account.accessToken;
+			}
 
-            return token;
-        },
-        async session({ session, token }) {
-            session.user = token.user as any;
+			switch (account?.type) {
+				case 'credentials':
+					token.user = user;
+					break;
+				// case 'oauth':
+				//     token.user = await oAuthUser(
+				//         account.email as string,
+				//         account.name as string
+				//     );
+				//     break;
+			}
 
-            return session;
-        },
-    },
-    secret: env.NEXTAUTH_SECRET,
-    pages: {
-        signIn: '/login',
-        newUser: '/register',
-    },
-    debug: process.env.NODE_ENV === 'development',
-    jwt: {
-        maxAge: 60 * 60 * 24 * 30,
-    },
-    useSecureCookies: process.env.NODE_ENV === 'production',
-    cookies: {
-        sessionToken: {
-            name: 'next-auth.session-token',
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-            },
-        },
-        callbackUrl: {
-            name: 'next-auth.callback-url',
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-            },
-        },
-        csrfToken: {
-            name: 'next-auth.csrf-token',
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-            },
-        },
-        nonce: {
-            name: 'next-auth.nonce',
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-            },
-        },
-        pkceCodeVerifier: {
-            name: 'next-auth.pkce.code_verifier',
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-            },
-        },
-        state: {
-            name: 'next-auth.state',
-            options: {
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-            },
-        },
-    },
+			return token;
+		},
+		async session({ session, token }) {
+			session.user = token.user as any;
+
+			return session;
+		},
+	},
+	secret: env.NEXTAUTH_SECRET,
+	pages: {
+		signIn: '/login',
+		newUser: '/register',
+	},
+	debug: process.env.NODE_ENV === 'development',
+	jwt: {
+		maxAge: 60 * 60 * 24 * 30,
+	},
+	useSecureCookies: process.env.NODE_ENV === 'production',
+	cookies: {
+		sessionToken: {
+			name: 'next-auth.session-token',
+			options: {
+				sameSite: 'lax',
+				path: '/',
+				secure: process.env.NODE_ENV === 'production',
+			},
+		},
+		callbackUrl: {
+			name: 'next-auth.callback-url',
+			options: {
+				sameSite: 'lax',
+				path: '/',
+				secure: process.env.NODE_ENV === 'production',
+			},
+		},
+		csrfToken: {
+			name: 'next-auth.csrf-token',
+			options: {
+				sameSite: 'lax',
+				path: '/',
+				secure: process.env.NODE_ENV === 'production',
+			},
+		},
+		nonce: {
+			name: 'next-auth.nonce',
+			options: {
+				sameSite: 'lax',
+				path: '/',
+				secure: process.env.NODE_ENV === 'production',
+			},
+		},
+		pkceCodeVerifier: {
+			name: 'next-auth.pkce.code_verifier',
+			options: {
+				sameSite: 'lax',
+				path: '/',
+				secure: process.env.NODE_ENV === 'production',
+			},
+		},
+		state: {
+			name: 'next-auth.state',
+			options: {
+				sameSite: 'lax',
+				path: '/',
+				secure: process.env.NODE_ENV === 'production',
+			},
+		},
+	},
 } satisfies NextAuthOptions;

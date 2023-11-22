@@ -55,12 +55,26 @@ export const LoginForm = () => {
 			redirect: false,
 		});
 
+		if (res?.status === 401 && res.error === 'Email not verified') {
+			toast.error('Error de autenticación', {
+				dismissible: true,
+				description:
+					'Debes verificar tu correo antes de iniciar sesión.',
+			});
+
+			return;
+		}
+
 		if (!res?.ok || res?.error === 'CredentialsSignin') {
 			toast.error('Error de autenticación', {
 				dismissible: true,
 				description: 'Credenciales incorrectas.',
 			});
-		} else {
+
+			return;
+		}
+
+		if (res?.ok) {
 			toast.success('Inicio de sesión', {
 				dismissible: true,
 				description: 'Bienvenido de vuelta.',

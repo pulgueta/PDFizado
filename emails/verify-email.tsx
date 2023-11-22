@@ -11,10 +11,10 @@ import { Hr } from '@react-email/hr';
 import { Section } from '@react-email/section';
 
 interface VerifyEmailProps {
-	resetLink: string;
+	link: string;
 }
 
-export default function VerifyEmailTemplate({ resetLink }: VerifyEmailProps) {
+export default function VerifyEmailTemplate({ link }: VerifyEmailProps) {
 	return (
 		<Html lang='es'>
 			<Head>
@@ -49,7 +49,7 @@ export default function VerifyEmailTemplate({ resetLink }: VerifyEmailProps) {
 						haciendo click en el siguiente botón.
 					</Text>
 
-					<Link href={resetLink} style={styles.button}>
+					<Link href={link} style={styles.button}>
 						Click aquí
 					</Link>
 

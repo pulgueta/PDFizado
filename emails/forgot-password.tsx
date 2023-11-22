@@ -8,6 +8,7 @@ import { Img } from '@react-email/img';
 import { Text } from '@react-email/text';
 import { Link } from '@react-email/link';
 import { Hr } from '@react-email/hr';
+import { Section } from '@react-email/section';
 
 interface ResetEmailProps {
 	resetLink: string;
@@ -65,9 +66,20 @@ export function ResetPasswordEmail({ resetLink, username }: ResetEmailProps) {
 
 					<Text style={styles.text}>Atentamente,</Text>
 					<Text style={styles.text}>El equipo de PDFizado</Text>
-					<div style={styles.footer}>
+					<Section
+						style={{
+							display: 'flex',
+							width: '100%',
+							alignItems: 'center',
+							justifyContent: 'center',
+							gap: '0.5rem',
+							color: '#e21d48',
+							fontSize: '12px',
+							margin: '1.6rem 0',
+						}}
+					>
 						<Link
-							href='https://pdfizado.com'
+							href='https://www.pdfizado.com/dashboard'
 							style={{
 								color: '#e21d48',
 								fontWeight: 'semibold',
@@ -75,10 +87,10 @@ export function ResetPasswordEmail({ resetLink, username }: ResetEmailProps) {
 							}}
 						>
 							Dashboard
-						</Link>
-						•
+						</Link>{' '}
+						•{' '}
 						<Link
-							href='https://pdfizado.com'
+							href='https://www.pdfizado.com/terms-of-service'
 							style={{
 								color: '#e21d48',
 								fontWeight: 'semibold',
@@ -87,7 +99,7 @@ export function ResetPasswordEmail({ resetLink, username }: ResetEmailProps) {
 						>
 							Términos y condiciones
 						</Link>
-					</div>
+					</Section>
 					<Text style={styles.footerCopyright}>
 						Copyright &copy; {new Date().getFullYear()} PDFizado
 					</Text>

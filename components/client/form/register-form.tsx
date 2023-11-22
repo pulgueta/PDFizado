@@ -68,12 +68,16 @@ export const RegisterForm = () => {
 				return;
 			}
 
-			toast.success('Cuenta creada, ahora debes iniciar sesión', {
-				duration: 1500,
-				dismissible: true,
-				important: true,
-			});
-			push('/login');
+			toast.success(
+				'Cuenta creada, te hemos enviado un correo de verificación',
+				{
+					duration: 1500,
+					dismissible: true,
+					important: true,
+				}
+			);
+			form.reset();
+			form.clearErrors();
 		} catch (error) {
 			toast.error('Ocurrió un error inesperado');
 		}
