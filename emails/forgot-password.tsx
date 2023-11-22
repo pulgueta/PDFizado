@@ -43,14 +43,16 @@ export function ResetPasswordEmail({ resetLink, username }: ResetEmailProps) {
 						Recuperación de contraseña
 					</Heading>
 					<Hr />
-					<Text style={styles.subHeading}>Estimado {username}</Text>
+					<Text style={styles.subHeading}>
+						Estimado(a) {username}
+					</Text>
 					<Text style={styles.text}>
 						Se ha solicitado un cambio de contraseña para tu cuenta.
 					</Text>
 
 					<Text style={styles.text}>
 						Haciendo click en el siguiente botón podrás cambiar tu
-						contraseña, el link expira en 24 horas.
+						contraseña, el link expira en 15 minutos.
 					</Text>
 
 					<Link href={resetLink} style={styles.button}>
