@@ -1,7 +1,6 @@
 'use client';
 
 import { toast } from 'sonner';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
