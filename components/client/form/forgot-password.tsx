@@ -56,6 +56,16 @@ export const ForgotPasswordForm = () => {
 				return;
 			}
 
+			if (res.status === 500 && !res.ok) {
+				toast.error('Error', {
+					dismissible: true,
+					description:
+						'Ocurrió un error al enviar el correo de recuperación.',
+				});
+
+				return;
+			}
+
 			toast.success('Correo enviado', {
 				dismissible: true,
 				description:
