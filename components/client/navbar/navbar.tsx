@@ -18,7 +18,7 @@ import { Button } from '~/shadcn/button';
 import { Skeleton } from '~/shadcn/skeleton';
 import { authRoutes, noAuthRoutes } from '~/constants/navbar';
 
-const Navbar = () => {
+export const Navbar = () => {
 	const { status, data } = useSession();
 
 	return (
@@ -137,4 +137,3 @@ const Navbar = () => {
 		</nav>
 	);
 };
-export default Navbar;

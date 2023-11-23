@@ -8,10 +8,9 @@ import { Toaster } from 'sonner';
 
 import { ThemeProvider } from '~/providers/theme-provider';
 import { AuthProvider } from '~/providers/auth-session';
-import { PaypalProvider } from '~/providers/paypal-provider';
-import ReactQueryProvider from '~/providers/tanstack-provider';
-import Navbar from '~/components/client/navbar/navbar';
-import Footer from '~/components/server/footer/footer';
+import { ReactQueryProvider } from '~/providers/tanstack-provider';
+import { Navbar } from '~/components/client/navbar/navbar';
+import { Footer } from '~/components/server/footer/footer';
 
 import '@radix-ui/themes/styles.css';
 import '~/app/globals.css';
@@ -122,14 +121,12 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 		<body className={GeistSans.className}>
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<AuthProvider>
-					<PaypalProvider>
-						<ReactQueryProvider>
-							<Navbar />
-							<Toaster richColors closeButton />
-							{children}
-							<Footer />
-						</ReactQueryProvider>
-					</PaypalProvider>
+					<ReactQueryProvider>
+						<Navbar />
+						<Toaster richColors closeButton />
+						{children}
+						<Footer />
+					</ReactQueryProvider>
 				</AuthProvider>
 			</ThemeProvider>
 			<Analytics />
