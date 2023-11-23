@@ -82,26 +82,10 @@ export const {
 					value: '',
 				},
 			},
-			authorize: async (credentials: any) => {
+			authorize: async (credentials) => {
 				const user = (await db.user.findUnique({
 					where: {
-						email: credentials?.email,
-					},
-					select: {
-						id: true,
-						name: true,
-						email: true,
-						password: true,
-						emailVerified: true,
-						plan: true,
-						mercadopagoCustomerId: true,
-						mercadopagoSubscriptionId: true,
-						mercadopagoPriceId: true,
-						mercadopagoCurrentPeriodEnd: true,
-						paypalCustomerId: true,
-						paypalSubscriptionId: true,
-						paypalPriceId: true,
-						paypalCurrentPeriodEnd: true,
+						email: credentials.email as string,
 					},
 				})) as PrismaUser;
 
@@ -110,8 +94,8 @@ export const {
 				if (!user.emailVerified) throw new Error('Email not verified');
 
 				const valid = await verify(
-					credentials?.password as string,
-					user.password
+					user.password,
+					credentials?.password as string
 				);
 
 				if (!valid) throw new Error('Invalid password');

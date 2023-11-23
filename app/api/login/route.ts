@@ -7,9 +7,6 @@ import { db } from '~/database/db';
 import { loginSchema } from '~/schemas';
 
 export const POST = async (req: NextRequest) => {
-	if (req.method !== 'POST')
-		return NextResponse.json('Method not allowed', { status: 405 });
-
 	const body = await req.json();
 	const validatedBody = loginSchema.safeParse(body);
 
@@ -17,20 +14,23 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.json(validatedBody.error.errors, { status: 400 });
 	}
 
-	const { email, password } = body;
+	const { email, password } = validatedBody.data;
 
-	const { password: userPassword, ...rest } = (await db.user.findUnique({
+	const user = (await db.user.findUnique({
 		where: {
 			email,
 		},
+		select: {
+			password: false,
+		},
 	})) as User;
 
-	if (!rest.emailVerified) {
+	if (!user.emailVerified) {
 		return NextResponse.json('Email not verified', { status: 401 });
 	}
 
-	if (rest && (await verify(password, userPassword))) {
-		return NextResponse.json(rest, { status: 200 });
+	if (user && (await verify(user.password, password))) {
+		return NextResponse.json(user, { status: 200 });
 	} else {
 		return NextResponse.json('Invalid credentials', { status: 401 });
 	}

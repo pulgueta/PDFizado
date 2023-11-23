@@ -32,7 +32,7 @@ import { loginSchema } from '~/schemas';
 import type { Login } from '~/types';
 
 export const LoginForm = () => {
-	const { push } = useRouter();
+	const { push, refresh } = useRouter();
 
 	const { status } = useSession();
 
@@ -76,6 +76,7 @@ export const LoginForm = () => {
 			toast.success('Inicio de sesión', {
 				description: 'Bienvenido de vuelta.',
 			});
+			refresh();
 			push('/dashboard');
 		}
 	});
