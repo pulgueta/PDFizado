@@ -40,7 +40,9 @@ export const metadata: Metadata = {
 		description:
 			'Una aplicación para interactuar con el contenido de tus archivos PDF y poder hacer tu estudio más sencillo.',
 		url: `http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
-			process.env.VERCEL_URL ?? 'localhost:3000'
+			process.env.NODE_ENV === 'production'
+				? 'pdfizado.com'
+				: 'localhost:3000'
 		}`,
 		countryName: 'Colombia',
 		locale: 'es_CO',
@@ -54,7 +56,9 @@ export const metadata: Metadata = {
 	},
 	metadataBase: new URL(
 		`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
-			process.env.VERCEL_URL ?? 'localhost:3000'
+			process.env.NODE_ENV === 'production'
+				? 'pdfizado.com'
+				: 'localhost:3000'
 		}`
 	),
 	alternates: {

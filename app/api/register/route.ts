@@ -32,14 +32,18 @@ export const POST = async (req: NextRequest) => {
 		if (userExists)
 			return new NextResponse('Email is already in use', { status: 400 });
 
-		const hashedPassword = await hash(password, 12);
+		const hashedPassword = await hash(password, 14);
 
 		// eslint-disable-next-line no-unused-vars
-		const { password: userPassword, ...rest } = (await db.user.create({
+		const user = (await db.user.create({
 			data: {
 				email,
 				password: hashedPassword,
 				name,
+			},
+			select: {
+				id: true,
+				password: false,
 			},
 		})) as User;
 
@@ -50,8 +54,8 @@ export const POST = async (req: NextRequest) => {
 			react: VerifyEmailTemplate({
 				link:
 					process.env.NODE_ENV === 'development'
-						? `http://localhost:3000/verify?id=${rest.id}`
-						: `https://www.pdfizado.com/verify?id=${rest.id}`,
+						? `http://localhost:3000/verify?id=${user.id}`
+						: `https://www.pdfizado.com/verify?id=${user.id}`,
 			}),
 		});
 
@@ -62,7 +66,7 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.json(
 			{
 				message: 'User created successfully!',
-				rest,
+				user,
 				emailId: data,
 			},
 			{ status: 201 }
