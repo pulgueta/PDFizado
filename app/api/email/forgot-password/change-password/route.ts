@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { User } from '@prisma/client';
-import { hash } from 'bcrypt';
+import { hash } from 'argon2';
 
 import { db } from '~/database/db';
 import { resetSchema } from '~/schemas';
@@ -27,7 +27,7 @@ export const POST = async (req: NextRequest) => {
 		);
 	}
 
-	const newPassword = await hash(password, 14);
+	const newPassword = await hash(password);
 
 	try {
 		const { id } = (await db.user.findUnique({

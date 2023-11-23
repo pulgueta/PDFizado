@@ -2,7 +2,7 @@ import type { DefaultSession } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 // import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
-import { compare } from 'bcrypt';
+import { verify } from 'argon2';
 import { User as PrismaUser } from '@prisma/client';
 
 import { db } from '~/database/db';
@@ -109,7 +109,7 @@ export const {
 
 				if (!user.emailVerified) throw new Error('Email not verified');
 
-				const valid = await compare(
+				const valid = await verify(
 					credentials?.password as string,
 					user.password
 				);

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { User } from '@prisma/client';
-import { hash } from 'bcrypt';
+import { hash } from 'argon2';
 import { Resend } from 'resend';
 
 import { db } from '~/database/db';
@@ -32,7 +32,7 @@ export const POST = async (req: NextRequest) => {
 		if (userExists)
 			return new NextResponse('Email is already in use', { status: 400 });
 
-		const hashedPassword = await hash(password, 14);
+		const hashedPassword = await hash(password);
 
 		// eslint-disable-next-line no-unused-vars
 		const user = (await db.user.create({

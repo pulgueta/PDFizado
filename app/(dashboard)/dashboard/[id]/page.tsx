@@ -9,6 +9,8 @@ import { PDFLoader } from '~/components/server/pdf-loaders';
 import { HeaderName } from '~/components/server/header-name';
 import { UploadPDF } from '~/components/client/dialog/pdf/upload-pdf';
 
+import '@radix-ui/themes/styles.css';
+
 const Dashboard = () => {
 	const { data, error, isLoading, isSuccess } = useQuery<File[]>({
 		queryKey: ['files'],

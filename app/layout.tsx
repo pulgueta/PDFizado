@@ -12,7 +12,6 @@ import { ReactQueryProvider } from '~/providers/tanstack-provider';
 import { Navbar } from '~/components/client/navbar/navbar';
 import { Footer } from '~/components/server/footer/footer';
 
-import '@radix-ui/themes/styles.css';
 import '~/app/globals.css';
 
 export const metadata: Metadata = {

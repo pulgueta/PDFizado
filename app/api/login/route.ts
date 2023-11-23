@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { compare } from 'bcrypt';
+import { verify } from 'argon2';
 import { User } from '@prisma/client';
 
 import { db } from '~/database/db';
@@ -29,7 +29,7 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.json('Email not verified', { status: 401 });
 	}
 
-	if (rest && (await compare(password, userPassword))) {
+	if (rest && (await verify(password, userPassword))) {
 		return NextResponse.json(rest, { status: 200 });
 	} else {
 		return NextResponse.json('Invalid credentials', { status: 401 });

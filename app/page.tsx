@@ -12,16 +12,16 @@ const Home = () => {
 		<>
 			<main className='min-h-screen bg-white p-2 dark:bg-[#1C1917]'>
 				<div className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-3xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out dark:bg-[#131110] md:py-12'>
-					<h1 className='mb-4 text-6xl font-black text-black dark:text-white md:mb-8 md:text-7xl'>
+					<h1 className='mb-4 text-5xl font-black text-black dark:text-white md:mb-8 md:text-7xl'>
 						<span className='text-primary'>PDF</span>izado
 					</h1>
-					<p className='text-base leading-7 md:text-lg [&:not(:first-child)]:mt-6'>
+					<p className='text-sm leading-5 md:text-lg [&:not(:first-child)]:mt-6'>
 						Haz tu estudio más fácil interactuando con la
 						Inteligencia Artificial mediante un chat para extraer la
 						información más relevante de tus archivos{' '}
 						<span className='font-bold'>PDF.</span>
 					</p>
-					<p className='text-lg leading-7 md:text-xl [&:not(:first-child)]:mt-6'>
+					<p className='text-base leading-5 md:text-xl [&:not(:first-child)]:mt-6'>
 						&iexcl;Solamente arrastra tu archivo y puedes empezar a
 						preguntar lo que necesites!
 					</p>
@@ -66,7 +66,7 @@ const Home = () => {
 				</section>
 			</main>
 			<section className='bg-white dark:bg-[#1C1917]'>
-				<div className='mx-auto w-full animate-fade-up px-8 py-32 md:w-11/12'>
+				<div className='mx-auto w-full animate-fade-up px-2 py-32 md:w-11/12'>
 					<h3 className='mb-4 border-b pb-4 text-center text-4xl font-black text-black dark:text-white md:mb-8'>
 						Tenemos 3 planes para que puedas utilizar{' '}
 						<span className='text-primary'>PDF</span>izado
