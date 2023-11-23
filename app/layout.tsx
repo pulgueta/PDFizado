@@ -9,7 +9,6 @@ import { Toaster } from 'sonner';
 import { ThemeProvider } from '~/providers/theme-provider';
 import { AuthProvider } from '~/providers/auth-session';
 import { ReactQueryProvider } from '~/providers/tanstack-provider';
-import { Navbar } from '~/components/client/navbar/navbar';
 import { Footer } from '~/components/server/footer/footer';
 
 import '~/app/globals.css';
@@ -121,7 +120,6 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<AuthProvider>
 					<ReactQueryProvider>
-						<Navbar />
 						<Toaster richColors closeButton />
 						{children}
 						<Footer />

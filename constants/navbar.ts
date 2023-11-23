@@ -17,7 +17,7 @@ export const noAuthRoutes: NavbarRoutes = [
 
 export const authRoutes: NavbarRoutes = [
 	{
-		href: '/pricing',
+		href: '/dashboard/pricing',
 		label: 'Precios',
 	},
 	{

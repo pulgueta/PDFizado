@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import type { Metadata } from 'next';
+import { Navbar } from '~/components/client/navbar/logged-navbar';
 
 export const metadata: Metadata = {
 	title: 'Dashboard',
@@ -18,6 +19,11 @@ export const metadata: Metadata = {
 	},
 };
 
-const DashboardLayout = ({ children }: PropsWithChildren) => children;
+const DashboardLayout = ({ children }: PropsWithChildren) => (
+	<>
+		<Navbar />
+		{children}
+	</>
+);
 
 export default DashboardLayout;
