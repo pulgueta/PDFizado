@@ -46,7 +46,6 @@ export const ForgotPasswordForm = () => {
 
 		if (res.status === 404 && !res.ok) {
 			toast.error('No existe el usuario', {
-				dismissible: true,
 				description:
 					'No hay un usuario registrado con ese correo electrónico.',
 			});
@@ -56,7 +55,6 @@ export const ForgotPasswordForm = () => {
 
 		if (res.status === 401 && !res.ok) {
 			toast.error('Usuario no verificado', {
-				dismissible: true,
 				description:
 					'Debes verificar tu correo electrónico para poder cambiar tu contraseña.',
 			});
@@ -66,7 +64,6 @@ export const ForgotPasswordForm = () => {
 
 		if (res.status === 500 && !res.ok) {
 			toast.error('Error', {
-				dismissible: true,
 				description:
 					'Ocurrió un error al enviar el correo de recuperación.',
 			});
@@ -75,7 +72,6 @@ export const ForgotPasswordForm = () => {
 		}
 
 		toast.success('Correo enviado', {
-			dismissible: true,
 			description:
 				'Se ha enviado el correo de recuperación, revisa tu bandeja de entrada.',
 		});

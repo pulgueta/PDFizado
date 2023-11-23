@@ -57,7 +57,6 @@ export const LoginForm = () => {
 
 		if (res?.status === 401 && res.error === 'Email not verified') {
 			toast.error('Error de autenticación', {
-				dismissible: true,
 				description:
 					'Debes verificar tu correo antes de iniciar sesión.',
 			});
@@ -67,7 +66,6 @@ export const LoginForm = () => {
 
 		if (!res?.ok || res?.error === 'CredentialsSignin') {
 			toast.error('Error de autenticación', {
-				dismissible: true,
 				description: 'Credenciales incorrectas.',
 			});
 
@@ -76,7 +74,6 @@ export const LoginForm = () => {
 
 		if (res?.ok) {
 			toast.success('Inicio de sesión', {
-				dismissible: true,
 				description: 'Bienvenido de vuelta.',
 			});
 			push('/dashboard');

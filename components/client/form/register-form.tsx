@@ -69,12 +69,7 @@ export const RegisterForm = () => {
 			}
 
 			toast.success(
-				'Cuenta creada, te hemos enviado un correo de verificación',
-				{
-					duration: 1500,
-					dismissible: true,
-					important: true,
-				}
+				'Cuenta creada, te hemos enviado un correo de verificación'
 			);
 			form.reset();
 			form.clearErrors();
