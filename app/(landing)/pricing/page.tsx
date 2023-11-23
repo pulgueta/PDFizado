@@ -1,4 +1,11 @@
+import { Metadata } from 'next';
+
 import { PriceCards } from '~/components/client/prices/card-details';
+
+export const metadata: Metadata = {
+	title: 'Precios',
+	description: 'Conoce los precios de PDFizado',
+};
 
 const Pricing = () => {
 	return (

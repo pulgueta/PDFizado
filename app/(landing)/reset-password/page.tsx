@@ -4,11 +4,17 @@ import { buttonVariants } from '~/shadcn/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~/shadcn/card';
 import { ResetPassword as ResetPasswordForm } from '~/components/client/form/reset-password';
 import { db } from '~/database/db';
+import { Metadata } from 'next';
 
 type ResetToken = {
 	searchParams: {
 		token: string;
 	};
+};
+
+export const metadata: Metadata = {
+	title: 'Reestablecer contraseña',
+	description: 'Actualiza tu contraseña de PDFizado',
 };
 
 const ResetPassword = async ({ searchParams }: ResetToken) => {

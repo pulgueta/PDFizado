@@ -1,8 +1,14 @@
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { auth } from '~/lib/auth';
 
 import { LoginForm } from '~/components/client/form/login-form';
+
+export const metadata: Metadata = {
+	title: 'Iniciar sesión',
+	description: 'Inicia sesión en PDFizado para acceder a tu perfil',
+}
 
 const Login = async () => {
 	const session = await auth();

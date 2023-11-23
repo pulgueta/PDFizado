@@ -2,11 +2,17 @@ import Link from 'next/link';
 
 import { buttonVariants } from '~/shadcn/button';
 import { db } from '~/database/db';
+import { Metadata } from 'next';
 
 type VerifyEmail = {
 	searchParams: {
 		id: string;
 	};
+};
+
+export const metadata: Metadata = {
+	title: 'Verificar tu email',
+	description: 'Verifica tu email de PDFizado para poder iniciar sesión.',
 };
 
 const Verify = async ({ searchParams }: VerifyEmail) => {

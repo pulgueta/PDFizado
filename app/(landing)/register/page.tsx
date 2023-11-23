@@ -1,7 +1,14 @@
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { RegisterForm } from '~/components/client/form/register-form';
 import { auth } from '~/lib/auth';
+
+export const metadata: Metadata = {
+	title: 'Registrarse',
+	description:
+		'Regístrate en PDFizado y verifica tu cuenta para acceder a tu perfil',
+};
 
 const Register = async () => {
 	const session = await auth();
