@@ -2,11 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 /* eslint-disable tailwindcss/no-custom-classname */
-import { getServerSession } from 'next-auth';
 import { FrownIcon } from 'lucide-react';
 
-import { authOptions } from '~/lib/auth';
 import { buttonVariants } from '~/components/ui/button';
+import { auth } from '~/lib/auth';
 
 export const metadata: Metadata = {
 	title: 'Página no encontrada',
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const _404 = async () => {
-	const session = await getServerSession(authOptions);
+	const session = await auth();
 
 	return (
 		<section

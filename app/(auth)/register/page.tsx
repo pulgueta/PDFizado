@@ -1,12 +1,10 @@
 import { redirect } from 'next/navigation';
 
-import { Session, getServerSession } from 'next-auth';
-
 import { RegisterForm } from '~/components/client/form/register-form';
-import { authOptions } from '~/lib/auth';
+import { auth } from '~/lib/auth';
 
 const Register = async () => {
-	const session = (await getServerSession(authOptions)) as Session | null;
+	const session = await auth();
 
 	if (session !== null) {
 		redirect('/dashboard');

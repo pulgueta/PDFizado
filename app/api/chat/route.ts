@@ -1,39 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { type Session, getServerSession } from 'next-auth';
 import { Message, OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration, OpenAIApi } from 'openai-edge';
 
 import { env } from '~/env';
-import { authOptions } from '~/lib/auth';
 import { plan as Plan } from '~/lib/plan-allowance';
 import { getContext } from '~/lib/context';
 import { db } from '~/database/db';
+import { auth } from '~/lib/auth';
 
 const config = new Configuration({
-    apiKey: env.OPENAI_SECRET,
-    organization: env.OPENAI_ORG,
+	apiKey: env.OPENAI_SECRET,
+	organization: env.OPENAI_ORG,
 });
 
 const gpt = new OpenAIApi(config);
 
 export const POST = async (req: NextRequest) => {
-    const body = await req.json();
+	const body = await req.json();
 
-    const { messages, chatId } = body;
+	const { messages, chatId } = body;
 
-    const session = (await getServerSession(authOptions)) as Session | null;
+	const session = await auth();
 
-    if (!session) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+	if (!session) {
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+	}
 
-    const lastMessage = messages[messages.length - 1];
-    const context = await getContext(lastMessage.content, chatId);
+	const lastMessage = messages[messages.length - 1];
+	const context = await getContext(lastMessage.content, chatId);
 
-    const prompt = {
-        role: 'system',
-        content: `
+	const prompt = {
+		role: 'system',
+		content: `
             AI assistant is a brand new, powerful, human-like artificial intelligence.
             The traits of AI include expert knowledge, helpfulness, cleverness, and articulateness.
             AI is a well-behaved and well-mannered individual.
@@ -49,46 +48,46 @@ export const POST = async (req: NextRequest) => {
             AI assistant will not invent anything that is not drawn directly from the context.
             AI assistant will always answer or ask in the user language provided.
       `,
-    };
+	};
 
-    try {
-        const response = await gpt.createChatCompletion({
-            model: Plan(session?.user.plan || 'FREE'),
-            stream: true,
-            temperature: 0.2,
-            messages: [
-                prompt,
-                ...messages.filter(
-                    (message: Message) => message.role === 'user'
-                ),
-            ],
-        });
+	try {
+		const response = await gpt.createChatCompletion({
+			model: Plan(session?.user.plan || 'FREE'),
+			stream: true,
+			temperature: 0.2,
+			messages: [
+				prompt,
+				...messages.filter(
+					(message: Message) => message.role === 'user'
+				),
+			],
+		});
 
-        const stream = OpenAIStream(response, {
-            onStart: async () => {
-                await db.message.create({
-                    data: {
-                        text: lastMessage.content,
-                        fileId: chatId,
-                        userId: session.user.id,
-                        isUserMessage: true,
-                    },
-                });
-            },
-            onCompletion: async (completion) => {
-                await db.message.create({
-                    data: {
-                        text: completion,
-                        fileId: chatId,
-                        userId: session.user.id,
-                        isUserMessage: false,
-                    },
-                });
-            },
-        });
+		const stream = OpenAIStream(response, {
+			onStart: async () => {
+				await db.message.create({
+					data: {
+						text: lastMessage.content,
+						fileId: chatId,
+						userId: session.user.id,
+						isUserMessage: true,
+					},
+				});
+			},
+			onCompletion: async (completion) => {
+				await db.message.create({
+					data: {
+						text: completion,
+						fileId: chatId,
+						userId: session.user.id,
+						isUserMessage: false,
+					},
+				});
+			},
+		});
 
-        return new StreamingTextResponse(stream);
-    } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
-    }
+		return new StreamingTextResponse(stream);
+	} catch (error) {
+		return NextResponse.json({ error }, { status: 500 });
+	}
 };

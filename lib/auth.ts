@@ -1,4 +1,4 @@
-import type { DefaultSession, NextAuthOptions } from 'next-auth';
+import type { DefaultSession } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 // import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
@@ -7,6 +7,7 @@ import { User as PrismaUser } from '@prisma/client';
 
 import { db } from '~/database/db';
 import { env } from '~/env';
+import NextAuth from 'next-auth';
 
 declare module 'next-auth' {
 	// eslint-disable-next-line no-unused-vars
@@ -26,13 +27,6 @@ declare module 'next-auth' {
 			paypalPriceId: string;
 			paypalCurrentPeriodEnd: string;
 		} & DefaultSession['user'];
-	}
-}
-
-declare module 'next-auth/jwt' {
-	// eslint-disable-next-line no-unused-vars
-	interface JWT {
-		id: string;
 	}
 }
 
@@ -61,7 +55,10 @@ declare module 'next-auth/jwt' {
 //     return oAuthedUser;
 // };
 
-export const authOptions: NextAuthOptions = {
+export const {
+	handlers: { GET, POST },
+	auth,
+} = NextAuth({
 	adapter: PrismaAdapter(db),
 	providers: [
 		// TODO: Properly set up Google Auth with email.
@@ -85,9 +82,7 @@ export const authOptions: NextAuthOptions = {
 					value: '',
 				},
 			},
-			async authorize(
-				credentials: Record<'email' | 'password', string> | undefined
-			) {
+			authorize: async (credentials: any) => {
 				const user = (await db.user.findUnique({
 					where: {
 						email: credentials?.email,
@@ -216,4 +211,4 @@ export const authOptions: NextAuthOptions = {
 			},
 		},
 	},
-} satisfies NextAuthOptions;
+});

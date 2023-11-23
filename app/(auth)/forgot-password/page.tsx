@@ -1,12 +1,10 @@
 import { redirect } from 'next/navigation';
 
-import { Session, getServerSession } from 'next-auth';
-
 import { ForgotPasswordForm } from '~/components/client/form/forgot-password';
-import { authOptions } from '~/lib/auth';
+import { auth } from '~/lib/auth';
 
 const ForgotPassword = async () => {
-	const session = (await getServerSession(authOptions)) as Session | null;
+	const session = await auth();
 
 	if (session) {
 		redirect('/dashboard');

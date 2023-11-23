@@ -1,13 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { type Session, getServerSession } from 'next-auth';
-
 import { db } from '~/database/db';
-import { authOptions } from '~/lib/auth';
 import { env } from '~/env';
 import { loadAWStoPinecone } from '~/lib/pinecone';
 import { awsSchema } from '~/schemas';
 import { s3 } from '~/lib/aws/s3.config';
+import { auth } from '~/lib/auth';
 
 export const POST = async (req: NextRequest) => {
 	const body = await req.json();
@@ -18,7 +16,7 @@ export const POST = async (req: NextRequest) => {
 
 	const { key, name, url } = body;
 
-	const session = (await getServerSession(authOptions)) as Session | null;
+	const session = await auth();
 
 	if (!session)
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -42,7 +40,7 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const GET = async () => {
-	const session = (await getServerSession(authOptions)) as Session | null;
+	const session = await auth();
 
 	if (!session)
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -66,7 +64,7 @@ export const GET = async () => {
 export const DELETE = async (req: NextRequest) => {
 	const body = await req.json();
 
-	const session = (await getServerSession(authOptions)) as Session | null;
+	const session = await auth();
 
 	const params = {
 		Bucket: env.NEXT_PUBLIC_S3_BUCKET,
