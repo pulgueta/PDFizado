@@ -1,26 +1,18 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-/* eslint-disable tailwindcss/no-custom-classname */
 import { FrownIcon } from 'lucide-react';
 
 import { buttonVariants } from '~/components/ui/button';
-import { auth } from '~/lib/auth';
 
 export const metadata: Metadata = {
 	title: 'Página no encontrada',
 	description: 'No hemos encontrado la página que buscas.',
 };
 
-const _404 = async () => {
-	const session = await auth();
-
+const _404 = () => {
 	return (
-		<section
-			className={`min-h-[calc(100vh-${
-				session !== null ? '80px' : '205px'
-			})] flex flex-col items-center justify-center gap-y-2`}
-		>
+		<section className='flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-2'>
 			<FrownIcon
 				aria-label='Cara triste'
 				className='h-12 w-12 text-muted-foreground'
