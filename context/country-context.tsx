@@ -1,12 +1,6 @@
 'use client';
 
-import {
-	PropsWithChildren,
-	createContext,
-	useContext,
-	useState,
-	useEffect,
-} from 'react';
+import { PropsWithChildren, createContext, useContext, useState } from 'react';
 
 type Country = 'colombia' | 'other';
 
@@ -19,14 +13,7 @@ type CountryContextType = {
 const CountryContext = createContext<CountryContextType | undefined>(undefined);
 
 export const CountryProvider = ({ children }: PropsWithChildren) => {
-	const [country, setCountry] = useState<Country>(() => {
-		const storedCountry = localStorage.getItem('country');
-		return storedCountry ? (storedCountry as Country) : 'colombia';
-	});
-
-	useEffect(() => {
-		localStorage.setItem('country', country);
-	}, [country]);
+	const [country, setCountry] = useState<Country>('colombia');
 
 	return (
 		<CountryContext.Provider value={{ country, setCountry }}>
