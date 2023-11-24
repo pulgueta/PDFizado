@@ -8,13 +8,17 @@ import { auth } from '~/lib/auth';
 const DashboardRedirect = async () => {
 	const session = await auth();
 
+	if (!session) {
+		redirect('/login');
+	}
+
 	const { id } = (await db.user.findUnique({
 		where: {
 			email: session?.user?.email,
 		},
 	})) as User;
 
-	if (session !== null && session.user?.email !== '') {
+	if (session) {
 		redirect(`/dashboard/${id}`);
 	}
 };

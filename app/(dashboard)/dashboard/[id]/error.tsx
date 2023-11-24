@@ -8,7 +8,7 @@ const Error = ({ error }: { error: Error & { digest?: string } }) => {
 	const { push } = useRouter();
 
 	return (
-		<main className='flex h-[calc(100vh-80px)] flex-col items-center justify-center'>
+		<main className='flex h-[calc(100vh-205px)] flex-col items-center justify-center'>
 			<section className='mx-auto flex max-w-5xl flex-col items-center justify-center gap-y-4'>
 				<h1 className='text-center text-3xl font-bold'>
 					&iexcl;Oops! Algo ha salido mal...

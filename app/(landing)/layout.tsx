@@ -1,12 +1,5 @@
 import { PropsWithChildren } from 'react';
 
-import { Navbar } from '~/components/client/navbar/navbar';
-
-const LandingLayout = ({ children }: PropsWithChildren) => (
-	<>
-		<Navbar />
-		{children}
-	</>
-);
+const LandingLayout = ({ children }: PropsWithChildren) => children;
 
 export default LandingLayout;
