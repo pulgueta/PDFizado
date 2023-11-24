@@ -36,9 +36,9 @@ const Home = () => {
 				</div>
 
 				<section className='relative mt-16 w-full animate-fade-up p-4 animate-once animate-ease-in-out'>
-					<h1 className='scroll-m-20 border-b pb-4 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
+					<h2 className='scroll-m-20 border-b pb-4 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 						Interfaz y utilidad
-					</h1>
+					</h2>
 					<p className='text-center text-lg leading-7 [&:not(:first-child)]:mt-6'>
 						Contamos con una interfaz sencilla de utilizar y fácil
 						de entender para una accesibilidad con alcance total
@@ -67,10 +67,10 @@ const Home = () => {
 			</main>
 			<section className='bg-white pb-16 dark:bg-[#1C1917]'>
 				<div className='mx-auto w-full animate-fade-up px-2 py-32 md:w-11/12'>
-					<h3 className='mb-4 border-b pb-4 text-center text-4xl font-black text-black dark:text-white md:mb-8'>
+					<h2 className='mb-4 border-b pb-4 text-center text-4xl font-black text-black dark:text-white md:mb-8'>
 						Tenemos 3 planes para que puedas utilizar{' '}
 						<span className='text-primary'>PDF</span>izado
-					</h3>
+					</h2>
 					<PriceCards />
 				</div>
 				<section className='flex w-full flex-col items-center justify-center gap-8 rounded-xl bg-secondary px-2 py-8 shadow-sm dark:bg-[#131110] md:py-16'>
