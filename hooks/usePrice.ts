@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useCountry } from '.';
+
+import { useCountry } from '~/context/country-context';
 
 export const usePrice = (price: number) => {
 	const [formattedPrice, setFormattedPrice] = useState<string>('');
 
-	const country = useCountry();
+	const { country } = useCountry();
 
 	useEffect(() => {
-		if (country === 'CO') {
+		if (country === 'colombia') {
 			setFormattedPrice(
 				new Intl.NumberFormat('es-CO', {
 					style: 'currency',

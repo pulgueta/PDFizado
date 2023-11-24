@@ -19,17 +19,18 @@ import {
 import { Separator } from '~/shadcn/separator';
 import { Button } from '~/shadcn/button';
 import { Badge } from '~/shadcn/badge';
-import { useCountry, usePrice } from '~/hooks';
+import { usePrice } from '~/hooks';
+import { useCountry } from '~/context/country-context';
 
 export const PriceCards = () => {
-	const country = useCountry();
+	const { country } = useCountry();
 	const standard = usePrice(25000);
 	const professional = usePrice(50000);
 
 	return (
 		<>
 			<p className='mb-8 text-center text-muted-foreground'>
-				*Precio en {country === 'CO' ? 'COP' : 'USD'}
+				*Precio en {country === 'colombia' ? 'COP' : 'USD'}
 			</p>
 			<TooltipProvider>
 				<div className='mx-auto flex w-full flex-col gap-8 md:flex-row md:flex-wrap'>

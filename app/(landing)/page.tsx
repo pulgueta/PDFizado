@@ -65,7 +65,7 @@ const Home = () => {
 					</div>
 				</section>
 			</main>
-			<section className='bg-white dark:bg-[#1C1917]'>
+			<section className='bg-white pb-16 dark:bg-[#1C1917]'>
 				<div className='mx-auto w-full animate-fade-up px-2 py-32 md:w-11/12'>
 					<h3 className='mb-4 border-b pb-4 text-center text-4xl font-black text-black dark:text-white md:mb-8'>
 						Tenemos 3 planes para que puedas utilizar{' '}
@@ -83,7 +83,7 @@ const Home = () => {
 							variant: 'default',
 						})}
 					>
-						Empezar
+						Registrarme
 						<ArrowRightIcon className='ml-2 h-4 w-4' />
 					</Link>
 				</section>
