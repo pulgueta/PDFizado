@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
 	CheckCircle2Icon,
 	FileIcon,
@@ -23,9 +23,10 @@ interface Mutation {
 }
 
 export const Dropzone = () => {
-	const { push } = useRouter();
+	const { push, refresh } = useRouter();
 	const pathname = usePathname();
 
+	const queryClient = useQueryClient();
 	const { mutate, isPending, isSuccess } = useMutation({
 		mutationKey: ['uploadToS3'],
 		mutationFn: ({ key, name, url }: Mutation) => {
@@ -47,6 +48,10 @@ export const Dropzone = () => {
 			toast.success(
 				'Tu PDF se ha procesado correctamente, serás redirigido en unos segundos'
 			);
+			queryClient.invalidateQueries({
+				queryKey: ['uploadToS3'],
+			});
+			refresh();
 			push(`${pathname}/${id}`);
 		},
 		retry: 3,

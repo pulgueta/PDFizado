@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev --experimental-https",
 		"db:push": "prisma db push",
 		"db:studio": "prisma studio",
 		"db:generate": "prisma generate",
@@ -56,7 +56,7 @@
 		"langchain": "^0.0.172",
 		"lucide-react": "^0.288.0",
 		"md5": "^2.3.0",
-		"mercadopago": "^2.0.3",
+		"mercadopago": "^2.0.5",
 		"next": "^14.0.3",
 		"next-auth": "^5.0.0-beta.3",
 		"next-themes": "^0.2.1",

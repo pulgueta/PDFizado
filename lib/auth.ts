@@ -1,4 +1,4 @@
-import type { DefaultSession } from 'next-auth';
+import NextAuth, { type DefaultSession } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 // import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
@@ -7,7 +7,6 @@ import { User as PrismaUser } from '@prisma/client';
 
 import { db } from '~/database/db';
 import { env } from '~/env';
-import NextAuth from 'next-auth';
 
 declare module 'next-auth' {
 	// eslint-disable-next-line no-unused-vars
@@ -68,21 +67,10 @@ export const {
 		// }),
 		Credentials({
 			name: 'Credentials',
-			credentials: {
-				email: {
-					label: 'Email',
-					type: 'email',
-					placeholder: 'Tu email',
-					value: '',
-				},
-				password: {
-					label: 'Contraseña',
-					type: 'password',
-					placeholder: 'Tu contraseña',
-					value: '',
-				},
-			},
-			authorize: async (credentials) => {
+			credentials: {},
+			authorize: async (
+				credentials: Partial<Record<'email' | 'password', unknown>>
+			) => {
 				const user = (await db.user.findUnique({
 					where: {
 						email: credentials.email as string,

@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { User } from '@prisma/client';
 
-import { Button } from '~/shadcn/button';
 import {
 	Card,
 	CardContent,
@@ -12,12 +10,8 @@ import {
 } from '~/shadcn/card';
 import { db } from '~/database/db';
 import { auth } from '~/lib/auth';
-
-enum Plans {
-	FREE = 'Gratis',
-	STANDARD = 'Estándar',
-	PROFESSIONAL = 'Profesional',
-}
+import { CurrentPlan } from './current-plan';
+import { UpgradeButton } from './upgrade-button';
 
 const Plan = async () => {
 	const session = await auth();
@@ -27,8 +21,6 @@ const Plan = async () => {
 			id: session?.user.id,
 		},
 	})) as User;
-
-	const currentPlan = Plans[plan] ?? 'Gratis';
 
 	return (
 		<section className='min-h-[calc(100vh-205px)] px-4 py-8'>
@@ -41,12 +33,15 @@ const Plan = async () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<p>Tu plan actual es: {currentPlan}</p>
+					<p>
+						Tu plan actual es: <CurrentPlan plan={plan} />
+					</p>
 				</CardContent>
-				<CardFooter className='flex flex-col items-center justify-between gap-4 md:flex-row'>
-					<Button>Actualizar a Estándar</Button>
-					<Button>Actualizar a Profesional</Button>
-				</CardFooter>
+				{plan !== 'PROFESSIONAL' && (
+					<CardFooter>
+						<UpgradeButton />
+					</CardFooter>
+				)}
 			</Card>
 		</section>
 	);

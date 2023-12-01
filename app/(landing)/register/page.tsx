@@ -18,7 +18,7 @@ const Register = async () => {
 	}
 
 	return (
-		<div className='flex min-h-[calc(100vh-205px)] items-center justify-center bg-white p-4 dark:bg-[#131110]'>
+		<div className='flex min-h-[calc(100vh-205px)] items-center justify-center bg-white p-2 dark:bg-[#131110]'>
 			<RegisterForm />
 		</div>
 	);

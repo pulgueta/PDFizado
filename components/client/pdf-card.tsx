@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { File } from '@prisma/client';
 import { toast } from 'sonner';
@@ -11,6 +11,7 @@ import { cn } from '~/lib/utils';
 
 export const PDFCard: React.FC<File> = (file) => {
 	const pathname = usePathname();
+	const { refresh } = useRouter();
 
 	const queryClient = useQueryClient();
 	const { mutate, isPending } = useMutation({
@@ -28,6 +29,7 @@ export const PDFCard: React.FC<File> = (file) => {
 				queryKey: ['files'],
 			});
 			toast.success('PDF eliminado correctamente');
+			refresh();
 		},
 		onError: () => toast.error('Error al eliminar el PDF'),
 		retry: 3,
@@ -37,7 +39,7 @@ export const PDFCard: React.FC<File> = (file) => {
 	const onDeleteFile = (id: string) => () => mutate(id);
 
 	return (
-		<div className='mx-auto flex w-80 flex-col rounded-2xl border p-4 md:w-96'>
+		<div className='mx-auto flex w-80 flex-col rounded-2xl border bg-white p-4 shadow dark:bg-neutral-900 md:w-96'>
 			<h3 className='truncate text-xl font-semibold'>{file.name}</h3>
 			<span className='my-4 text-muted-foreground'>
 				Fecha de subida:{' '}
@@ -66,7 +68,10 @@ export const PDFCard: React.FC<File> = (file) => {
 					onClick={onDeleteFile(file.id)}
 				>
 					{isPending ? (
-						<Loader2Icon className='h-4 w-4 animate-spin' />
+						<>
+							<Loader2Icon className='mr-2 h-4 w-4 animate-spin' />
+							Eliminando PDF...
+						</>
 					) : (
 						'Eliminar PDF'
 					)}

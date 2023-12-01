@@ -14,7 +14,7 @@ const Error = ({ error }: { error: Error & { digest?: string } }) => {
 					&iexcl;Oops! Algo ha salido mal...
 				</h1>
 				<h3 className='text-center text-xl font-semibold'>{`${error.name}`}</h3>
-				<p className='text-center'>${error.message}</p>
+				<p className='text-center'>{error.message}</p>
 				<Button onClick={() => push('/')} variant='outline'>
 					Volver al inicio
 				</Button>

@@ -20,9 +20,6 @@ export const POST = async (req: NextRequest) => {
 		where: {
 			email,
 		},
-		select: {
-			password: false,
-		},
 	})) as User;
 
 	if (!user.emailVerified) {

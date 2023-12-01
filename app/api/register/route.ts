@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.json(validatedBody.error.errors, { status: 400 });
 	}
 
-	const { name, email, password } = body;
+	const { name, email, password } = validatedBody.data;
 
 	try {
 		const userExists = (await db.user.findUnique({
@@ -34,7 +34,6 @@ export const POST = async (req: NextRequest) => {
 
 		const hashedPassword = await hash(password);
 
-		// eslint-disable-next-line no-unused-vars
 		const user = (await db.user.create({
 			data: {
 				email,
@@ -72,6 +71,7 @@ export const POST = async (req: NextRequest) => {
 			{ status: 201 }
 		);
 	} catch (error) {
+		console.log(error);
 		NextResponse.json(error, { status: 500 });
 	}
 };

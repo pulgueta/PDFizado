@@ -13,7 +13,6 @@ import { Footer } from '~/components/server/footer/footer';
 import { Navbar } from '~/components/client/navbar/navbar';
 
 import '~/app/globals.css';
-import { CountryProvider } from '~/context/country-context';
 
 export const metadata: Metadata = {
 	title: {
@@ -110,7 +109,8 @@ export const viewport: Viewport = {
 	colorScheme: 'light dark',
 	minimumScale: 1,
 	initialScale: 1,
-	maximumScale: 1,
+	maximumScale: 5,
+	viewportFit: 'cover',
 	userScalable: true,
 	height: 'device-height',
 	width: 'device-width',
@@ -122,16 +122,10 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<AuthProvider>
 					<ReactQueryProvider>
-						<CountryProvider>
-							<Navbar />
-							<Toaster
-								richColors
-								closeButton
-								position='top-center'
-							/>
-							{children}
-							<Footer />
-						</CountryProvider>
+						<Navbar />
+						<Toaster richColors closeButton position='top-center' />
+						{children}
+						<Footer />
 					</ReactQueryProvider>
 				</AuthProvider>
 			</ThemeProvider>

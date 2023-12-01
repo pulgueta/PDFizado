@@ -14,6 +14,8 @@ const ChatPage = async ({ params }: { params: { fileId: string } }) => {
 		},
 	})) as File;
 
+	console.log(file);
+
 	return (
 		<div className='flex h-[calc(100vh-80px)] flex-col md:flex-row'>
 			<iframe
