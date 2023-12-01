@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/react';
-import { GeistSans } from 'geist/font';
+import { GeistSans } from 'geist/font/sans';
 
 import { Toaster } from 'sonner';
 
@@ -118,7 +118,7 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: PropsWithChildren) => (
 	<html lang='es' suppressHydrationWarning>
-		<body className={GeistSans.className}>
+		<body className={`${GeistSans.variable} antialiased`}>
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<AuthProvider>
 					<ReactQueryProvider>
