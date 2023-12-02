@@ -42,12 +42,6 @@
 		"jest.config.ts",
 		"build/types/**/*.ts"
 	],
-	"ts-node": {
-		"compilerOptions": {
-			"module": "ESNext",
-			"moduleResolution": "Node"
-		}
-	},
 	"exclude": [
 		"node_modules"
 	]
