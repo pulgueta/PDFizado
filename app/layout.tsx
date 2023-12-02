@@ -127,7 +127,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 							richColors
 							closeButton
 							position='top-center'
-							duration={1250}
+							duration={1500}
 						/>
 						{children}
 						<Footer />

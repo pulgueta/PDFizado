@@ -16,8 +16,6 @@ export const UploadPDF = async () => {
 		res.json()
 	)) as Number[];
 
-	console.log(files.length);
-
 	return (
 		<Dialog>
 			<DialogTrigger asChild>

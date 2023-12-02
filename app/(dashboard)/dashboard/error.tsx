@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '~/components/ui/button';
 
 const Error = ({ error }: { error: Error & { digest?: string } }) => {
-	const { back } = useRouter();
+	const { push } = useRouter();
 
 	return (
 		<main className='flex min-h-[calc(100vh-205px)] flex-col items-center justify-center'>
@@ -15,7 +15,7 @@ const Error = ({ error }: { error: Error & { digest?: string } }) => {
 				</h1>
 				<h3 className='text-center text-xl font-semibold'>{`${error.name}`}</h3>
 				<p className='text-center'>{error.message}</p>
-				<Button onClick={back} variant='outline'>
+				<Button onClick={() => push('/dashboard')} variant='outline'>
 					Volver al dashboard
 				</Button>
 			</section>

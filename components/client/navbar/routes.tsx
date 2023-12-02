@@ -19,7 +19,7 @@ export const DesktopRoutes = () => {
 				authRoutes.map(({ href, label }) => (
 					<li key={href}>
 						<Link
-							href={href.replace(':id', data.user.id)}
+							href={href}
 							aria-label={label}
 							className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
 						>
@@ -55,7 +55,7 @@ export const MobileRoutes = () => {
 							<li key={href}>
 								<SheetTrigger asChild>
 									<Link
-										href={href.replace(':id', data.user.id)}
+										href={href}
 										aria-label={label}
 										className='text-center text-lg font-semibold leading-loose duration-200 ease-in-out hover:text-primary'
 									>

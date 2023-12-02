@@ -21,7 +21,7 @@ export const authRoutes: NavbarRoutes = [
 		label: 'Precios',
 	},
 	{
-		href: '/dashboard/:id',
+		href: '/dashboard',
 		label: 'Dashboard',
 	},
 	{
