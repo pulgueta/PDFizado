@@ -8,7 +8,11 @@ export const ProgressProvider = ({ children }: PropsWithChildren) => {
 	return (
 		<>
 			{children}
-			<AppProgressBar options={{ showSpinner: false }} color='#e11d48' />
+			<AppProgressBar
+				options={{ showSpinner: false }}
+				color='#e11d48'
+				shallowRouting
+			/>
 		</>
 	);
 };
