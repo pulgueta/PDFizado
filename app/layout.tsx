@@ -9,7 +9,6 @@ import { Toaster } from 'sonner';
 import { ThemeProvider } from '~/providers/theme-provider';
 import { AuthProvider } from '~/providers/auth-session';
 import { ReactQueryProvider } from '~/providers/tanstack-provider';
-import { ProgressProvider } from '~/providers/progress-bar';
 import { Footer } from '~/components/server/footer/footer';
 import { Navbar } from '~/components/client/navbar/navbar';
 
@@ -123,16 +122,15 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<AuthProvider>
 					<ReactQueryProvider>
-						<ProgressProvider>
-							<Navbar />
-							<Toaster
-								richColors
-								closeButton
-								position='top-center'
-							/>
-							{children}
-							<Footer />
-						</ProgressProvider>
+						<Navbar />
+						<Toaster
+							richColors
+							closeButton
+							position='top-center'
+							duration={1250}
+						/>
+						{children}
+						<Footer />
 					</ReactQueryProvider>
 				</AuthProvider>
 			</ThemeProvider>
