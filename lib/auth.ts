@@ -21,10 +21,6 @@ declare module 'next-auth' {
 			mercadopagoSubscriptionId: string;
 			mercadopagoPriceId: string;
 			mercadopagoCurrentPeriodEnd: string;
-			paypalCustomerId: string;
-			paypalSubscriptionId: string;
-			paypalPriceId: string;
-			paypalCurrentPeriodEnd: string;
 		} & DefaultSession['user'];
 	}
 }
