@@ -16,12 +16,6 @@ export const env: Env = {
 		process.env.NODE_ENV === 'development'
 			? process.env.MERCADOPAGO_DEV_SECRET ?? ''
 			: process.env.MERCADOPAGO_PROD_SECRET ?? '',
-	NEXT_PUBLIC_DEV_PAYPAL_CLIENT_ID:
-		process.env.NEXT_PUBLIC_DEV_PAYPAL_CLIENT_ID ?? '',
-	DEV_PAYPAL_SECRET_ID: process.env.DEV_PAYPAL_SECRET_ID ?? '',
-	NEXT_PUBLIC_PROD_PAYPAL_CLIENT_ID:
-		process.env.NEXT_PUBLIC_PROD_PAYPAL_CLIENT_ID ?? '',
-	PROD_PAYPAL_SECRET_ID: process.env.PROD_PAYPAL_SECRET_ID ?? '',
 	NEXT_PUBLIC_S3_PUBLIC: process.env.NEXT_PUBLIC_S3_PUBLIC ?? '',
 	NEXT_PUBLIC_S3_REGION: process.env.NEXT_PUBLIC_S3_REGION ?? '',
 	NEXT_PUBLIC_S3_SECRET: process.env.NEXT_PUBLIC_S3_SECRET ?? '',

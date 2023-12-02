@@ -139,3 +139,22 @@ export type ReceiverAddress = {
 	state_name: null;
 	country_name: null;
 };
+
+export type BrickResponse = {
+	token: string;
+	issuer_id: string;
+	payment_method_id: string;
+	transaction_amount: number;
+	installments: number;
+	payer: Payer;
+};
+
+export type Payer = {
+	email: string;
+	identification: Identification;
+};
+
+export type Identification = {
+	type: string;
+	number: string;
+};

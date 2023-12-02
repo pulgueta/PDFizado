@@ -38,7 +38,7 @@ const Plan = async () => {
 					</p>
 				</CardContent>
 				{plan !== 'PROFESSIONAL' && (
-					<CardFooter>
+					<CardFooter className='flex flex-col items-center justify-between gap-4 md:flex-row'>
 						<UpgradeButton />
 					</CardFooter>
 				)}
