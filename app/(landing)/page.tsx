@@ -12,16 +12,25 @@ const Home = () => {
 		<>
 			<main className='min-h-screen bg-white p-2 dark:bg-[#1C1917]'>
 				<div className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-3xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out dark:bg-[#131110] md:py-12'>
-					<h1 className='mb-4 text-5xl font-black text-black dark:text-white md:mb-8 md:text-7xl'>
+					<h1
+						id='landing-title'
+						className='mb-4 text-5xl font-black text-black dark:text-white md:mb-8 md:text-7xl'
+					>
 						<span className='text-primary'>PDF</span>izado
 					</h1>
-					<p className='text-sm leading-5 md:text-lg [&:not(:first-child)]:mt-6'>
+					<p
+						id='landing-description'
+						className='text-sm leading-5 md:text-lg [&:not(:first-child)]:mt-6'
+					>
 						Haz tu estudio más fácil interactuando con la
 						Inteligencia Artificial mediante un chat para extraer la
 						información más relevante de tus archivos{' '}
 						<span className='font-bold'>PDF.</span>
 					</p>
-					<p className='text-base leading-5 md:text-xl [&:not(:first-child)]:mt-6'>
+					<p
+						id='landing-explanation'
+						className='text-base leading-5 md:text-xl [&:not(:first-child)]:mt-6'
+					>
 						&iexcl;Solamente arrastra tu archivo y puedes empezar a
 						preguntar lo que necesites!
 					</p>
@@ -74,9 +83,9 @@ const Home = () => {
 					<PriceCards />
 				</div>
 				<section className='flex w-full flex-col items-center justify-center gap-8 bg-secondary px-2 py-8 shadow-sm dark:bg-[#131110] md:py-16'>
-					<p className='text-center text-2xl font-extrabold dark:text-white md:text-3xl'>
+					<h3 className='text-center text-2xl font-extrabold dark:text-white md:text-3xl'>
 						&iquest;Qué esperas para agilizar tu forma de estudiar?
-					</p>
+					</h3>
 					<Link href='/register' className={buttonVariants()}>
 						Registrarme
 						<ArrowRightIcon className='ml-2 h-4 w-4' />

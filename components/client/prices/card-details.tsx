@@ -44,9 +44,9 @@ export const PriceCards = () => {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<p className='text-center text-5xl font-black'>
+							<h4 className='text-center text-5xl font-black'>
 								Sin costo
-							</p>
+							</h4>
 							<Separator className='my-4' />
 							<ul className='text-muted-foreground'>
 								<li>&#9989; 12 páginas por PDF</li>
@@ -87,9 +87,9 @@ export const PriceCards = () => {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<p className='text-center text-5xl font-black'>
+							<h4 className='text-center text-5xl font-black'>
 								{professional}
-							</p>
+							</h4>
 							<Separator className='my-4' />
 							<ul className='text-muted-foreground'>
 								<li>&#9989; 64 páginas por PDF</li>
