@@ -1,102 +1,55 @@
 'use client';
 
-import { CardPayment, initMercadoPago } from '@mercadopago/sdk-react';
-import {
-	ICardPaymentBrickPayer,
-	ICardPaymentFormData,
-} from '@mercadopago/sdk-react/bricks/cardPayment/type';
-
 import { Button } from '~/shadcn/button';
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '~/shadcn/dialog';
 import { env } from '~/env';
 
 export const UpgradeButton = () => {
-	initMercadoPago(env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC, {
-		locale: 'es-CO',
-		advancedFraudPrevention: true,
-		trackingDisabled: true,
-		frontEndStack: 'react',
-	});
-
-	const initialization = {
-		amount: 50000,
+	const body = {
+		reason: 'PDFizado - Plan estándar',
+		auto_recurring: {
+			frequency: 1,
+			frequency_type: 'months',
+			transaction_amount: 25000,
+			currency_id: 'COP',
+		},
+		back_url: `${env.BASE_URL}/dashboard/plan`,
+		payer_email: 'test_user_538458526@testuser.com',
 	};
 
-	const customization = {
-		visual: {
-			style: {
-				customVariables: {
-					baseColor: '#e11d48',
-					baseColorSecondVariant: '#ba163a',
-				},
+	const onStandard = async () => {
+		const res = await fetch('https://api.mercadopago.com/preapproval', {
+			method: 'POST',
+			body: JSON.stringify({ body }),
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${env.MERCADOPAGO_DEV_SECRET}`,
 			},
-		},
-		paymentMethods: {
-			minInstallments: 1,
-			maxInstallments: 12,
-		},
+		})
+			.then((res) => {
+				res.json();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
+		console.log(res);
 	};
-
-	const onSubmit = async (
-		formData: ICardPaymentFormData<ICardPaymentBrickPayer>
-	) => {
-		try {
-			const res = await fetch('/api/checkout/mercadopago', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formData),
-			}).then((data) => data.json());
-
-			console.log(res);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	// const standard =
-	// 	'https://www.mercadopago.com.co/subscriptions/checkout?preapproval_plan_id=2c9380848bebed70018c2bc56b982b16';
 
 	// const professional =
-	// 	'https://www.mercadopago.com.co/subscriptions/checkout?preapproval_plan_id=2c9380848bebedbc018c2b6393712b57';
+	// 	'https://www.mercadopago.com.co/subscriptions/checkout?preapproval_plan_id=2c9380848c2cfc6a018c2de3ffb3005e';
 
 	return (
-		// <>
-		// 	<Button
-		// 		className='w-full md:w-auto'
-		// 		onClick={() => (window.location.href = standard)}
-		// 	>
-		// 		Actualizar a estándar
-		// 	</Button>
-		// 	<Button
-		// 		className='w-full md:w-auto'
-		// 		onClick={() => (window.location.href = professional)}
-		// 	>
-		// 		Actualizar a profesional
-		// 	</Button>
-		// </>
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button>Actualizar plan</Button>
-			</DialogTrigger>
-			<DialogContent className='max-h-[75vh] max-w-sm overflow-y-scroll rounded-xl md:max-h-full md:max-w-lg md:overflow-auto lg:max-w-xl'>
-				<DialogHeader>
-					<DialogTitle>Actualizar suscripción</DialogTitle>
-				</DialogHeader>
-				<CardPayment
-					locale='es-CO'
-					customization={customization}
-					initialization={initialization}
-					onSubmit={onSubmit}
-				/>
-			</DialogContent>
-		</Dialog>
+		<>
+			<Button className='w-full md:w-auto' onClick={onStandard}>
+				Actualizar a estándar
+			</Button>
+			{/* <Button
+				className='w-full md:w-auto'
+				onClick={() => (window.location.href = professional)}
+			>
+				Actualizar a profesional
+			</Button> */}
+		</>
 	);
 };
