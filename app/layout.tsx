@@ -13,6 +13,7 @@ import { Footer } from '~/components/server/footer/footer';
 import { Navbar } from '~/components/client/navbar/navbar';
 
 import '~/app/globals.css';
+import { ProgressProvider } from '~/providers/progress-bar';
 
 export const metadata: Metadata = {
 	title: {
@@ -122,15 +123,17 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<AuthProvider>
 					<ReactQueryProvider>
-						<Navbar />
-						<Toaster
-							richColors
-							closeButton
-							position='top-center'
-							duration={1500}
-						/>
-						{children}
-						<Footer />
+						<ProgressProvider>
+							<Navbar />
+							<Toaster
+								richColors
+								closeButton
+								position='top-center'
+								duration={1500}
+							/>
+							{children}
+							<Footer />
+						</ProgressProvider>
 					</ReactQueryProvider>
 				</AuthProvider>
 			</ThemeProvider>

@@ -45,7 +45,7 @@ const Home = () => {
 				</div>
 
 				<section className='relative mt-16 w-full animate-fade-up p-4 animate-once animate-ease-in-out'>
-					<h2 className='scroll-m-20 border-b pb-4 text-center text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl'>
+					<h2 className='mx-auto max-w-2xl scroll-m-20 border-b pb-4 text-center text-3xl font-extrabold tracking-tight md:text-4xl lg:text-5xl'>
 						Interfaz y utilidad
 					</h2>
 					<p className='text-center text-lg leading-7 [&:not(:first-child)]:mt-6'>
