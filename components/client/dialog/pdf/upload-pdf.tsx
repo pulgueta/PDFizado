@@ -10,6 +10,8 @@ import { Dropzone } from './dropzone';
 import { auth } from '~/lib/auth';
 import { env } from '~/env';
 
+export const dynamic = 'force-dynamic';
+
 export const UploadPDF = async () => {
 	const session = await auth();
 
