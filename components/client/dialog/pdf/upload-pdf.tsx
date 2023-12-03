@@ -8,18 +8,24 @@ import {
 } from '~/shadcn/dialog';
 import { Dropzone } from './dropzone';
 import { auth } from '~/lib/auth';
-import { env } from '~/env';
 
 export const dynamic = 'force-dynamic';
 
 export const UploadPDF = async () => {
 	const session = await auth();
 
-	const files = (await fetch(`${env.BASE_URL}/api/files`, {
-		next: {
-			revalidate: 5,
-		},
-	}).then((res) => res.json())) as Number[];
+	const files = (await fetch(
+		`${
+			process.env.NODE_ENV === 'development'
+				? 'http://localhost:3000'
+				: 'https://pdfizado.com'
+		}/api/files`,
+		{
+			next: {
+				revalidate: 5,
+			},
+		}
+	).then((res) => res.json())) as Number[];
 
 	return (
 		<Dialog>
