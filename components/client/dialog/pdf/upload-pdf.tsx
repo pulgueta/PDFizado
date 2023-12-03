@@ -15,9 +15,11 @@ export const dynamic = 'force-dynamic';
 export const UploadPDF = async () => {
 	const session = await auth();
 
-	const files = (await fetch(`${env.BASE_URL}/api/files`).then((res) =>
-		res.json()
-	)) as Number[];
+	const files = (await fetch(`${env.BASE_URL}/api/files`, {
+		next: {
+			revalidate: 5,
+		},
+	}).then((res) => res.json())) as Number[];
 
 	return (
 		<Dialog>
