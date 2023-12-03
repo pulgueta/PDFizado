@@ -8,11 +8,12 @@ import {
 } from '~/shadcn/dialog';
 import { Dropzone } from './dropzone';
 import { auth } from '~/lib/auth';
+import { env } from '~/env';
 
 export const UploadPDF = async () => {
 	const session = await auth();
 
-	const files = (await fetch('http://localhost:3000/api/files').then((res) =>
+	const files = (await fetch(`${env.BASE_URL}/api/files`).then((res) =>
 		res.json()
 	)) as Number[];
 
