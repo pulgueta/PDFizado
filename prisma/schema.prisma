@@ -34,23 +34,20 @@ model Session {
 }
 
 model User {
-    id                          String    @id @default(cuid())
-    name                        String
-    email                       String    @unique
-    password                    String
-    image                       String?
-    createdAt                   DateTime  @default(now())
-    updatedAt                   DateTime  @updatedAt
-    mercadopagoCurrentPeriodEnd DateTime? @unique
-    mercadopagoCustomerId       String?   @unique
-    mercadopagoPriceId          String?   @unique
-    mercadopagoSubscriptionId   String?   @unique
-    plan                        Plan      @default(FREE)
-    emailVerified               Boolean   @default(false)
-    accounts                    Account[]
-    File                        File[]
-    Message                     Message[]
-    sessions                    Session[]
+    id                        String    @id @default(cuid())
+    name                      String
+    email                     String    @unique
+    password                  String
+    image                     String?
+    createdAt                 DateTime  @default(now())
+    updatedAt                 DateTime  @updatedAt
+    mercadopagoSubscriptionId String?   @unique
+    plan                      Plan      @default(FREE)
+    emailVerified             Boolean   @default(false)
+    accounts                  Account[]
+    File                      File[]
+    Message                   Message[]
+    sessions                  Session[]
 }
 
 model VerificationToken {
