@@ -9,19 +9,22 @@
 	],
 	"screenshots": [
 		{
-			"src": "./screenshots/phone-2.webp",
-			"sizes": "376x666",
-			"type": "image/webp"
+			"src": "/screenshots/screenshot",
+			"sizes": "1028x2402",
+			"type": "image/png",
+			"label": "Pantalla de inicio de PDFizado"
 		},
 		{
-			"src": "./screenshots/phone-1.webp",
-			"sizes": "376x666",
-			"type": "image/webp"
+			"src": "/screenshots/screenshot-2",
+			"sizes": "1028x2402",
+			"type": "image/png",
+			"label": "Login de PDFizado"
 		},
 		{
-			"src": "./screenshots/phone-3.webp",
-			"sizes": "376x666",
-			"type": "image/webp"
+			"src": "/screenshots/screenshot-3",
+			"sizes": "1028x2402",
+			"type": "image/png",
+			"label": "Dashboard de PDFizado"
 		}
 	],
 	"scope": "/",
