@@ -1,3 +1,6 @@
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
+
 import { User } from '@prisma/client';
 
 import {
@@ -13,8 +16,18 @@ import { auth } from '~/lib/auth';
 import { CurrentPlan } from './current-plan';
 import { UpgradeButton } from './upgrade-button';
 
-const Plan = async () => {
+type PlanPage = {
+	searchParams: { preapproval_id: string };
+};
+
+const Plan = async ({ searchParams }: PlanPage) => {
 	const session = await auth();
+
+	if (!session) {
+		redirect('/login');
+	}
+
+	console.log(searchParams.preapproval_id);
 
 	const { plan } = (await db.user.findUnique({
 		where: {
@@ -37,11 +50,22 @@ const Plan = async () => {
 						Tu plan actual es: <CurrentPlan plan={plan} />
 					</p>
 				</CardContent>
-				{plan !== 'PROFESSIONAL' && (
-					<CardFooter className='flex flex-col items-center justify-between gap-4 md:flex-row'>
+				<CardFooter className='flex flex-col items-center justify-between gap-4 md:flex-row'>
+					{plan !== 'FREE' ? (
 						<UpgradeButton />
-					</CardFooter>
-				)}
+					) : (
+						<span className='text-sm font-normal leading-tight text-muted-foreground'>
+							Si quieres cancelar o modificar tu suscripción
+							actual, deberás manejarla en{' '}
+							<Link
+								href='https://www.mercadopago.com.co/subscriptions'
+								className='font-medium text-primary'
+							>
+								MercadoPago
+							</Link>
+						</span>
+					)}
+				</CardFooter>
 			</Card>
 		</section>
 	);
