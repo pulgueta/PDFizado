@@ -10,7 +10,9 @@ export const UpgradeButton = () => {
 			body: JSON.stringify(plan),
 		}).then((res) => res.json())) as Subscription;
 
-		window.location.href = res.init_point;
+		console.log(res);
+
+		// window.location.href = res.init_point;
 	};
 
 	return (

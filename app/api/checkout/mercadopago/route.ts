@@ -36,7 +36,9 @@ export const POST = async (req: NextRequest) => {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${env.MERCADOPAGO_SECRET}`,
 			},
-		}).then((res) => res.json());
+		})
+			.then((res) => res.json())
+			.catch((err) => console.log(err));
 
 		return NextResponse.json(res, { status: 200 });
 	} catch (error) {
