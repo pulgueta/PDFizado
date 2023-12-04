@@ -51,7 +51,7 @@ const Plan = async ({ searchParams }: PlanPage) => {
 					</p>
 				</CardContent>
 				<CardFooter className='flex flex-col items-center justify-between gap-4 md:flex-row'>
-					{plan !== 'FREE' ? (
+					{plan === 'FREE' ? (
 						<UpgradeButton />
 					) : (
 						<span className='text-sm font-normal leading-tight text-muted-foreground'>
