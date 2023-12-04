@@ -19,12 +19,18 @@ export const POST = async (req: NextRequest) => {
 
 		console.log('subscription status', res);
 
-		if (res.status === 'authorized') {
-			console.log('upgrading subscription to pro');
-		}
-
-		if (res.status === 'cancelled') {
-			console.log('downgrading to free tier');
+		switch (res.status) {
+			case 'pending':
+				console.log('user is paying the subscription');
+				break;
+			case 'authorized':
+				console.log('user paid -- upgrading plan');
+				break;
+			case 'cancelled':
+				console.log(
+					'user cancelled the subscription -- downgrading plan'
+				);
+				break;
 		}
 	}
 

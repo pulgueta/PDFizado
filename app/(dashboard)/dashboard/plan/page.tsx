@@ -1,3 +1,4 @@
+import type { NextPage } from 'next';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
@@ -20,14 +21,12 @@ type PlanPage = {
 	searchParams: { preapproval_id: string };
 };
 
-const Plan = async ({ searchParams }: PlanPage) => {
+const Plan: NextPage<PlanPage> = async () => {
 	const session = await auth();
 
 	if (!session) {
 		redirect('/login');
 	}
-
-	console.log(searchParams.preapproval_id);
 
 	const { plan } = (await db.user.findUnique({
 		where: {
