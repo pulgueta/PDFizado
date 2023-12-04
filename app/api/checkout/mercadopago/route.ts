@@ -1,61 +1,49 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { MercadoPagoConfig, Payment } from 'mercadopago';
-import { PaymentCreateData } from 'mercadopago/dist/clients/payment/create/types';
-
 import { env } from '~/env';
-import { BrickResponse } from '~/types';
-
-const client = new MercadoPagoConfig({
-	accessToken: env.MERCADOPAGO_SECRET,
-	options: {
-		timeout: 10000,
-	},
-});
+import { auth } from '~/lib/auth';
 
 export const POST = async (req: NextRequest) => {
+	const session = await auth();
+
 	const _body = await req.json();
 
-	const {
-		installments,
-		transaction_amount,
-		issuer_id,
-		payment_method_id,
-		payer: {
-			identification: { number, type },
-			email,
+	const body = {
+		reason: `PDFizado - Plan ${
+			_body === 'standard' ? 'estándar' : 'profesional'
+		}`,
+		auto_recurring: {
+			frequency: 1,
+			frequency_type: 'months',
+			transaction_amount: _body === 'standard' ? 25000 : 50000,
+			currency_id: 'COP',
 		},
-		token,
-	} = _body as BrickResponse;
-
-	console.log('body', _body);
-
-	const payment = new Payment(client);
-
-	const body: PaymentCreateData = {
-		body: {
-			transaction_amount,
-			description: 'PDFizado - Plan Profesional',
-			payment_method_id,
-			installments,
-			issuer_id: Number(issuer_id),
-			token,
-			payer: {
-				email,
-				identification: {
-					type,
-					number,
-				},
-			},
-		},
+		back_url:
+			process.env.NODE_ENV === 'development'
+				? 'https://3mx9jhl1-3000.use2.devtunnels.ms/dashboard/plan'
+				: 'https://pdfizado.com/dashboard/plan',
+		payer_email:
+			process.env.NODE_ENV === 'development'
+				? 'test_user_398545683@testuser.com'
+				: session?.user.email,
 	};
 
 	try {
-		const data = await payment.create(body);
+		const res = await fetch('https://api.mercadopago.com/preapproval', {
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${env.MERCADOPAGO_SECRET}`,
+			},
+		}).then((res) => res.json());
 
-		return NextResponse.json(data);
+		return NextResponse.json(res, { status: 200 });
 	} catch (error) {
 		console.log(error);
-		return NextResponse.json(error);
+		return NextResponse.json(error, {
+			status: 500,
+			statusText: error as string,
+		});
 	}
 };
