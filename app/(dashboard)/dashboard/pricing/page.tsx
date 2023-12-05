@@ -1,4 +1,19 @@
+import { Metadata } from 'next';
+
 import { PriceCards } from '~/components/client/prices/card-details';
+
+export const metadata: Metadata = {
+	metadataBase: new URL(
+		`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
+			process.env.NODE_ENV === 'production'
+				? 'pdfizado.com'
+				: 'localhost:3000'
+		}/dashboard/pricing`
+	),
+	alternates: {
+		canonical: '/dashboard/pricing',
+	},
+};
 
 const Pricing = () => {
 	return (

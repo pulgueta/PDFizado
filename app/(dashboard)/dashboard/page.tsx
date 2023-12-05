@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { UploadPDF } from '~/components/client/dialog/pdf/upload-pdf';
@@ -6,6 +7,19 @@ import { Skeleton } from '~/shadcn/skeleton';
 import { auth } from '~/lib/auth';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+	metadataBase: new URL(
+		`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
+			process.env.NODE_ENV === 'production'
+				? 'pdfizado.com'
+				: 'localhost:3000'
+		}/dashboard`
+	),
+	alternates: {
+		canonical: '/dashboard',
+	},
+};
 
 const Dashboard = async () => {
 	const session = await auth();
@@ -32,7 +46,7 @@ const Dashboard = async () => {
 			</header>
 			<main className='min-h-screen md:min-h-[calc(100vh-381px)]'>
 				<div className='mx-auto max-w-7xl rounded p-4'>
-					<h3 className='mt-6 text-xl font-semibold'>Tus PDFs:</h3>
+					<h2 className='mt-6 text-2xl font-bold'>Tus PDFs:</h2>
 					<UserFiles />
 				</div>
 			</main>
