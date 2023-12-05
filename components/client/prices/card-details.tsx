@@ -56,7 +56,6 @@ export const PriceCards = () => {
 							</h4>
 							<Separator className='my-4' />
 							<ul className='text-muted-foreground'>
-								<li>&#9989; 12 páginas por PDF</li>
 								<li>&#9989; 8MB de tamaño límite</li>
 								<li>&#9989; Respuesta estándar</li>
 								<li>&#9989; Soporte estándar</li>
@@ -98,14 +97,16 @@ export const PriceCards = () => {
 							</h4>
 							<Separator className='my-4' />
 							<ul className='text-muted-foreground'>
-								<li>&#9989; 64 páginas por PDF</li>
 								<li>&#9989; 32MB de tamaño límite</li>
 								<li>&#9989; Respuesta más rápida</li>
-								<li>&#9989; Soporte estándar</li>
-								<li>&#9989; PDFs ilimitados</li>
+								<li>&#9989; Subir hasta 12 PDFs</li>
 								<li>&#9989; Respuestas más claras</li>
-								<li>&#9989; Soporte personalizado</li>
+								<li>&#9989; Soporte prioritario</li>
 								<li>&#9989; Alojamiento de PDFs de por vida</li>
+								<li>
+									&#10060; Acceso a funciones futuras con
+									anticipación
+								</li>
 							</ul>
 						</CardContent>
 						<CardFooter>
@@ -127,14 +128,18 @@ export const PriceCards = () => {
 							</h4>
 							<Separator className='my-4' />
 							<ul className='text-muted-foreground'>
-								<li>&#9989; 64 páginas por PDF</li>
-								<li>&#9989; 32MB de tamaño límite</li>
+								<li>&#9989; Sin límite de tamaño</li>
 								<li>&#9989; Respuesta más rápida</li>
-								<li>&#9989; Soporte estándar</li>
 								<li>&#9989; PDFs ilimitados</li>
 								<li>&#9989; Respuestas más claras</li>
-								<li>&#9989; Soporte personalizado</li>
+								<li>
+									&#9989; Soporte prioritario y personalizado
+								</li>
 								<li>&#9989; Alojamiento de PDFs de por vida</li>
+								<li>
+									&#9989; Acceso a funciones futuras con
+									anticipación
+								</li>
 							</ul>
 						</CardContent>
 						<CardFooter>
