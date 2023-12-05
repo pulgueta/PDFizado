@@ -1,113 +1,20 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
-
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
 	CheckCircle2Icon,
 	FileIcon,
 	Loader2Icon,
 	UploadCloudIcon,
 } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import { useDropzone } from 'react-dropzone';
-import { toast } from 'sonner';
 
-import { uploadToS3 } from '~/lib/aws/awsS3';
-import { maxSizeAllowed } from '~/lib/plan-allowance';
-
-interface Mutation {
-	key: string;
-	name: string;
-	url: string;
-}
+import { useDropzonePDF } from './hooks/use-pdf-dropzone';
+import { usePDFMutation } from './hooks/use-pdf-mutation';
 
 export const Dropzone = () => {
-	const { push, refresh } = useRouter();
-	const pathname = usePathname();
+	const { mutate, isPending, isSuccess } = usePDFMutation();
 
-	const queryClient = useQueryClient();
-	const { mutate, isPending, isSuccess } = useMutation({
-		mutationKey: ['uploadToS3'],
-		mutationFn: ({ key, name, url }: Mutation) => {
-			const data = fetch('/api/files', {
-				body: JSON.stringify({
-					key,
-					name,
-					url,
-				}),
-				method: 'POST',
-			}).then((res) => res.json());
-
-			return data;
-		},
-		onError: (err) => {
-			toast.error(err.message || 'Error al subir el PDF');
-		},
-		onSuccess: ({ id }) => {
-			toast.success(
-				'Tu PDF se ha procesado correctamente, serás redirigido en unos segundos'
-			);
-			queryClient.invalidateQueries({
-				queryKey: ['uploadToS3'],
-			});
-			refresh();
-			push(`${pathname}/${id}`);
-		},
-		retry: 3,
-		retryDelay: 1000,
-	});
-
-	const session = useSession();
-
-	const plan = session.data?.user.plan as string;
-
-	const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
-		accept: { 'application/pdf': ['.pdf'] },
-		maxFiles: 1,
-		multiple: false,
-		maxSize: maxSizeAllowed(plan),
-		validator: (file) => {
-			if (file.size > maxSizeAllowed(plan)) {
-				return {
-					code: 'file-too-large',
-					message: 'El archivo excede el límite de tu plan',
-				};
-			}
-
-			if (!file.type.includes('pdf')) {
-				return {
-					code: 'file-invalid-type',
-					message: 'El archivo no es un PDF',
-				};
-			}
-
-			return null;
-		},
-		onDropRejected: (fileRejections) => {
-			toast.error(fileRejections[0].errors[1].message);
-		},
-		onError: (err) => {
-			toast.error(err.message);
-		},
-		onDropAccepted: (file) => {
-			toast.promise(
-				async () => {
-					const res = await uploadToS3(file[0]);
-
-					if (!res.key || !res.name) {
-						toast.error('Error al subir el PDF');
-					}
-
-					mutate(res);
-				},
-				{
-					loading: `Subiendo ${file[0].name}...`,
-					success: `${file[0].name} subido correctamente`,
-					error: `Error al subir ${file[0].name}`,
-				}
-			);
-		},
+	const { getRootProps, getInputProps, acceptedFiles } = useDropzonePDF({
+		mutate,
 	});
 
 	return (
