@@ -1,6 +1,11 @@
 import { MetadataRoute } from 'next';
 
+import { File } from '@prisma/client';
+
+import { db } from '~/database/db';
 import { auth } from '~/lib/auth';
+
+export const revalidate = 1800;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const url =
@@ -8,7 +13,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			? 'http://localhost:3000'
 			: 'https://www.pdfizado.com';
 
-	const user = await auth();
+	const session = await auth();
+
+	const data = (await db.file.findMany({
+		where: {
+			userId: session?.user.email,
+		},
+	})) as File[];
+
+	const files = data.map((file) => ({
+		url: `${url}/dashboard/${file.id}`,
+		lastModified: new Date(file.updatedAt),
+		changeFrequency: 'weekly',
+		priority: 0.6,
+	})) as MetadataRoute.Sitemap;
 
 	return [
 		{
@@ -48,12 +66,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			priority: 0.6,
 		},
 		{
-			url: `${url}/forgot-password`,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.6,
-		},
-		{
 			url: `${url}/verify`,
 			lastModified: new Date(),
 			changeFrequency: 'weekly',
@@ -66,22 +78,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			priority: 1,
 		},
 		{
-			url: `${url}/dashboard/${user?.user.id ?? ':id'}`,
+			url: `${url}/dashboard/pricing`,
 			lastModified: new Date(),
 			changeFrequency: 'weekly',
-			priority: 1,
+			priority: 0.5,
 		},
 		{
-			url: `${url}/dashboard/${user?.user.id ?? ':id'}/:fileId`,
+			url: `${url}/dashboard/plan`,
 			lastModified: new Date(),
 			changeFrequency: 'weekly',
-			priority: 0.8,
+			priority: 0.5,
 		},
-		{
-			url: `${url}/dashboard/${user?.user.id ?? ':id'}/plan`,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.8,
-		},
+		...files,
 	];
 }
