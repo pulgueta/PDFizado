@@ -40,7 +40,11 @@ export const DesktopRoutes = () => {
 					</li>
 				))
 			)}
-			{status === 'authenticated' && <SignOut />}
+			{status === 'authenticated' && (
+				<li>
+					<SignOut />
+				</li>
+			)}
 		</ul>
 	);
 };
