@@ -18,23 +18,23 @@ export const Footer = () => {
 					{footerRoutes.map((route) => (
 						<li
 							key={route.label}
-							aria-label={route.label}
 							className='text-xs text-muted-foreground transition-colors duration-200 ease-in-out hover:text-primary-foreground'
 						>
 							<Link href={route.href}>{route.label}</Link>
 						</li>
 					))}
-					<p className='py-4 text-center text-xs text-muted-foreground'>
-						&copy; Copyright{' '}
-						<Link
-							href='https://www.linkedin.com/in/and-rodr/'
-							aria-label='Andrés Rodríguez - LinkedIn'
-							target='_blank'
-						>
-							Andrés Rodríguez
-						</Link>{' '}
-						{new Date().getFullYear()}
-					</p>
+					<li>
+						<p className='py-4 text-center text-xs text-muted-foreground'>
+							&copy; Copyright{' '}
+							<Link
+								href='https://www.linkedin.com/in/and-rodr/'
+								target='_blank'
+							>
+								Andrés Rodríguez
+							</Link>{' '}
+							{new Date().getFullYear()}
+						</p>
+					</li>
 				</ul>
 			</nav>
 		</footer>
