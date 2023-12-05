@@ -2,6 +2,8 @@ import { PropsWithChildren } from 'react';
 
 import type { Metadata } from 'next';
 
+import { ReactQueryProvider } from '~/providers/tanstack-provider';
+
 export const metadata: Metadata = {
 	title: 'Dashboard',
 	description:
@@ -18,6 +20,8 @@ export const metadata: Metadata = {
 	},
 };
 
-const DashboardLayout = ({ children }: PropsWithChildren) => children;
+const DashboardLayout = ({ children }: PropsWithChildren) => (
+	<ReactQueryProvider>{children}</ReactQueryProvider>
+);
 
 export default DashboardLayout;
