@@ -20,6 +20,13 @@ import { Separator } from '~/shadcn/separator';
 import { Button } from '~/shadcn/button';
 
 export const PriceCards = () => {
+	const standard = new Intl.NumberFormat('es-CO', {
+		style: 'currency',
+		currency: 'COP',
+	})
+		.format(25000)
+		.replace(',00', '');
+
 	const professional = new Intl.NumberFormat('es-CO', {
 		style: 'currency',
 		currency: 'COP',
@@ -33,7 +40,7 @@ export const PriceCards = () => {
 				*Precio en COP
 			</p>
 			<TooltipProvider>
-				<div className='mx-auto grid grid-cols-1 gap-4 lg:grid-cols-2'>
+				<div className='mx-auto flex grow flex-col gap-4 lg:flex-row'>
 					<Card className='mx-auto w-80 bg-neutral-50 dark:bg-[#131110] md:w-[25rem]'>
 						<CardHeader className='text-center'>
 							<CardTitle className='text-3xl font-bold'>
@@ -76,7 +83,35 @@ export const PriceCards = () => {
 							<Button className='w-full'>Adquirir</Button>
 						</CardFooter>
 					</Card>
-
+					<Card className='mx-auto w-80 bg-neutral-50 dark:bg-[#131110] md:w-[25rem]'>
+						<CardHeader className='text-center'>
+							<CardTitle className='text-3xl font-bold'>
+								Estándar
+							</CardTitle>
+							<CardDescription>
+								Para documentos más grandes
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<h4 className='text-center text-5xl font-black'>
+								{standard}
+							</h4>
+							<Separator className='my-4' />
+							<ul className='text-muted-foreground'>
+								<li>&#9989; 64 páginas por PDF</li>
+								<li>&#9989; 32MB de tamaño límite</li>
+								<li>&#9989; Respuesta más rápida</li>
+								<li>&#9989; Soporte estándar</li>
+								<li>&#9989; PDFs ilimitados</li>
+								<li>&#9989; Respuestas más claras</li>
+								<li>&#9989; Soporte personalizado</li>
+								<li>&#9989; Alojamiento de PDFs de por vida</li>
+							</ul>
+						</CardContent>
+						<CardFooter>
+							<Button className='w-full'>Adquirir</Button>
+						</CardFooter>
+					</Card>
 					<Card className='mx-auto w-80 bg-neutral-50 dark:bg-[#131110] md:w-[25rem]'>
 						<CardHeader className='text-center'>
 							<CardTitle className='text-3xl font-bold'>
