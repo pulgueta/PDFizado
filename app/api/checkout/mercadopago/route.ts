@@ -28,8 +28,6 @@ export const POST = async (req: NextRequest) => {
 				: session?.user.email,
 	};
 
-	console.log(body);
-
 	try {
 		const res = await fetch('https://api.mercadopago.com/preapproval', {
 			method: 'POST',

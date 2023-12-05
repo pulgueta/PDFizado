@@ -25,7 +25,7 @@ export const POST = async (req: NextRequest) => {
 
 			switch (res.status) {
 				case 'authorized':
-					console.log(res.payer_email);
+					console.log('Upgrading subscription');
 					// await db.user.update({
 					// 	data: {
 					// 		mercadopagoSubscriptionId: res.id,
@@ -36,7 +36,7 @@ export const POST = async (req: NextRequest) => {
 					// });
 					break;
 				case 'cancelled':
-					console.log(res.payer_email);
+					console.log('Downgrading subscription');
 					// await db.user.update({
 					// 	data: {
 					// 		mercadopagoSubscriptionId: null,
