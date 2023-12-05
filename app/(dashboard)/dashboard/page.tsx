@@ -5,6 +5,8 @@ import { UserFiles } from '~/components/client/user-files';
 import { Skeleton } from '~/shadcn/skeleton';
 import { auth } from '~/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 const Dashboard = async () => {
 	const session = await auth();
 
