@@ -1,4 +1,6 @@
-export const maxSizeAllowed = (plan: string) => {
+import { $Enums } from '@prisma/client';
+
+export const maxSizeAllowed = (plan: $Enums.Plan) => {
 	switch (plan) {
 		case 'FREE':
 			return 8000000;
@@ -11,7 +13,7 @@ export const maxSizeAllowed = (plan: string) => {
 	}
 };
 
-export const plan = (plan: string) => {
+export const plan = (plan: $Enums.Plan) => {
 	switch (plan) {
 		case 'FREE':
 			return 'gpt-3.5-turbo-0613';
