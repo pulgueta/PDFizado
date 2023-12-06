@@ -36,7 +36,7 @@ const Plan: NextPage<PlanPage> = async () => {
 
 	return (
 		<section className='min-h-[calc(100vh-205px)] px-4 py-8'>
-			<Card className='mx-auto w-80 md:w-auto md:max-w-md'>
+			<Card className='mx-auto w-full sm:w-96 md:w-auto md:max-w-md'>
 				<CardHeader>
 					<CardTitle>Tu plan</CardTitle>
 					<CardDescription>
@@ -49,7 +49,7 @@ const Plan: NextPage<PlanPage> = async () => {
 						Tu plan actual es: <CurrentPlan plan={plan} />
 					</p>
 				</CardContent>
-				<CardFooter className='flex flex-col items-center justify-between gap-4 md:flex-row'>
+				<CardFooter className='flex flex-col items-center justify-between gap-4'>
 					{plan === 'FREE' ? (
 						<UpgradeButton />
 					) : (
