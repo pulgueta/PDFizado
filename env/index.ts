@@ -6,8 +6,6 @@ export const env: Env = {
 	GOOGLE_PUBLIC_ID: process.env.GOOGLE_PUBLIC_ID ?? '',
 	GOOGLE_SECRET_ID: process.env.GOOGLE_SECRET_ID ?? '',
 	NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ?? '',
-	UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET ?? '',
-	UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID ?? '',
 	NEXT_PUBLIC_MERCADOPAGO_PUBLIC:
 		process.env.NODE_ENV === 'development'
 			? process.env.NEXT_PUBLIC_MERCADOPAGO_DEV_PUBLIC ?? ''
