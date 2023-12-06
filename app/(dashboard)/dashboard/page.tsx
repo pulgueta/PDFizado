@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { UploadPDF } from '~/components/client/dialog/pdf/upload-pdf';
-import { UserFiles } from '~/components/client/user-files';
+import { UserFiles } from '~/components/client/user/user-files';
 import { Skeleton } from '~/shadcn/skeleton';
 import { auth } from '~/lib/auth';
 
