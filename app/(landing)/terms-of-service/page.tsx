@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 	title: 'Términos de Servicio',
 	description: 'Términos de servicio por el uso de PDFizado.',
 	robots: {
-		index: false,
+		index: true,
 		googleBot: {
 			notranslate: false,
 		},
