@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { Message, OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration, OpenAIApi } from 'openai-edge';
+import { $Enums } from '@prisma/client';
 
 import { env } from '~/env';
 import { plan as Plan } from '~/lib/plan-allowance';
@@ -19,7 +20,11 @@ const gpt = new OpenAIApi(config);
 export const POST = async (req: NextRequest) => {
 	const body = await req.json();
 
-	const { messages, chatId } = body;
+	const { messages, chatId, fileId } = body;
+
+	console.log('messages ->', messages);
+	console.log('chatId ->', chatId);
+	console.log('fileId ->', fileId);
 
 	const session = await auth();
 
@@ -52,7 +57,7 @@ export const POST = async (req: NextRequest) => {
 
 	try {
 		const response = await gpt.createChatCompletion({
-			model: Plan(session?.user.plan || 'FREE'),
+			model: Plan(session?.user.plan as $Enums.Plan),
 			stream: true,
 			temperature: 0.2,
 			messages: [
@@ -68,7 +73,7 @@ export const POST = async (req: NextRequest) => {
 				await db.message.create({
 					data: {
 						text: lastMessage.content,
-						fileId: chatId,
+						fileId,
 						userId: session.user.id,
 						isUserMessage: true,
 					},
@@ -78,7 +83,7 @@ export const POST = async (req: NextRequest) => {
 				await db.message.create({
 					data: {
 						text: completion,
-						fileId: chatId,
+						fileId,
 						userId: session.user.id,
 						isUserMessage: false,
 					},
