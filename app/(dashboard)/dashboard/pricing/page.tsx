@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 import { PriceCards } from '~/components/client/prices/card-details';
+import { auth } from '~/lib/auth';
 
 export const metadata: Metadata = {
 	metadataBase: new URL(
@@ -15,7 +17,13 @@ export const metadata: Metadata = {
 	},
 };
 
-const Pricing = () => {
+const Pricing = async () => {
+	const session = await auth();
+
+	if (!session) {
+		redirect('/login');
+	}
+
 	return (
 		<div className='relative min-h-[calc(100vh-205px)] bg-white p-4 dark:bg-[#1C1917]'>
 			<div className='mx-auto my-8 max-w-7xl'>
