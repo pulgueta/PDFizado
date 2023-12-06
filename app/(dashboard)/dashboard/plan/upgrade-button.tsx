@@ -15,19 +15,25 @@ export const UpgradeButton = () => {
 
 	return (
 		<>
-			<Button
-				className='w-full md:w-auto'
-				onClick={onUpgrade('standard')}
-			>
-				Actualizar a estándar
-			</Button>
+			<div className='flex w-full flex-col items-center justify-between gap-4 md:flex-row'>
+				<Button
+					className='w-full md:w-auto'
+					onClick={onUpgrade('standard')}
+				>
+					Actualizar a estándar
+				</Button>
 
-			<Button
-				className='w-full md:w-auto'
-				onClick={onUpgrade('professional')}
-			>
-				Actualizar a profesional
-			</Button>
+				<Button
+					className='w-full md:w-auto'
+					onClick={onUpgrade('professional')}
+				>
+					Actualizar a profesional
+				</Button>
+			</div>
+			<span className='text-sm leading-5 text-muted-foreground'>
+				*Asegúrate que tu correo de MercadoPago sea el mismo que usaste
+				para registrarte en PDFizado.
+			</span>
 		</>
 	);
 };
