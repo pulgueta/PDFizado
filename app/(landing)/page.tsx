@@ -7,6 +7,8 @@ import { Badge } from '~/shadcn/badge';
 import { buttonVariants } from '~/shadcn/button';
 import { PriceCards } from '~/components/client/prices/card-details';
 
+import landing from '~/public/landing.webp';
+
 const Home = () => {
 	return (
 		<>
@@ -62,11 +64,12 @@ const Home = () => {
 					<div className='mt-8 flex flex-col items-center justify-center md:flex-row'>
 						<div className='relative mt-4 w-full'>
 							<Image
-								src='/landing.webp'
+								src={landing}
 								alt='PDFizado - UI'
 								width={850}
 								height={850}
 								quality={100}
+								placeholder='blur'
 								priority
 								className='relative z-40 mx-auto aspect-auto rounded-xl shadow-xl'
 							/>
