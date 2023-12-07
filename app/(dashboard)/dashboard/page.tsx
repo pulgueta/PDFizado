@@ -32,7 +32,10 @@ const Dashboard = async () => {
 		<>
 			<header className='mx-auto max-w-7xl p-4'>
 				{session?.user.name ? (
-					<h1 className='mb-4 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
+					<h1
+						id='dashboard-title'
+						className='mb-4 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'
+					>
 						Dashboard de {session.user.name}
 					</h1>
 				) : (
