@@ -20,6 +20,7 @@ export const DesktopRoutes = () => {
 					<li key={href}>
 						<Link
 							href={href}
+							id={href.replace('/', '')}
 							aria-label={label}
 							className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
 						>
@@ -32,6 +33,7 @@ export const DesktopRoutes = () => {
 					<li key={href}>
 						<Link
 							href={href}
+							id={href.replace('/', '')}
 							aria-label={label}
 							className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
 						>
@@ -61,6 +63,7 @@ export const MobileRoutes = () => {
 									<Link
 										href={href}
 										aria-label={label}
+										id={href.replace('/', '')}
 										className='text-center text-lg font-semibold leading-loose duration-200 ease-in-out hover:text-primary'
 									>
 										{label}
@@ -74,6 +77,7 @@ export const MobileRoutes = () => {
 									<Link
 										href={href}
 										aria-label={label}
+										id={href.replace('/', '')}
 										className='text-center text-lg font-semibold leading-loose duration-200 ease-in-out hover:text-primary'
 									>
 										{label}
