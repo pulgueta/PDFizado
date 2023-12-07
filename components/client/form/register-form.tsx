@@ -191,6 +191,12 @@ export const RegisterForm = () => {
 							)}
 						</Button>
 					</form>
+					<span className='mt-4 block text-center text-sm text-muted-foreground'>
+						Al registrarte, aceptas nuestros{' '}
+						<Link href='/terms-of-service'>
+							Términos y Condiciones
+						</Link>
+					</span>
 				</Form>
 			</CardContent>
 			<CardFooter className='flex flex-col items-center justify-center'>
