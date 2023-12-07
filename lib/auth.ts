@@ -2,8 +2,6 @@ import NextAuth, { type DefaultSession } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 // import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
-import { verify } from 'argon2';
-import { User as PrismaUser } from '@prisma/client';
 
 import { db } from '~/database/db';
 import { env } from '~/env';
