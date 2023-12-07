@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import type { Metadata, Viewport } from 'next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { GeistSans } from 'geist/font/sans';
 
@@ -135,6 +136,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 				</AuthProvider>
 			</ThemeProvider>
 			<Analytics />
+			<SpeedInsights />
 		</body>
 	</html>
 );
