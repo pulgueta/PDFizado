@@ -58,7 +58,7 @@ export const ResetPassword = () => {
 			}
 		}
 
-		toast('Cambio de contraseña', {
+		toast.success('Cambio de contraseña', {
 			description: 'Contraseña reestablecida con éxito',
 		});
 		push(res.url);
