@@ -22,6 +22,10 @@ export const POST = async (req: NextRequest) => {
 		},
 	})) as User;
 
+	if (!user) {
+		return NextResponse.json('No user was found', { status: 404 });
+	}
+
 	if (!user.emailVerified) {
 		return NextResponse.json('Email not verified', { status: 401 });
 	}
