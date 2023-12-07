@@ -16,6 +16,7 @@ export const Navbar = async () => {
 			<Link
 				href={!session ? '/' : '/dashboard'}
 				aria-label='PDFizado - Inicio'
+				id='branding'
 				className='text-3xl font-black text-black dark:text-white md:text-4xl'
 			>
 				<span className='text-primary'>PDF</span>izado
@@ -24,7 +25,11 @@ export const Navbar = async () => {
 				<DesktopRoutes />
 				<ThemeSwitcher />
 				<Sheet>
-					<SheetTrigger asChild className='flex md:hidden'>
+					<SheetTrigger
+						asChild
+						className='flex md:hidden'
+						id='navbar-btn'
+					>
 						<Button
 							size='icon'
 							aria-label='Mobile navbar menu button'
