@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import Link from 'next/link';
 
 import { buttonVariants } from '~/shadcn/button';
@@ -15,16 +17,19 @@ type ResetToken = {
 export const metadata: Metadata = {
 	title: 'Reestablecer contraseña',
 	description: 'Actualiza tu contraseña de PDFizado',
+	alternates: {
+		canonical: '/reset-password',
+	},
 };
 
-const ResetPassword = async ({ searchParams }: ResetToken) => {
-	if (!searchParams.token) {
+const ResetPassword: FC<ResetToken> = async ({ searchParams: { token } }) => {
+	if (!token) {
 		return <NoTokenProvided />;
 	}
 
 	const dbToken = await db.verificationToken.findUnique({
 		where: {
-			token: searchParams.token,
+			token,
 		},
 	});
 
@@ -33,7 +38,7 @@ const ResetPassword = async ({ searchParams }: ResetToken) => {
 	}
 
 	const isTokenExpired =
-		dbToken?.expires.toISOString()! < new Date().toISOString();
+		dbToken.expires.toISOString() < new Date().toISOString();
 
 	return (
 		<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
@@ -42,9 +47,9 @@ const ResetPassword = async ({ searchParams }: ResetToken) => {
 					<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 						Reestablecer contraseña
 					</h1>
-					<h3 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
+					<h2 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
 						Escribe tu nueva contraseña y confírmala
-					</h3>
+					</h2>
 					<Card className='w-full max-w-lg'>
 						<CardHeader>
 							<CardTitle>Reestablecer contraseña</CardTitle>
@@ -59,9 +64,9 @@ const ResetPassword = async ({ searchParams }: ResetToken) => {
 					<h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
 						Token expirado
 					</h1>
-					<h3 className='scroll-m-20 text-2xl font-semibold tracking-tight'>
+					<h2 className='scroll-m-20 text-2xl font-semibold tracking-tight'>
 						Tendrás que solicitar uno nuevo.
-					</h3>
+					</h2>
 					<Link
 						className={buttonVariants({ variant: 'link' })}
 						href='/forgot-password'
@@ -81,11 +86,11 @@ const NoTokenProvided = () => (
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No se ha proporcionado un token
 		</h1>
-		<h3 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
+		<h2 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
 			Necesitas un token válido para reestablecer tu contraseña.
-		</h3>
+		</h2>
 		<Link
-			className={buttonVariants({ variant: 'link' })}
+			className={buttonVariants({ variant: 'link', size: 'lg' })}
 			href='/forgot-password'
 		>
 			Recuperar contraseña
@@ -98,11 +103,11 @@ const InvalidToken = () => (
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No es un token válido
 		</h1>
-		<h3 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
+		<h2 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
 			Necesitas un token válido para reestablecer tu contraseña.
-		</h3>
+		</h2>
 		<Link
-			className={buttonVariants({ variant: 'link' })}
+			className={buttonVariants({ variant: 'link', size: 'lg' })}
 			href='/forgot-password'
 		>
 			Recuperar contraseña
