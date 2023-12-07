@@ -6,8 +6,9 @@ import { Button } from '~/shadcn/button';
 
 export const SignOut = () => (
 	<Button
-		onClick={() => signOut({ callbackUrl: '/' })}
+		onClick={() => signOut({ callbackUrl: '/login' })}
 		aria-label='Cerrar sesión'
+		id='logout-btn'
 		variant='destructive'
 	>
 		Cerrar sesión
@@ -18,7 +19,8 @@ export const SignOutMobile = () => (
 	<Button
 		className='w-full font-medium'
 		aria-label='Cerrar sesión'
-		onClick={() => signOut({ callbackUrl: '/' })}
+		id='logout-btn'
+		onClick={() => signOut({ callbackUrl: '/login' })}
 		variant='destructive'
 	>
 		Cerrar sesión
