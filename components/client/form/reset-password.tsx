@@ -44,25 +44,24 @@ export const ResetPassword = () => {
 			}),
 		});
 
-		if (res.ok && res.url) {
-			toast.success('Contraseña reestablecida con éxito');
-			push(res.url);
-		}
-
-		if (res.status === 400) {
-			toast.error('El token ha expirado');
-			return;
-		}
-
-		if (res.status === 401) {
-			toast.error('El token es inválido');
-			return;
-		}
-
 		if (!res.ok) {
-			toast.error('Ha ocurrido un error');
-			return;
+			switch (res.status) {
+				case 400:
+					toast.error('El token ha expirado');
+					return;
+				case 401:
+					toast.error('El token es inválido');
+					return;
+				default:
+					toast.error('Ha ocurrido un error');
+					return;
+			}
 		}
+
+		toast('Cambio de contraseña', {
+			description: 'Contraseña reestablecida con éxito',
+		});
+		push(res.url);
 	});
 
 	return (
