@@ -36,45 +36,42 @@ export const ForgotPasswordForm = () => {
 	const onSubmit = form.handleSubmit(async ({ email }: ForgotPassword) => {
 		const res = await fetch('/api/email/forgot-password', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
 			body: JSON.stringify({
 				email,
 			}),
 		});
 
-		if (res.status === 404 && !res.ok) {
-			toast.error('No existe el usuario', {
-				description:
-					'No hay un usuario registrado con ese correo electrónico.',
-			});
+		if (!res.ok) {
+			switch (res.status) {
+				case 404:
+					toast.error('No existe el usuario', {
+						description:
+							'No hay un usuario registrado con ese correo electrónico.',
+					});
 
-			return;
-		}
+					return;
+				case 401:
+					toast.error('Usuario no verificado', {
+						description:
+							'Debes verificar tu correo electrónico para poder cambiar tu contraseña.',
+					});
 
-		if (res.status === 401 && !res.ok) {
-			toast.error('Usuario no verificado', {
-				description:
-					'Debes verificar tu correo electrónico para poder cambiar tu contraseña.',
-			});
+					return;
+				case 500:
+					toast.error('Error', {
+						description:
+							'Ocurrió un error al enviar el correo de recuperación.',
+					});
 
-			return;
-		}
-
-		if (res.status === 500 && !res.ok) {
-			toast.error('Error', {
-				description:
-					'Ocurrió un error al enviar el correo de recuperación.',
-			});
-
-			return;
+					return;
+			}
 		}
 
 		toast.success('Correo enviado', {
 			description:
 				'Se ha enviado el correo de recuperación, revisa tu bandeja de entrada.',
 		});
+
 		form.clearErrors();
 		form.reset();
 	});
@@ -102,6 +99,7 @@ export const ForgotPasswordForm = () => {
 											autoComplete='Correo'
 											placeholder='Tu correo registrado'
 											type='email'
+											id='email'
 											disabled={
 												form.formState.isSubmitting
 											}
@@ -116,10 +114,11 @@ export const ForgotPasswordForm = () => {
 						<Button
 							type='submit'
 							className='w-full'
+							id='submit-btn'
 							disabled={form.formState.isSubmitting}
 						>
 							{form.formState.isSubmitting ? (
-								<Loader2Icon className='mr-2 animate-spin' />
+								<Loader2Icon className='h-4 w-4 animate-spin' />
 							) : (
 								'Recuperar contraseña'
 							)}
