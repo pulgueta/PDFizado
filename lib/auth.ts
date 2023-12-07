@@ -17,10 +17,7 @@ declare module 'next-auth' {
 			email: string;
 			emailVerified: boolean;
 			plan: string;
-			mercadopagoCustomerId: string;
 			mercadopagoSubscriptionId: string;
-			mercadopagoPriceId: string;
-			mercadopagoCurrentPeriodEnd: string;
 		} & DefaultSession['user'];
 	}
 }
@@ -67,34 +64,31 @@ export const {
 			authorize: async (
 				credentials: Partial<Record<'email' | 'password', unknown>>
 			) => {
-				const user = (await db.user.findUnique({
-					where: {
-						email: credentials.email as string,
+				const res = await fetch(`${env.AUTH_URL}/api/login`, {
+					method: 'POST',
+					body: JSON.stringify(credentials),
+					headers: {
+						'Content-Type': 'application/json',
 					},
-				})) as PrismaUser;
+				});
 
-				if (!user) throw new Error('User not found');
+				if (!res.ok) {
+					return null;
+				}
 
-				if (!user.emailVerified) throw new Error('Email not verified');
+				const user = await res.json();
 
-				const valid = await verify(
-					user.password,
-					credentials?.password as string
-				);
-
-				if (!valid) throw new Error('Invalid password');
-
-				return user as PrismaUser;
+				return user;
 			},
 		}),
 	],
 	session: {
 		strategy: 'jwt',
-		maxAge: 60 * 60 * 24 * 30,
+		maxAge: 60 * 60 * 24 * 7,
 		updateAge: 60 * 60 * 24,
 	},
 	callbacks: {
-		async jwt({ token, user, account }) {
+		jwt: async ({ token, user, account }) => {
 			if (account) {
 				token.accessToken = account.accessToken;
 			}
@@ -113,13 +107,17 @@ export const {
 
 			return token;
 		},
-		async session({ session, token }) {
+		session: async ({ session, token }) => {
 			session.user = token.user as any;
 
 			return session;
 		},
+		redirect: async ({ baseUrl, url }) => {
+			if (url.startsWith('/')) return `${baseUrl}${url}`;
+			return baseUrl;
+		},
 	},
-	secret: env.NEXTAUTH_SECRET,
+	secret: env.AUTH_SECRET,
 	pages: {
 		signIn: '/login',
 		newUser: '/register',

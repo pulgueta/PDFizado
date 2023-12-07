@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
 import { Loader2Icon } from 'lucide-react';
 
@@ -32,13 +32,7 @@ import { loginSchema } from '~/schemas';
 import type { Login } from '~/types';
 
 export const LoginForm = () => {
-	const { push, refresh } = useRouter();
-
-	const { status } = useSession();
-
-	if (status === 'authenticated') {
-		push('/dashboard');
-	}
+	const { refresh } = useRouter();
 
 	const form = useForm<Login>({
 		resolver: zodResolver(loginSchema),
@@ -48,37 +42,49 @@ export const LoginForm = () => {
 		},
 	});
 
-	const onSubmit = form.handleSubmit(async (data: Login) => {
+	const onSubmit = form.handleSubmit(async ({ email, password }: Login) => {
 		const res = await signIn('credentials', {
-			email: data.email,
-			password: data.password,
+			email,
+			password,
 			redirect: false,
 		});
 
-		if (res?.status === 401 && res.error === 'Email not verified') {
-			toast.error('Error de autenticación', {
-				description:
-					'Debes verificar tu correo antes de iniciar sesión.',
-			});
+		if (!res?.ok) {
+			switch (res?.error) {
+				case 'User not found':
+					toast.error('Error de autenticación', {
+						description:
+							'No se ha encontrado un usuario con esas credenciales.',
+					});
 
-			return;
+					return;
+				case 'Email not verified':
+					toast.error('Error de autenticación', {
+						description:
+							'Debes verificar tu correo antes de iniciar sesión.',
+					});
+
+					return;
+				case 'CredentialsSignin':
+					toast.error('Error de autenticación', {
+						description: 'Credenciales incorrectas.',
+					});
+
+					return;
+				default:
+					toast.error('Error', {
+						description:
+							'Ha ocurrido un error, intenta nuevamente.',
+					});
+
+					return;
+			}
 		}
 
-		if (!res?.ok || res?.error === 'CredentialsSignin') {
-			toast.error('Error de autenticación', {
-				description: 'Credenciales incorrectas.',
-			});
-
-			return;
-		}
-
-		if (res?.ok) {
-			toast.success('Inicio de sesión', {
-				description: 'Bienvenido de vuelta.',
-			});
-			refresh();
-			push('/dashboard');
-		}
+		toast.success('Inicio de sesión', {
+			description: 'Bienvenido de vuelta.',
+		});
+		refresh();
 	});
 
 	return (
@@ -103,6 +109,7 @@ export const LoginForm = () => {
 											autoComplete='Correo'
 											placeholder='Tu correo registrado'
 											type='email'
+											id='email'
 											{...field}
 										/>
 									</FormControl>
@@ -121,6 +128,7 @@ export const LoginForm = () => {
 											autoComplete='Contraseña'
 											placeholder='Tu contraseña'
 											type='password'
+											id='password'
 											{...field}
 										/>
 									</FormControl>
@@ -132,6 +140,7 @@ export const LoginForm = () => {
 							type='submit'
 							className='w-full'
 							disabled={form.formState.isSubmitting}
+							id='submit-btn'
 						>
 							{form.formState.isSubmitting ? (
 								<Loader2Icon className='animate-spin' />
