@@ -100,7 +100,6 @@ export default function VerifyEmailTemplate({ link }: VerifyEmailProps) {
 
 const styles = {
 	main: {
-		fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
 		backgroundColor: '#ffffff',
 		border: '1px solid #b3b3b3',
 		borderRadius: '8px',
