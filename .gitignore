@@ -15,6 +15,7 @@
 # production
 /build
 /dist
+.turbo
 
 # misc
 .DS_Store
@@ -43,3 +44,5 @@ next-env.d.ts
 react-email-starter
 
 certificates
+
+.vercel
