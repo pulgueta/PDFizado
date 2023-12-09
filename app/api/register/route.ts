@@ -6,7 +6,7 @@ import { Resend } from 'resend';
 
 import { db } from '~/database/db';
 import { registerSchema } from '~/schemas';
-import { env } from '~/env';
+import { env } from '~/env/server.mjs';
 import VerifyEmailTemplate from '~/emails/verify-email';
 
 const resend = new Resend(env.RESEND_API_KEY);

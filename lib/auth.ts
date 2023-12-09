@@ -4,7 +4,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import Credentials from 'next-auth/providers/credentials';
 
 import { db } from '~/database/db';
-import { env } from '~/env';
+import { env } from '~/env/server.mjs';
 
 declare module 'next-auth' {
 	// eslint-disable-next-line no-unused-vars
@@ -109,10 +109,6 @@ export const {
 			session.user = token.user as any;
 
 			return session;
-		},
-		redirect: async ({ baseUrl, url }) => {
-			if (url.startsWith('/')) return `${baseUrl}${url}`;
-			return baseUrl;
 		},
 	},
 	secret: env.AUTH_SECRET,

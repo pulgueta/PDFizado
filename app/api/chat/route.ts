@@ -4,7 +4,7 @@ import { Message, OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration, OpenAIApi } from 'openai-edge';
 import { $Enums } from '@prisma/client';
 
-import { env } from '~/env';
+import { env } from '~/env/server.mjs';
 import { plan as Plan } from '~/lib/plan-allowance';
 import { getContext } from '~/lib/context';
 import { db } from '~/database/db';

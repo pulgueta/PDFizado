@@ -5,7 +5,7 @@ import { User } from '@prisma/client';
 
 import { db } from '~/database/db';
 import { ResetPasswordEmail } from '~/emails/forgot-password';
-import { env } from '~/env';
+import { env } from '~/env/server.mjs';
 import { emailSchema } from '~/schemas';
 
 const resend = new Resend(env.RESEND_API_KEY);

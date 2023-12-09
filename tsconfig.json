@@ -37,8 +37,10 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"next.config.mjs",
-		"build/types/**/*.ts"
+		"next.config.js",
+		"build/types/**/*.ts",
+		"env/server.mjs",
+		"env/client.mjs",
 	],
 	"ts-node": {
 		"compilerOptions": {

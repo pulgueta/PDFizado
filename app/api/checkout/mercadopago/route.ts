@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { env } from '~/env';
+import { env } from '~/env/server.mjs';
 import { auth } from '~/lib/auth';
 
 export const POST = async (req: NextRequest) => {

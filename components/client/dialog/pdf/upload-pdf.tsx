@@ -8,7 +8,7 @@ import {
 } from '~/shadcn/dialog';
 import { Dropzone } from './dropzone';
 import { auth } from '~/lib/auth';
-import { env } from '~/env';
+import { env } from '~/env/server.mjs';
 
 export const dynamic = 'force-dynamic';
 

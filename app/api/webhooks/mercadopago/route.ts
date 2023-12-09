@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { env } from '~/env';
+import { env } from '~/env/server.mjs';
 import { Subscription, Webhook } from './types';
 // import { db } from '~/database/db';
 
@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
 				`https://api.mercadopago.com/preapproval/${body.data.id}`,
 				{
 					headers: {
-						Authorization: `Bearer ${env.MERCADOPAGO_SECRETCD}`,
+						Authorization: `Bearer ${env.MERCADOPAGO_SECRET}`,
 					},
 				}
 			)
