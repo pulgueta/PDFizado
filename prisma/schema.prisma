@@ -48,6 +48,7 @@ model User {
     File                      File[]
     Message                   Message[]
     sessions                  Session[]
+    role                      Role      @default(USER)
 }
 
 model VerificationToken {
@@ -86,4 +87,9 @@ enum Plan {
     FREE
     STANDARD
     PROFESSIONAL
+}
+
+enum Role {
+    USER
+    ADMIN
 }
