@@ -38,11 +38,7 @@ export const metadata: Metadata = {
 		siteName: 'PDFizado',
 		description:
 			'Una aplicación para interactuar con el contenido de tus archivos PDF y poder hacer tu estudio más sencillo.',
-		url: `http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
-			process.env.NODE_ENV === 'production'
-				? 'pdfizado.com'
-				: 'localhost:3000'
-		}`,
+		url: 'https://pdfizado.com',
 		countryName: 'Colombia',
 		locale: 'es_CO',
 		type: 'website',
@@ -53,13 +49,7 @@ export const metadata: Metadata = {
 			height: 630,
 		},
 	},
-	metadataBase: new URL(
-		`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
-			process.env.NODE_ENV === 'production'
-				? 'pdfizado.com'
-				: 'localhost:3000'
-		}`
-	),
+	metadataBase: new URL('https://pdfizado.com'),
 	alternates: {
 		canonical: '/',
 	},
