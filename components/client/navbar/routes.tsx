@@ -1,48 +1,42 @@
-'use client';
-
 import Link from 'next/link';
 
-import { useSession } from 'next-auth/react';
-
 import { SheetFooter, SheetTrigger } from '~/shadcn/sheet';
-import { Skeleton } from '~/shadcn/skeleton';
 import { authRoutes, noAuthRoutes } from '~/constants/navbar';
 import { SignOut, SignOutMobile } from './sign-out';
+import { auth } from '~/lib/auth';
 
-export const DesktopRoutes = () => {
-	const { data, status } = useSession();
+export const DesktopRoutes = async () => {
+	const session = await auth();
+
 	return (
 		<ul className='hidden md:flex md:items-center md:gap-x-6 lg:gap-x-12'>
-			{status === 'loading' ? (
-				<Skeleton className='h-10 w-96' />
-			) : data?.user && status === 'authenticated' ? (
-				authRoutes.map(({ href, label }) => (
-					<li key={href}>
-						<Link
-							href={href}
-							id={href.replace('/', '')}
-							aria-label={label}
-							className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
-						>
-							{label}
-						</Link>
-					</li>
-				))
-			) : (
-				noAuthRoutes.map(({ href, label }) => (
-					<li key={href}>
-						<Link
-							href={href}
-							id={href.replace('/', '')}
-							aria-label={label}
-							className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
-						>
-							{label}
-						</Link>
-					</li>
-				))
-			)}
-			{status === 'authenticated' && (
+			{session
+				? authRoutes.map(({ href, label }) => (
+						<li key={href}>
+							<Link
+								href={href}
+								id={href.replace('/', '')}
+								aria-label={label}
+								className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
+							>
+								{label}
+							</Link>
+						</li>
+				  ))
+				: noAuthRoutes.map(({ href, label }) => (
+						<li key={href}>
+							<Link
+								href={href}
+								id={href.replace('/', '')}
+								aria-label={label}
+								className='text-center font-semibold duration-200 ease-in-out hover:text-primary'
+							>
+								{label}
+							</Link>
+						</li>
+				  ))}
+
+			{session && (
 				<li>
 					<SignOut />
 				</li>
@@ -51,12 +45,13 @@ export const DesktopRoutes = () => {
 	);
 };
 
-export const MobileRoutes = () => {
-	const { data, status } = useSession();
+export const MobileRoutes = async () => {
+	const session = await auth();
+
 	return (
 		<>
 			<ul className='space-y-4'>
-				{data?.user && status === 'authenticated'
+				{session
 					? authRoutes.map(({ href, label }) => (
 							<li key={href}>
 								<SheetTrigger asChild>
@@ -86,7 +81,8 @@ export const MobileRoutes = () => {
 							</li>
 					  ))}
 			</ul>
-			{status === 'authenticated' && (
+
+			{session && (
 				<SheetFooter className='mt-4'>
 					<SignOutMobile />
 				</SheetFooter>
