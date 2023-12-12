@@ -1,6 +1,7 @@
+import { NextResponse } from 'next/server';
+
 import NextAuth, { type DefaultSession } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-// import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 
 import { db } from '~/database/db';
@@ -20,48 +21,18 @@ declare module 'next-auth' {
 	}
 }
 
-// const oAuthUser = async (email: string, OAuthName: string) => {
-//     const user = await db.user.findUnique({
-//         where: {
-//             email,
-//         },
-//     });
-
-//     const { email: oAuthEmail, id: oAuthId } = user as PrismaUser;
-
-//     if (user) {
-//         return user;
-//     }
-
-//     const oAuthedUser = await db.user.create({
-//         data: {
-//             id: oAuthId,
-//             email: oAuthEmail,
-//             name: OAuthName,
-//             password: '@OAuthPassword',
-//         },
-//     });
-
-//     return oAuthedUser;
-// };
-
 export const {
 	handlers: { GET, POST },
 	auth,
+	signOut,
 } = NextAuth({
 	adapter: PrismaAdapter(db),
 	providers: [
 		// TODO: Properly set up Google Auth with email.
-		// Google({
-		//     clientId: env.GOOGLE_PUBLIC_ID,
-		//     clientSecret: env.GOOGLE_SECRET_ID,
-		// }),
 		Credentials({
 			name: 'Credentials',
 			credentials: {},
-			authorize: async (
-				credentials: Partial<Record<'email' | 'password', unknown>>
-			) => {
+			authorize: async (credentials) => {
 				const res = await fetch(`${env.AUTH_URL}/api/login`, {
 					method: 'POST',
 					body: JSON.stringify(credentials),
@@ -70,11 +41,15 @@ export const {
 					},
 				});
 
+				console.log(res);
+
 				if (!res.ok) {
 					return null;
 				}
 
 				const user = await res.json();
+
+				console.log(user);
 
 				return user;
 			},
@@ -95,12 +70,6 @@ export const {
 				case 'credentials':
 					token.user = user;
 					break;
-				// case 'oauth':
-				//     token.user = await oAuthUser(
-				//         account.email as string,
-				//         account.name as string
-				//     );
-				//     break;
 			}
 
 			return token;
@@ -109,6 +78,20 @@ export const {
 			session.user = token.user as any;
 
 			return session;
+		},
+		authorized: ({ auth, request: { nextUrl } }) => {
+			const isLogged = !!auth?.user;
+			const isDashboard = nextUrl.pathname.startsWith('/dashboard');
+
+			if (isDashboard) {
+				if (isLogged) return true;
+
+				return false;
+			} else if (isLogged) {
+				return NextResponse.redirect(new URL('/dashboard', nextUrl));
+			}
+
+			return true;
 		},
 	},
 	secret: env.AUTH_SECRET,
@@ -140,30 +123,6 @@ export const {
 		},
 		csrfToken: {
 			name: 'next-auth.csrf-token',
-			options: {
-				sameSite: 'lax',
-				path: '/',
-				secure: process.env.NODE_ENV === 'production',
-			},
-		},
-		nonce: {
-			name: 'next-auth.nonce',
-			options: {
-				sameSite: 'lax',
-				path: '/',
-				secure: process.env.NODE_ENV === 'production',
-			},
-		},
-		pkceCodeVerifier: {
-			name: 'next-auth.pkce.code_verifier',
-			options: {
-				sameSite: 'lax',
-				path: '/',
-				secure: process.env.NODE_ENV === 'production',
-			},
-		},
-		state: {
-			name: 'next-auth.state',
 			options: {
 				sameSite: 'lax',
 				path: '/',
