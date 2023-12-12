@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const Register = async () => {
 	const session = await auth();
 
-	if (session !== null) {
+	if (session) {
 		redirect('/dashboard');
 	}
 
