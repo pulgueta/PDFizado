@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { HelpCircleIcon } from 'lucide-react';
 
 import {
@@ -17,7 +19,7 @@ import {
 	TooltipTrigger,
 } from '~/shadcn/tooltip';
 import { Separator } from '~/shadcn/separator';
-import { Button } from '~/shadcn/button';
+import { buttonVariants } from '~/shadcn/button';
 
 export const PriceCards = () => {
 	const standard = new Intl.NumberFormat('es-CO', {
@@ -79,7 +81,14 @@ export const PriceCards = () => {
 							</ul>
 						</CardContent>
 						<CardFooter>
-							<Button className='w-full'>Adquirir</Button>
+							<Link
+								href='/dashboard/plan'
+								className={buttonVariants({
+									className: 'w-full',
+								})}
+							>
+								Adquirir
+							</Link>
 						</CardFooter>
 					</Card>
 					<Card className='mx-auto w-full bg-neutral-50 dark:bg-[#131110] sm:w-96 md:w-[25rem]'>
@@ -110,7 +119,14 @@ export const PriceCards = () => {
 							</ul>
 						</CardContent>
 						<CardFooter>
-							<Button className='w-full'>Adquirir</Button>
+							<Link
+								href='/dashboard/plan'
+								className={buttonVariants({
+									className: 'w-full',
+								})}
+							>
+								Adquirir
+							</Link>
 						</CardFooter>
 					</Card>
 					<Card className='mx-auto w-full bg-neutral-50 dark:bg-[#131110] sm:w-96 md:w-[25rem]'>
@@ -143,7 +159,14 @@ export const PriceCards = () => {
 							</ul>
 						</CardContent>
 						<CardFooter>
-							<Button className='w-full'>Adquirir</Button>
+							<Link
+								href='/dashboard/plan'
+								className={buttonVariants({
+									className: 'w-full',
+								})}
+							>
+								Adquirir
+							</Link>
 						</CardFooter>
 					</Card>
 				</div>
