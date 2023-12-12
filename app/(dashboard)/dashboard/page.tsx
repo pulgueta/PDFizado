@@ -9,13 +9,7 @@ import { auth } from '~/lib/auth';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-	metadataBase: new URL(
-		`http${process.env.NODE_ENV === 'production' ? 's' : ''}://${
-			process.env.NODE_ENV === 'production'
-				? 'pdfizado.com'
-				: 'localhost:3000'
-		}/dashboard`
-	),
+	metadataBase: new URL('https://pdfizado.com/dashboard'),
 	alternates: {
 		canonical: '/dashboard',
 	},

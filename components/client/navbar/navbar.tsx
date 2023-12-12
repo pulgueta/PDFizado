@@ -12,7 +12,7 @@ export const Navbar = async () => {
 	const session = await auth();
 
 	return (
-		<header className='sticky top-0 z-50 flex h-20 items-center justify-between border-b bg-white/80 px-4 backdrop-blur dark:bg-[#0C0A09]/80 md:px-6 lg:px-16 xl:px-40 2xl:px-64'>
+		<nav className='sticky top-0 z-50 flex h-20 items-center justify-between border-b bg-white/80 px-4 backdrop-blur dark:bg-[#0C0A09]/80 md:px-6 lg:px-16 xl:px-40 2xl:px-64'>
 			<Link
 				href={!session ? '/' : '/dashboard'}
 				aria-label='PDFizado - Inicio'
@@ -42,6 +42,6 @@ export const Navbar = async () => {
 					</SheetContent>
 				</Sheet>
 			</nav>
-		</header>
+		</nav>
 	);
 };

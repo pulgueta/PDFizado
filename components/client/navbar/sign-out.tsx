@@ -1,12 +1,9 @@
-'use client';
-
-import { signOut } from 'next-auth/react';
-
 import { Button } from '~/shadcn/button';
+import { logout } from './action';
 
 export const SignOut = () => (
 	<Button
-		onClick={() => signOut({ callbackUrl: '/login' })}
+		formAction={logout}
 		aria-label='Cerrar sesión'
 		id='logout-btn'
 		variant='destructive'
@@ -17,10 +14,10 @@ export const SignOut = () => (
 
 export const SignOutMobile = () => (
 	<Button
+		formAction={logout}
 		className='w-full font-medium'
 		aria-label='Cerrar sesión'
 		id='logout-btn'
-		onClick={() => signOut({ callbackUrl: '/login' })}
 		variant='destructive'
 	>
 		Cerrar sesión

@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
 import { toast } from 'sonner';
 import { Loader2Icon } from 'lucide-react';
 
@@ -46,7 +46,8 @@ export const LoginForm = () => {
 		const res = await signIn('credentials', {
 			email,
 			password,
-			redirect: false,
+			redirect: true,
+			callbackUrl: '/dashboard',
 		});
 
 		if (!res?.ok) {
@@ -197,7 +198,7 @@ export const LoginForm = () => {
 				</Link>
 
 				<span className='text-muted-foreground'>
-					Aún no tienes cuenta?{' '}
+					Si aún no tienes cuenta,{' '}
 					<Link
 						href='/register'
 						className={buttonVariants({ variant: 'link' })}
