@@ -1,25 +1,17 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 import { ArrowLeftIcon } from 'lucide-react';
 
 import { ForgotPasswordForm } from '~/components/client/form/forgot-password';
 import { buttonVariants } from '~/shadcn/button';
-import { auth } from '~/lib/auth';
 
 export const metadata: Metadata = {
 	title: 'Olvidé mi contraseña',
 	description: 'Recupera tu contraseña de PDFizado',
 };
 
-const ForgotPassword = async () => {
-	const session = await auth();
-
-	if (session) {
-		redirect('/dashboard');
-	}
-
+const ForgotPassword = () => {
 	return (
 		<section className='flex min-h-[calc(100vh-205px)] flex-col items-center justify-center p-2'>
 			<Link

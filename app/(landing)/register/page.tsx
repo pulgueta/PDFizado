@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 
 import { RegisterForm } from '~/components/client/form/register-form';
-import { auth } from '~/lib/auth';
 
 export const metadata: Metadata = {
 	title: 'Registrarse',
@@ -10,13 +8,7 @@ export const metadata: Metadata = {
 		'Regístrate en PDFizado y verifica tu cuenta para acceder a tu perfil',
 };
 
-const Register = async () => {
-	const session = await auth();
-
-	if (session) {
-		redirect('/dashboard');
-	}
-
+const Register = () => {
 	return (
 		<div className='flex min-h-[calc(100vh-205px)] items-center justify-center bg-white p-2 dark:bg-[#131110]'>
 			<RegisterForm />
