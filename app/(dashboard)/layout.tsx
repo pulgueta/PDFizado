@@ -1,8 +1,10 @@
 import { PropsWithChildren } from 'react';
 
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 import { ReactQueryProvider } from '~/providers/tanstack-provider';
+import { auth } from '~/lib/auth';
 
 export const metadata: Metadata = {
 	title: 'Dashboard',
@@ -20,8 +22,14 @@ export const metadata: Metadata = {
 	},
 };
 
-const DashboardLayout = ({ children }: PropsWithChildren) => (
-	<ReactQueryProvider>{children}</ReactQueryProvider>
-);
+const DashboardLayout = async ({ children }: PropsWithChildren) => {
+	const session = await auth();
+
+	if (!session) {
+		redirect('/login');
+	}
+
+	return <ReactQueryProvider>{children}</ReactQueryProvider>;
+};
 
 export default DashboardLayout;
