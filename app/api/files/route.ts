@@ -42,6 +42,10 @@ export const POST = async (req: NextRequest) => {
 export const GET = async () => {
 	const session = await auth();
 
+	if (!session) {
+		return NextResponse.json('Unauthorized', { status: 401 });
+	}
+
 	try {
 		const files = await db.file.findMany({
 			where: {
