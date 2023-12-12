@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
-
 import { File } from '@prisma/client';
 
 import { auth } from '~/lib/auth';
@@ -8,10 +6,6 @@ import { db } from '~/database/db';
 
 const ChatPage = async ({ params }: { params: { fileId: string } }) => {
 	const session = await auth();
-
-	if (!session) {
-		redirect('/login');
-	}
 
 	const file = (await db.file.findUnique({
 		where: {

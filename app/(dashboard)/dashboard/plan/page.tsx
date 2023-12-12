@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 import { User } from '@prisma/client';
@@ -17,16 +16,14 @@ import { auth } from '~/lib/auth';
 import { CurrentPlan } from './current-plan';
 import { UpgradeButton } from './upgrade-button';
 
+export const dynamic = 'force-dynamic';
+
 type PlanPage = {
 	searchParams: { preapproval_id: string };
 };
 
 const Plan: NextPage<PlanPage> = async () => {
 	const session = await auth();
-
-	if (!session) {
-		redirect('/login');
-	}
 
 	const { plan } = (await db.user.findUnique({
 		where: {
@@ -57,6 +54,7 @@ const Plan: NextPage<PlanPage> = async () => {
 							Si quieres cancelar o modificar tu suscripción
 							actual, deberás manejarla en{' '}
 							<Link
+								target='_blank'
 								href='https://www.mercadopago.com.co/subscriptions'
 								className='font-medium text-primary'
 							>

@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 
 import { UploadPDF } from '~/components/client/dialog/pdf/upload-pdf';
 import { UserFiles } from '~/components/client/user/user-files';
@@ -17,10 +16,6 @@ export const metadata: Metadata = {
 
 const Dashboard = async () => {
 	const session = await auth();
-
-	if (!session) {
-		redirect('/login');
-	}
 
 	return (
 		<>
