@@ -11,7 +11,10 @@ export const POST = async (req: NextRequest) => {
 	const validatedBody = loginSchema.safeParse(body);
 
 	if (!validatedBody.success) {
-		return NextResponse.json(validatedBody.error.errors, { status: 400 });
+		return NextResponse.json(validatedBody.error.errors, {
+			status: 400,
+			statusText: '',
+		});
 	}
 
 	const { email, password } = validatedBody.data;
@@ -23,16 +26,25 @@ export const POST = async (req: NextRequest) => {
 	})) as User;
 
 	if (!user) {
-		return NextResponse.json('No user was found', { status: 404 });
+		return NextResponse.json('No user was found', {
+			status: 404,
+			statusText: 'No user was found',
+		});
 	}
 
 	if (!user.emailVerified) {
-		return NextResponse.json('Email not verified', { status: 401 });
+		return NextResponse.json('Email not verified', {
+			status: 401,
+			statusText: 'Email not verified',
+		});
 	}
 
 	if (user && (await verify(user.password, password))) {
 		return NextResponse.json(user, { status: 200 });
 	} else {
-		return NextResponse.json('Invalid credentials', { status: 401 });
+		return NextResponse.json('Invalid credentials', {
+			status: 401,
+			statusText: 'Invalid credentials',
+		});
 	}
 };

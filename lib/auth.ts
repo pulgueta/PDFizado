@@ -28,7 +28,6 @@ export const {
 } = NextAuth({
 	adapter: PrismaAdapter(db),
 	providers: [
-		// TODO: Properly set up Google Auth with email.
 		Credentials({
 			name: 'Credentials',
 			credentials: {},
@@ -41,15 +40,18 @@ export const {
 					},
 				});
 
-				console.log(res);
-
 				if (!res.ok) {
-					return null;
+					switch (res.statusText) {
+						case 'No user was found':
+							throw new Error(res.statusText);
+						case 'Email not verified':
+							throw new Error(res.statusText);
+						case 'Invalid credentials':
+							throw new Error(res.statusText);
+					}
 				}
 
 				const user = await res.json();
-
-				console.log(user);
 
 				return user;
 			},
