@@ -41,7 +41,7 @@ export const PriceCards = () => {
 			</p>
 			<TooltipProvider>
 				<div className='mx-auto flex grow flex-col gap-4 lg:flex-row'>
-					<Card className='mx-auto w-full bg-neutral-50 dark:bg-[#131110] sm:w-96 md:w-[25rem]'>
+					<Card className='mx-auto w-full bg-neutral-50 sm:w-96 md:w-[25rem] dark:bg-[#131110]'>
 						<CardHeader className='text-center'>
 							<CardTitle className='text-3xl font-bold'>
 								Gratis
@@ -89,7 +89,7 @@ export const PriceCards = () => {
 							</Link>
 						</CardFooter>
 					</Card>
-					<Card className='mx-auto w-full bg-neutral-50 dark:bg-[#131110] sm:w-96 md:w-[25rem]'>
+					<Card className='mx-auto w-full bg-neutral-50 sm:w-96 md:w-[25rem] dark:bg-[#131110]'>
 						<CardHeader className='text-center'>
 							<CardTitle className='text-3xl font-bold'>
 								Estándar
@@ -127,7 +127,7 @@ export const PriceCards = () => {
 							</Link>
 						</CardFooter>
 					</Card>
-					<Card className='mx-auto w-full bg-neutral-50 dark:bg-[#131110] sm:w-96 md:w-[25rem]'>
+					<Card className='mx-auto w-full bg-neutral-50 sm:w-96 md:w-[25rem] dark:bg-[#131110]'>
 						<CardHeader className='text-center'>
 							<CardTitle className='text-3xl font-bold'>
 								Profesional

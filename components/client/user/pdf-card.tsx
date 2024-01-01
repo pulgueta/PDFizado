@@ -17,7 +17,7 @@ export const PDFCard: React.FC<File> = (file) => {
 	} = useDeletePDF({ file });
 
 	return (
-		<div className='mx-auto flex w-full flex-col rounded-2xl border bg-white p-4 shadow dark:bg-neutral-900 sm:w-96 md:w-96'>
+		<div className='mx-auto flex w-full flex-col rounded-2xl border bg-white p-4 shadow sm:w-96 md:w-96 dark:bg-neutral-900'>
 			<h3 className='truncate text-xl font-semibold'>{file.name}</h3>
 			<span className='my-4 text-muted-foreground'>
 				Fecha de subida:{' '}
