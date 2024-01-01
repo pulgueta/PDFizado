@@ -1,23 +1,24 @@
 import { NextResponse } from 'next/server';
 
+import { Plan, Role } from '@prisma/client';
 import NextAuth, { type DefaultSession } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import Credentials from 'next-auth/providers/credentials';
 
+import authConfig from './auth.config';
 import { db } from '~/database/db';
-import { env } from '~/env/server.mjs';
+
+export type ExtendedUser = DefaultSession['user'] & {
+	role: Role;
+	mercadopagoSubscriptionId: string;
+	plan: Plan;
+	emailVerified: boolean;
+	accounts: [];
+};
 
 declare module 'next-auth' {
 	// eslint-disable-next-line no-unused-vars
-	interface Session extends DefaultSession {
-		user: {
-			id: string;
-			name: string;
-			email: string;
-			emailVerified: boolean;
-			plan: string;
-			mercadopagoSubscriptionId: string;
-		} & DefaultSession['user'];
+	interface Session {
+		user: ExtendedUser;
 	}
 }
 
@@ -25,42 +26,25 @@ export const {
 	handlers: { GET, POST },
 	auth,
 	signOut,
+	signIn,
 } = NextAuth({
 	adapter: PrismaAdapter(db),
-	providers: [
-		Credentials({
-			name: 'Credentials',
-			credentials: {},
-			authorize: async (credentials) => {
-				const res = await fetch(`${env.AUTH_URL}/api/login`, {
-					method: 'POST',
-					body: JSON.stringify(credentials),
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				});
-
-				if (!res.ok) {
-					switch (res.statusText) {
-						case 'No user was found':
-							throw new Error(res.statusText);
-						case 'Email not verified':
-							throw new Error(res.statusText);
-						case 'Invalid credentials':
-							throw new Error(res.statusText);
-					}
-				}
-
-				const user = await res.json();
-
-				return user;
-			},
-		}),
-	],
 	session: {
 		strategy: 'jwt',
 		maxAge: 60 * 60 * 24 * 7,
 		updateAge: 60 * 60 * 24,
+	},
+	events: {
+		linkAccount: async ({ user }) => {
+			await db.user.update({
+				where: {
+					id: user.id,
+				},
+				data: {
+					emailVerified: true,
+				},
+			});
+		},
 	},
 	callbacks: {
 		jwt: async ({ token, user, account }) => {
@@ -96,7 +80,6 @@ export const {
 			return true;
 		},
 	},
-	secret: env.AUTH_SECRET,
 	pages: {
 		signIn: '/login',
 		newUser: '/register',
@@ -132,4 +115,5 @@ export const {
 			},
 		},
 	},
+	...authConfig,
 });
