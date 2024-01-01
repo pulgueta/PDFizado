@@ -5,8 +5,9 @@ import { Grid } from '@radix-ui/themes';
 import { PDFCard } from '~/components/client/user/pdf-card';
 import { PDFLoader } from '~/components/server/pdf-loaders';
 
-import '@radix-ui/themes/styles.css';
 import { usePDF } from '~/hooks/user/use-pdf';
+
+import '@radix-ui/themes/styles.css';
 
 export const UserFiles = () => {
 	const { data, error, isLoading, isSuccess } = usePDF();
