@@ -25,29 +25,20 @@ model Account {
     @@unique([provider, providerAccountId])
 }
 
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 model User {
     id                        String    @id @default(cuid())
     name                      String
     email                     String    @unique
-    password                  String
+    password                  String?
     image                     String?
     createdAt                 DateTime  @default(now())
     updatedAt                 DateTime  @updatedAt
     mercadopagoSubscriptionId String?   @unique
     plan                      Plan      @default(FREE)
-    emailVerified             Boolean   @default(false)
+    emailVerified             Boolean?  @default(false)
     accounts                  Account[]
     File                      File[]
     Message                   Message[]
-    sessions                  Session[]
     role                      Role      @default(USER)
 }
 
