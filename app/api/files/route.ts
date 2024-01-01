@@ -8,18 +8,18 @@ import { s3 } from '~/lib/aws/s3.config';
 import { auth } from '~/lib/auth';
 
 export const POST = async (req: NextRequest) => {
+	const session = await auth();
+
+	if (!session)
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
 	const body = await req.json();
 	const validatedBody = awsSchema.safeParse(body);
 
 	if (!validatedBody.success)
 		return NextResponse.json(validatedBody.error.errors, { status: 400 });
 
-	const { key, name, url } = body;
-
-	const session = await auth();
-
-	if (!session)
-		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+	const { key, name, url } = validatedBody.data;
 
 	try {
 		await loadAWStoPinecone(key);
