@@ -13,10 +13,10 @@ const Home = () => {
 	return (
 		<>
 			<main className='min-h-screen bg-white p-2 dark:bg-[#1C1917]'>
-				<div className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-3xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out dark:bg-[#131110] md:py-12'>
+				<div className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-3xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out md:py-12 dark:bg-[#131110]'>
 					<h1
 						id='landing-title'
-						className='mb-4 text-5xl font-black text-black dark:text-white md:mb-8 md:text-7xl'
+						className='mb-4 text-5xl font-black tracking-tight text-black md:mb-8 md:text-7xl dark:text-white'
 					>
 						<span className='text-primary'>PDF</span>izado
 					</h1>
@@ -85,14 +85,14 @@ const Home = () => {
 			</main>
 			<section className='bg-white pb-16 dark:bg-[#1C1917]'>
 				<div className='mx-auto max-w-7xl animate-fade-up py-16'>
-					<h2 className='mb-4 border-b pb-4 text-center text-3xl font-black leading-snug text-black dark:text-white md:mb-8 md:text-4xl'>
+					<h2 className='mb-4 border-b pb-4 text-center text-3xl font-black leading-snug text-black md:mb-8 md:text-4xl dark:text-white'>
 						Tenemos 3 planes para que puedas utilizar{' '}
 						<span className='text-primary'>PDF</span>izado
 					</h2>
 					<PriceCards />
 				</div>
-				<section className='flex w-full flex-col items-center justify-center gap-8 bg-secondary px-2 py-8 shadow-sm dark:bg-[#131110] md:py-16'>
-					<h3 className='text-center text-2xl font-extrabold dark:text-white md:text-3xl'>
+				<section className='flex w-full flex-col items-center justify-center gap-8 bg-secondary px-2 py-8 shadow-sm md:py-16 dark:bg-[#131110]'>
+					<h3 className='text-center text-2xl font-extrabold md:text-3xl dark:text-white'>
 						&iquest;Qué esperas para agilizar tu forma de estudiar?
 					</h3>
 					<Link href='/register' className={buttonVariants()}>

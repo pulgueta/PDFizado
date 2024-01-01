@@ -1,9 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
-import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -30,9 +30,14 @@ import { Separator } from '~/shadcn/separator';
 import { Button, buttonVariants } from '~/shadcn/button';
 import { loginSchema } from '~/schemas';
 import type { Login } from '~/types';
+import { login } from './actions/auth';
+import { Google } from '~/components/svg/google';
+import { Facebook } from '~/components/svg/facebook';
+import { signIn } from 'next-auth/react';
+import { Badge } from '~/components/ui/badge';
 
 export const LoginForm = () => {
-	const { push, refresh } = useRouter();
+	const [isPending, startTransition] = useTransition();
 
 	const form = useForm<Login>({
 		resolver: zodResolver(loginSchema),
@@ -42,50 +47,14 @@ export const LoginForm = () => {
 		},
 	});
 
-	const onSubmit = form.handleSubmit(async ({ email, password }: Login) => {
-		const res = await signIn('credentials', {
-			email,
-			password,
-			redirect: false,
-		});
+	const onSubmit = form.handleSubmit((data: Login) => {
+		startTransition(async () => {
+			const res = await login(data);
 
-		if (!res?.ok) {
-			switch (res?.error) {
-				case 'User not found':
-					toast.error('Error de autenticación', {
-						description:
-							'No se ha encontrado un usuario con esas credenciales.',
-					});
-
-					return;
-				case 'Email not verified':
-					toast.error('Error de autenticación', {
-						description:
-							'Debes verificar tu correo antes de iniciar sesión.',
-					});
-
-					return;
-				case 'Invalid credentials':
-					toast.error('Error de autenticación', {
-						description: 'Credenciales incorrectas.',
-					});
-
-					return;
-				default:
-					toast.error('Error', {
-						description:
-							'Ha ocurrido un error, intenta nuevamente.',
-					});
-
-					return;
+			if (res?.error) {
+				toast.error(res.error);
 			}
-		}
-
-		toast.success('Inicio de sesión', {
-			description: 'Bienvenido de vuelta.',
 		});
-		refresh();
-		push('/dashboard');
 	});
 
 	return (
@@ -107,6 +76,7 @@ export const LoginForm = () => {
 									<FormLabel>Correo electrónico</FormLabel>
 									<FormControl>
 										<Input
+											disabled={isPending}
 											autoComplete='Correo'
 											placeholder='Tu correo registrado'
 											type='email'
@@ -126,6 +96,7 @@ export const LoginForm = () => {
 									<FormLabel>Contraseña</FormLabel>
 									<FormControl>
 										<Input
+											disabled={isPending}
 											autoComplete='Contraseña'
 											placeholder='Tu contraseña'
 											type='password'
@@ -140,10 +111,10 @@ export const LoginForm = () => {
 						<Button
 							type='submit'
 							className='w-full'
-							disabled={form.formState.isSubmitting}
+							disabled={isPending}
 							id='submit-btn'
 						>
-							{form.formState.isSubmitting ? (
+							{isPending ? (
 								<Loader2Icon className='animate-spin' />
 							) : (
 								'Iniciar sesión'
@@ -153,7 +124,30 @@ export const LoginForm = () => {
 				</Form>
 			</CardContent>
 			<CardFooter className='flex flex-col items-center justify-center'>
-				<Separator className='mb-4' />
+				<section className='flex w-full flex-col items-center gap-2 md:flex-row'>
+					<Button
+						onClick={() =>
+							signIn('google', { callbackUrl: '/dashboard' })
+						}
+						variant='outline'
+						className='w-full'
+					>
+						<Google />
+					</Button>
+					<Button
+						onClick={() => signIn('facebook')}
+						variant='outline'
+						disabled
+						className='relative w-full'
+					>
+						<Badge className='absolute -right-4 top-0 -rotate-12'>
+							¡Pronto!
+						</Badge>
+						<Facebook />
+					</Button>
+				</section>
+
+				<Separator className='my-4' />
 
 				<Link
 					href='/forgot-password'

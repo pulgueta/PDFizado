@@ -1,9 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
-import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -29,15 +29,10 @@ import { Input } from '~/shadcn/input';
 import { Button, buttonVariants } from '~/shadcn/button';
 import { registerSchema } from '~/schemas';
 import type { Register } from '~/types';
+import { register } from './actions/auth';
 
 export const RegisterForm = () => {
-	const { push } = useRouter();
-
-	const { status } = useSession();
-
-	if (status === 'authenticated') {
-		push('/dashboard');
-	}
+	const [isPending, startTransition] = useTransition();
 
 	const form = useForm<Register>({
 		resolver: zodResolver(registerSchema),
@@ -49,34 +44,23 @@ export const RegisterForm = () => {
 		},
 	});
 
-	const onSubmit = async (data: Register) => {
-		try {
-			const fetch_res = await fetch('/api/register', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
+	const onSubmit = form.handleSubmit((data: Register) => {
+		startTransition(async () => {
+			const res = await register(data);
 
-			if (!fetch_res.ok) {
-				toast.error(
-					fetch_res.statusText === 'Internal Server Error'
-						? 'Ocurrió un error inesperado'
-						: fetch_res.statusText
-				);
+			if (res.error) {
+				toast.error(`${res.error}`);
 				return;
 			}
 
-			toast.success(
-				'Cuenta creada, te hemos enviado un correo de verificación'
-			);
+			toast.success('Cuenta creada con éxito', {
+				description:
+					'Revisa tu correo electrónico para confirmar tu cuenta.',
+			});
 			form.reset();
 			form.clearErrors();
-		} catch (error) {
-			toast.error('Ocurrió un error inesperado');
-		}
-	};
+		});
+	});
 
 	return (
 		<Card className='w-full md:w-[640px]'>
@@ -88,7 +72,7 @@ export const RegisterForm = () => {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)}>
+					<form onSubmit={onSubmit}>
 						<div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2'>
 							<FormField
 								control={form.control}
@@ -99,9 +83,7 @@ export const RegisterForm = () => {
 										<FormControl>
 											<Input
 												autoComplete='Nombre'
-												disabled={
-													form.formState.isSubmitting
-												}
+												disabled={isPending}
 												placeholder='Tu nombre'
 												type='text'
 												{...field}
@@ -122,9 +104,7 @@ export const RegisterForm = () => {
 										<FormControl>
 											<Input
 												autoComplete='Email'
-												disabled={
-													form.formState.isSubmitting
-												}
+												disabled={isPending}
 												placeholder='Tu correo registrado'
 												type='email'
 												{...field}
@@ -143,9 +123,7 @@ export const RegisterForm = () => {
 										<FormControl>
 											<Input
 												autoComplete='Contraseña'
-												disabled={
-													form.formState.isSubmitting
-												}
+												disabled={isPending}
 												placeholder='Tu contraseña'
 												type='password'
 												{...field}
@@ -166,9 +144,7 @@ export const RegisterForm = () => {
 										<FormControl>
 											<Input
 												autoComplete='Confirmar contraseña'
-												disabled={
-													form.formState.isSubmitting
-												}
+												disabled={isPending}
 												placeholder='Reescribe tu contraseña'
 												type='password'
 												{...field}
@@ -182,9 +158,9 @@ export const RegisterForm = () => {
 						<Button
 							type='submit'
 							className='w-full'
-							disabled={form.formState.isSubmitting}
+							disabled={isPending}
 						>
-							{form.formState.isSubmitting ? (
+							{isPending ? (
 								<Loader2Icon className='animate-spin' />
 							) : (
 								'Registrarme'

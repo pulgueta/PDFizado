@@ -19,9 +19,9 @@ export const Chat = () => {
 	const { data, isLoading } = useQuery<Message[]>({
 		queryKey: ['messages', fileId],
 		queryFn: async () => {
-			const res = await fetch(`/api/chat/${fileId}`, {
+			const res = await fetch('/api/chat/messages', {
 				method: 'POST',
-				body: JSON.stringify({ fileId }),
+				body: JSON.stringify(fileId),
 			}).then((res) => res.json());
 
 			return res;
@@ -39,7 +39,7 @@ export const Chat = () => {
 		body: {
 			fileId,
 		},
-		initialMessages: data || [],
+		initialMessages: data,
 	});
 
 	useEffect(() => {
@@ -56,11 +56,8 @@ export const Chat = () => {
 	}, [messages]);
 
 	return (
-		<div className='flex-1 p-2'>
-			<ScrollArea
-				id='scroller'
-				className='relative h-[calc(45vh)] max-h-screen py-2 md:h-[calc(100vh-180px)]'
-			>
+		<div className='flex-1 p-2' id='scroller'>
+			<ScrollArea className='relative h-[calc(40vh)] max-h-svh py-2 md:h-[calc(100vh-140px)]'>
 				{/* @ts-ignore */}
 				<MessageList messages={messages} />
 				{isLoading && (
@@ -75,7 +72,7 @@ export const Chat = () => {
 			<footer className='flex w-full items-center gap-4'>
 				<form
 					onSubmit={handleSubmit}
-					className='sticky inset-x-0 bottom-0 flex h-[88px] w-full items-center gap-4'
+					className='sticky inset-x-0 bottom-0 flex w-full items-center gap-4'
 				>
 					<Input
 						className='bottom-0 h-full w-full'

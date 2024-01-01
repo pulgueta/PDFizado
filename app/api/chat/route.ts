@@ -48,6 +48,8 @@ export const POST = async (req: NextRequest) => {
                 ${context}
             END OF CONTEXT BLOCK
             AI assistant will ONLY answer questions that are asked in the context of the conversation.
+			AI assistant will ALWAYS answer within the context provided, IF THERE IS NO INFORMATION IN THE USER QUESTION, AI ASSISTANT WILL ANSWER "Sorry, that information is not included in the PDF." OR IN THE USER LANGUAGE. IMPORTANT
+			IF AI ASSISTANT DOES NOT FIND THE QUESTION RELEVANT TO THE CONTEXT, SIMPLY ASK THE USER TO ASK ANOTHER QUESTION RELATED TO THE PDF.
             If the context does not provide the answer to question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
             AI assistant will not apologize for previous responses, but instead will indicated new information was gained.
             AI assistant will not invent anything that is not drawn directly from the context.
