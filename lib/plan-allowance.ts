@@ -16,12 +16,12 @@ export const maxSizeAllowed = (plan: $Enums.Plan) => {
 export const plan = (plan: $Enums.Plan) => {
 	switch (plan) {
 		case 'FREE':
-			return 'gpt-3.5-turbo-0613';
+			return 'gpt-3.5-turbo-1106';
 		case 'STANDARD':
 			return 'gpt-4-32k';
 		case 'PROFESSIONAL':
-			return 'gpt-4-32k';
+			return 'gpt-4-1106-preview';
 		default:
-			return 'gpt-3.5-turbo-0613';
+			return 'gpt-3.5-turbo-1106';
 	}
 };
