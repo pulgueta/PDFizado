@@ -8,18 +8,23 @@ import {
 } from '~/shadcn/dialog';
 import { Dropzone } from './dropzone';
 import { auth } from '~/lib/auth';
-import { env } from '~/env/server.mjs';
+import { db } from '~/database/db';
 
 export const dynamic = 'force-dynamic';
 
 export const UploadPDF = async () => {
 	const session = await auth();
 
-	const files = (await fetch(`${env.BASE_URL}/api/files`, {
-		next: {
-			revalidate: 5,
+	const files = await db.file.findMany({
+		where: {
+			userId: session?.user.id,
 		},
-	}).then((res) => res.json())) as Number[];
+		orderBy: {
+			createdAt: 'desc',
+		},
+	});
+
+	console.log(files);
 
 	return (
 		<Dialog>
