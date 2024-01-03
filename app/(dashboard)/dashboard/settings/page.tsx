@@ -6,7 +6,7 @@ const Settings = () => {
 					id='settings-title'
 					className='mt-4 scroll-m-20 text-pretty text-4xl font-extrabold tracking-tighter lg:text-5xl'
 				>
-					Dashboard de Testing
+					Ajustes de tu cuenta
 				</h1>
 			</div>
 		</section>
