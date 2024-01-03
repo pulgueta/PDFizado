@@ -1,7 +1,7 @@
 import { Skeleton } from '~/shadcn/skeleton';
 
-export const PDFLoader = () => {
-	return Array.from({ length: 3 }, (_, i) => (
+export const PDFLoader = () =>
+	Array.from({ length: 3 }, (_, i) => (
 		<div key={i} className='mx-auto w-full rounded-2xl border p-4 md:w-96'>
 			<Skeleton className='mb-4 h-10' />
 
@@ -14,4 +14,3 @@ export const PDFLoader = () => {
 			</div>
 		</div>
 	));
-};
