@@ -3,7 +3,6 @@ import { ZodError, z } from 'zod';
 
 export const env = createEnv({
 	server: {
-		BASE_URL: z.string().url(),
 		DATABASE_URL: z.string().url(),
 		AUTH_URL: z.string().url(),
 		AUTH_SECRET: z.string().min(8),
@@ -19,7 +18,6 @@ export const env = createEnv({
 		RESEND_API_KEY: z.string().min(8),
 	},
 	runtimeEnv: {
-		BASE_URL: process.env.BASE_URL,
 		DATABASE_URL: process.env.DATABASE_URL,
 		AUTH_URL: process.env.AUTH_URL,
 		AUTH_SECRET: process.env.AUTH_SECRET,
