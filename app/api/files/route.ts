@@ -6,7 +6,6 @@ import { env } from '~/env/client.mjs';
 import { loadAWStoPinecone } from '~/lib/pinecone';
 import { awsSchema } from '~/schemas';
 import { s3 } from '~/lib/aws/s3.config';
-import { update } from '~/lib/auth/auth';
 import { currentUser } from '~/lib/auth/currentUser';
 
 export const POST = async (req: NextRequest) => {
@@ -36,7 +35,6 @@ export const POST = async (req: NextRequest) => {
 		});
 
 		revalidatePath('/dashboard');
-		update({ user });
 
 		return NextResponse.json(file, { status: 201 });
 	} catch (error) {

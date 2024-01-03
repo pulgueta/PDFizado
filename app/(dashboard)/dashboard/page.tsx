@@ -19,18 +19,18 @@ const Dashboard = async () => {
 
 	return (
 		<>
-			<header className='mx-auto max-w-7xl p-4'>
+			<header className='mx-auto max-w-7xl p-2'>
 				{user?.name ? (
 					<h1
 						id='dashboard-title'
-						className='mb-4 scroll-m-20 text-4xl font-extrabold tracking-tighter lg:text-5xl'
+						className='mb-4 scroll-m-20 text-pretty text-4xl font-extrabold tracking-tighter lg:text-5xl'
 					>
 						Dashboard de {user.name}
 					</h1>
 				) : (
 					<Skeleton className='mb-8 h-10 w-80 md:w-96' />
 				)}
-				<p className='mb-4'>
+				<p className='mb-4 text-pretty'>
 					Bienvenido a tu dashboard, aquí podrás acceder a todas las
 					funcionalidades de PDFizado
 				</p>
@@ -38,7 +38,7 @@ const Dashboard = async () => {
 			</header>
 
 			<main className='min-h-screen md:min-h-[calc(100vh-381px)]'>
-				<div className='mx-auto max-w-7xl rounded p-4'>
+				<div className='mx-auto max-w-7xl rounded p-2'>
 					<h2 className='mt-6 text-2xl font-bold tracking-tight'>
 						Tus PDFs:
 					</h2>

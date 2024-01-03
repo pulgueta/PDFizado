@@ -13,12 +13,28 @@ import { signIn } from '~/lib/auth/auth';
 import { loginSchema, registerSchema } from '~/schemas';
 import { Login, Provider, Register } from '~/types';
 
-const resend = new Resend(env.RESEND_API_KEY);
+const { emails } = new Resend(env.RESEND_API_KEY);
 
-export const loginWithProvider = async (provider: Provider) =>
-	await signIn(provider, {
-		redirectTo: '/dashboard',
-	});
+export const loginWithProvider = async (provider: Provider) => {
+	try {
+		await signIn(provider, {
+			redirectTo: '/dashboard',
+		});
+	} catch (error) {
+		if (error instanceof AuthError) {
+			switch (error.type) {
+				case 'AdapterError':
+				case 'OAuthAccountNotLinked':
+				case 'OAuthSignInError':
+					return {
+						error: 'Algo salió mal iniciando sesión con tu cuenta.',
+					};
+			}
+		}
+
+		throw error;
+	}
+};
 
 export const login = async (data: Login) => {
 	const values = loginSchema.safeParse(data);
@@ -87,7 +103,7 @@ export const register = async (data: Register) => {
 		},
 	});
 
-	const { data: emailId, error } = await resend.emails.send({
+	const { data: emailId, error } = await emails.send({
 		from: 'PDFizado <no-reply@pdfizado.com>',
 		to: [email],
 		subject: 'PDFizado - Verificación de correo electrónico',

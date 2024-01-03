@@ -63,7 +63,11 @@ export const LoginForm = () => {
 		e.preventDefault();
 
 		startTransition(async () => {
-			await loginWithProvider(provider);
+			const res = await loginWithProvider(provider);
+
+			if (res?.error) {
+				toast.error(res.error);
+			}
 		});
 	};
 
@@ -81,12 +85,15 @@ export const LoginForm = () => {
 						<FormField
 							control={form.control}
 							name='email'
-							render={({ field }) => (
+							render={({
+								field,
+								formState: { isSubmitting },
+							}) => (
 								<FormItem>
 									<FormLabel>Correo electrónico</FormLabel>
 									<FormControl>
 										<Input
-											disabled={isPending}
+											disabled={isPending && isSubmitting}
 											autoComplete='Correo'
 											placeholder='Tu correo registrado'
 											type='email'
@@ -101,12 +108,15 @@ export const LoginForm = () => {
 						<FormField
 							control={form.control}
 							name='password'
-							render={({ field }) => (
+							render={({
+								field,
+								formState: { isSubmitting },
+							}) => (
 								<FormItem>
 									<FormLabel>Contraseña</FormLabel>
 									<FormControl>
 										<Input
-											disabled={isPending}
+											disabled={isPending && isSubmitting}
 											autoComplete='Contraseña'
 											placeholder='Tu contraseña'
 											type='password'

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { TypeOf, z } from 'zod';
 
 export const loginSchema = z.object({
 	email: z.string().email({ message: 'Debes ingresar un email válido' }),
@@ -6,6 +6,8 @@ export const loginSchema = z.object({
 		.string()
 		.min(4, 'La contraseña debe ser de al menos 4 caracteres.'),
 });
+
+export type Login = TypeOf<typeof loginSchema>;
 
 export const registerSchema = z
 	.object({
@@ -26,6 +28,8 @@ export const registerSchema = z
 		path: ['confirmPassword'],
 	});
 
+export type Register = TypeOf<typeof registerSchema>;
+
 export const awsSchema = z.object({
 	key: z.string().min(1, 'La llave debe tener al menos 1 caracter.'),
 	name: z.string().min(1, 'El nombre debe tener al menos 1 caracter.'),
@@ -42,6 +46,8 @@ export const forgotPasswordSchema = z.object({
 		.min(6, 'El email debe tener al menos 6 caracteres')
 		.email({ message: 'Debes ingresar un email válido' }),
 });
+
+export type ForgotPassword = TypeOf<typeof forgotPasswordSchema>;
 
 export const resetSchema = z
 	.object({
@@ -60,3 +66,5 @@ export const resetSchema = z
 		message: 'Las contraseñas deben coincidir',
 		path: ['confirmPassword'],
 	});
+
+export type ResetPassword = TypeOf<typeof resetSchema>;

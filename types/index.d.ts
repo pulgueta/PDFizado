@@ -1,12 +1,3 @@
-import { TypeOf } from 'zod';
-
-import {
-	forgotPasswordSchema,
-	loginSchema,
-	registerSchema,
-	resetSchema,
-} from '~/schemas';
-
 export type NavbarRoutes = {
 	href: string;
 	label: string;
@@ -14,14 +5,6 @@ export type NavbarRoutes = {
 }[];
 
 export type Provider = 'google' | 'facebook';
-
-export type Register = TypeOf<typeof registerSchema>;
-
-export type Login = TypeOf<typeof loginSchema>;
-
-export type ForgotPassword = TypeOf<typeof forgotPasswordSchema>;
-
-export type ResetPassword = TypeOf<typeof resetSchema>;
 
 export type Subscription = {
 	id: string;
