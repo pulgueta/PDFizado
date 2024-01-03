@@ -1,6 +1,6 @@
 'use client';
 
-import { useTransition } from 'react';
+import { FormEvent, useTransition } from 'react';
 
 import Link from 'next/link';
 
@@ -29,11 +29,10 @@ import { Input } from '~/shadcn/input';
 import { Separator } from '~/shadcn/separator';
 import { Button, buttonVariants } from '~/shadcn/button';
 import { loginSchema } from '~/schemas';
-import type { Login } from '~/types';
-import { login } from './actions/auth';
+import type { Login, Provider } from '~/types';
+import { login, loginWithProvider } from './actions/auth';
 import { Google } from '~/components/svg/google';
 import { Facebook } from '~/components/svg/facebook';
-import { signIn } from 'next-auth/react';
 import { Badge } from '~/components/ui/badge';
 
 export const LoginForm = () => {
@@ -56,6 +55,17 @@ export const LoginForm = () => {
 			}
 		});
 	});
+
+	const providerLogin = (
+		e: FormEvent<HTMLFormElement>,
+		provider: Provider
+	) => {
+		e.preventDefault();
+
+		startTransition(async () => {
+			await loginWithProvider(provider);
+		});
+	};
 
 	return (
 		<Card className='w-full md:w-[512px]'>
@@ -114,7 +124,7 @@ export const LoginForm = () => {
 							disabled={isPending}
 							id='submit-btn'
 						>
-							{isPending ? (
+							{isPending && form.formState.isSubmitting ? (
 								<Loader2Icon className='animate-spin' />
 							) : (
 								'Iniciar sesión'
@@ -125,22 +135,28 @@ export const LoginForm = () => {
 			</CardContent>
 			<CardFooter className='flex flex-col items-center justify-center'>
 				<section className='flex w-full flex-col items-center gap-2 md:flex-row'>
-					<Button
-						onClick={() =>
-							signIn('google', { callbackUrl: '/dashboard' })
-						}
-						variant='outline'
+					<form
 						className='w-full'
+						onSubmit={(e) => providerLogin(e, 'google')}
 					>
-						<Google />
-					</Button>
+						<Button
+							variant='outline'
+							disabled={isPending}
+							className='w-full'
+						>
+							{isPending ? (
+								<Loader2Icon className='animate-spin' />
+							) : (
+								<Google />
+							)}
+						</Button>
+					</form>
 					<Button
-						onClick={() => signIn('facebook')}
 						variant='outline'
 						disabled
 						className='relative w-full'
 					>
-						<Badge className='absolute -right-4 top-0 -rotate-12'>
+						<Badge className='absolute -right-6 top-0 -rotate-12'>
 							¡Pronto!
 						</Badge>
 						<Facebook />

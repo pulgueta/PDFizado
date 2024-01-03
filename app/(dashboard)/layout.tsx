@@ -3,8 +3,10 @@ import { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
+import { SessionProvider } from 'next-auth/react';
+
 import { ReactQueryProvider } from '~/providers/tanstack-provider';
-import { auth } from '~/lib/auth';
+import { auth } from '~/lib/auth/auth';
 
 export const metadata: Metadata = {
 	title: 'Dashboard',
@@ -29,7 +31,11 @@ const DashboardLayout = async ({ children }: PropsWithChildren) => {
 		redirect('/login');
 	}
 
-	return <ReactQueryProvider>{children}</ReactQueryProvider>;
+	return (
+		<ReactQueryProvider>
+			<SessionProvider session={session}>{children}</SessionProvider>
+		</ReactQueryProvider>
+	);
 };
 
 export default DashboardLayout;

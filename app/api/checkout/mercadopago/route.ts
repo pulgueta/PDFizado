@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { env } from '~/env/server.mjs';
-import { auth } from '~/lib/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const POST = async (req: NextRequest) => {
-	const session = await auth();
+	const user = await currentUser();
 
 	const _body = await req.json();
 
@@ -25,7 +25,7 @@ export const POST = async (req: NextRequest) => {
 		payer_email:
 			process.env.NODE_ENV === 'development'
 				? 'test_user_398545683@testuser.com'
-				: session?.user.email,
+				: user?.email,
 	};
 
 	try {

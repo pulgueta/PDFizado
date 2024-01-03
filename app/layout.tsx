@@ -8,7 +8,6 @@ import { GeistSans } from 'geist/font/sans';
 import { Toaster } from 'sonner';
 
 import { ThemeProvider } from '~/providers/theme-provider';
-import { AuthProvider } from '~/providers/auth-session';
 import { ProgressProvider } from '~/providers/progress-bar';
 import { Footer } from '~/components/server/footer/footer';
 import { Navbar } from '~/components/client/navbar/navbar';
@@ -111,19 +110,17 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 	<html lang='es' suppressHydrationWarning>
 		<body className={`${GeistSans.variable} antialiased`}>
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-				<AuthProvider>
-					<ProgressProvider>
-						<Navbar />
-						<Toaster
-							richColors
-							closeButton
-							position='top-center'
-							duration={1500}
-						/>
-						{children}
-						<Footer />
-					</ProgressProvider>
-				</AuthProvider>
+				<ProgressProvider>
+					<Navbar />
+					<Toaster
+						richColors
+						closeButton
+						position='top-center'
+						duration={1500}
+					/>
+					{children}
+					<Footer />
+				</ProgressProvider>
 			</ThemeProvider>
 			<Analytics />
 			<SpeedInsights />

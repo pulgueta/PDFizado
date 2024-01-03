@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
 
-import { auth } from '~/lib/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 const LandingLayout = async ({ children }: any) => {
-	const session = await auth();
+	const session = await currentUser();
 
 	if (session) {
 		redirect('/dashboard');

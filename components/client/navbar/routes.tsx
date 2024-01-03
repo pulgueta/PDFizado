@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { SheetFooter, SheetTrigger } from '~/shadcn/sheet';
 import { authRoutes, noAuthRoutes } from '~/constants/navbar';
 import { SignOut, SignOutMobile } from './sign-out';
-import { auth } from '~/lib/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const DesktopRoutes = async () => {
-	const session = await auth();
+	const session = await currentUser();
 
 	return (
 		<ul className='hidden md:flex md:items-center md:gap-x-6 lg:gap-x-12'>
@@ -22,7 +22,7 @@ export const DesktopRoutes = async () => {
 								{label}
 							</Link>
 						</li>
-				  ))
+					))
 				: noAuthRoutes.map(({ href, label }) => (
 						<li key={href}>
 							<Link
@@ -34,7 +34,7 @@ export const DesktopRoutes = async () => {
 								{label}
 							</Link>
 						</li>
-				  ))}
+					))}
 
 			{session && (
 				<li>
@@ -46,7 +46,7 @@ export const DesktopRoutes = async () => {
 };
 
 export const MobileRoutes = async () => {
-	const session = await auth();
+	const session = await currentUser();
 
 	return (
 		<>
@@ -65,7 +65,7 @@ export const MobileRoutes = async () => {
 									</Link>
 								</SheetTrigger>
 							</li>
-					  ))
+						))
 					: noAuthRoutes.map(({ href, label }) => (
 							<li key={href}>
 								<SheetTrigger asChild>
@@ -79,7 +79,7 @@ export const MobileRoutes = async () => {
 									</Link>
 								</SheetTrigger>
 							</li>
-					  ))}
+						))}
 			</ul>
 
 			{session && (

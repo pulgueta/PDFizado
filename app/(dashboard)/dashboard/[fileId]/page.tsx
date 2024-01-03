@@ -1,15 +1,15 @@
 import { File } from '@prisma/client';
 
-import { auth } from '~/lib/auth';
 import { Chat } from '~/components/client/chat/chat';
 import { db } from '~/database/db';
+import { currentUser } from '~/lib/auth/currentUser';
 
 const ChatPage = async ({ params }: { params: { fileId: string } }) => {
-	const session = await auth();
+	const user = await currentUser();
 
 	const file = (await db.file.findUnique({
 		where: {
-			userId: session?.user.id,
+			userId: user?.id,
 			id: params.fileId,
 		},
 	})) as File;

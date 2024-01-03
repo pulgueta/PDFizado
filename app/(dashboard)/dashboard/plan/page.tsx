@@ -12,9 +12,9 @@ import {
 	CardTitle,
 } from '~/shadcn/card';
 import { db } from '~/database/db';
-import { auth } from '~/lib/auth';
 import { CurrentPlan } from './current-plan';
 import { UpgradeButton } from './upgrade-button';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,11 +23,11 @@ type PlanPage = {
 };
 
 const Plan: NextPage<PlanPage> = async () => {
-	const session = await auth();
+	const user = await currentUser();
 
 	const { plan } = (await db.user.findUnique({
 		where: {
-			id: session?.user.id,
+			id: user?.id,
 		},
 	})) as User;
 

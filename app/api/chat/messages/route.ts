@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { db } from '~/database/db';
-import { auth } from '~/lib/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const POST = async (req: NextRequest) => {
 	const body = await req.json();
@@ -10,13 +10,13 @@ export const POST = async (req: NextRequest) => {
 
 	console.log('route', fileId);
 
-	const session = await auth();
+	const user = await currentUser();
 
 	try {
 		const messages = await db.message.findMany({
 			where: {
 				fileId,
-				userId: session?.user.id,
+				userId: user?.id,
 			},
 		});
 		console.log(messages);

@@ -7,33 +7,27 @@ import {
 	DialogTrigger,
 } from '~/shadcn/dialog';
 import { Dropzone } from './dropzone';
-import { auth } from '~/lib/auth';
 import { db } from '~/database/db';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const dynamic = 'force-dynamic';
 
 export const UploadPDF = async () => {
-	const session = await auth();
+	const user = await currentUser();
 
 	const files = await db.file.findMany({
 		where: {
-			userId: session?.user.id,
+			userId: user?.id,
 		},
 		orderBy: {
 			createdAt: 'desc',
 		},
 	});
 
-	console.log(files);
-
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button
-					disabled={
-						session?.user.plan === 'FREE' && files.length >= 6
-					}
-				>
+				<Button disabled={user?.plan === 'FREE' && files.length >= 6}>
 					Subir PDF
 				</Button>
 			</DialogTrigger>

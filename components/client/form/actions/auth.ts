@@ -1,18 +1,24 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 import { hash } from 'argon2';
 import { AuthError } from 'next-auth';
-import { revalidatePath } from 'next/cache';
 import { Resend } from 'resend';
 
 import { db } from '~/database/db';
 import VerifyEmailTemplate from '~/emails/verify-email';
 import { env } from '~/env/server.mjs';
-import { signIn } from '~/lib/auth';
+import { signIn } from '~/lib/auth/auth';
 import { loginSchema, registerSchema } from '~/schemas';
-import { Login, Register } from '~/types';
+import { Login, Provider, Register } from '~/types';
 
 const resend = new Resend(env.RESEND_API_KEY);
+
+export const loginWithProvider = async (provider: Provider) =>
+	await signIn(provider, {
+		redirectTo: '/dashboard',
+	});
 
 export const login = async (data: Login) => {
 	const values = loginSchema.safeParse(data);

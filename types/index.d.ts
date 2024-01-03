@@ -1,4 +1,5 @@
-import { z } from 'zod';
+import { TypeOf } from 'zod';
+
 import {
 	forgotPasswordSchema,
 	loginSchema,
@@ -12,17 +13,15 @@ export type NavbarRoutes = {
 	active?: boolean;
 }[];
 
-export type Env = {
-	[key: string]: string;
-};
+export type Provider = 'google' | 'facebook';
 
-export type Register = z.infer<typeof registerSchema>;
+export type Register = TypeOf<typeof registerSchema>;
 
-export type Login = z.infer<typeof loginSchema>;
+export type Login = TypeOf<typeof loginSchema>;
 
-export type ForgotPassword = z.infer<typeof forgotPasswordSchema>;
+export type ForgotPassword = TypeOf<typeof forgotPasswordSchema>;
 
-export type ResetPassword = z.infer<typeof resetSchema>;
+export type ResetPassword = TypeOf<typeof resetSchema>;
 
 export type Subscription = {
 	id: string;

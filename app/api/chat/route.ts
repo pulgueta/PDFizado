@@ -8,7 +8,7 @@ import { env } from '~/env/server.mjs';
 import { plan as Plan } from '~/lib/plan-allowance';
 import { getContext } from '~/lib/context';
 import { db } from '~/database/db';
-import { auth } from '~/lib/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 const config = new Configuration({
 	apiKey: env.OPENAI_SECRET,
@@ -26,9 +26,9 @@ export const POST = async (req: NextRequest) => {
 	console.log('chatId ->', chatId);
 	console.log('fileId ->', fileId);
 
-	const session = await auth();
+	const user = await currentUser();
 
-	if (!session) {
+	if (!user) {
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
@@ -59,7 +59,7 @@ export const POST = async (req: NextRequest) => {
 
 	try {
 		const response = await gpt.createChatCompletion({
-			model: Plan(session?.user.plan as $Enums.Plan),
+			model: Plan(user.plan as $Enums.Plan),
 			stream: true,
 			temperature: 0.2,
 			messages: [
@@ -76,7 +76,7 @@ export const POST = async (req: NextRequest) => {
 					data: {
 						text: lastMessage.content,
 						fileId,
-						userId: session.user.id,
+						userId: user.id,
 						isUserMessage: true,
 					},
 				});
@@ -86,7 +86,7 @@ export const POST = async (req: NextRequest) => {
 					data: {
 						text: completion,
 						fileId,
-						userId: session.user.id,
+						userId: user.id,
 						isUserMessage: false,
 					},
 				});

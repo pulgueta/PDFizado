@@ -6,15 +6,15 @@ import { ThemeSwitcher } from '~/shadcn/theme-switcher';
 import { Sheet, SheetContent, SheetTrigger } from '~/shadcn/sheet';
 import { Button } from '~/shadcn/button';
 import { DesktopRoutes, MobileRoutes } from './routes';
-import { auth } from '~/lib/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const Navbar = async () => {
-	const session = await auth();
+	const user = await currentUser();
 
 	return (
 		<nav className='sticky top-0 z-50 flex h-20 items-center justify-between border-b bg-white/80 px-4 backdrop-blur md:px-6 lg:px-16 xl:px-40 2xl:px-64 dark:bg-[#0C0A09]/80'>
 			<Link
-				href={!session ? '/' : '/dashboard'}
+				href={!user ? '/' : '/dashboard'}
 				aria-label='PDFizado - Inicio'
 				id='branding'
 				className='text-3xl font-black text-black md:text-4xl dark:text-white'

@@ -12,7 +12,9 @@ export type ExtendedUser = DefaultSession['user'] & {
 	mercadopagoSubscriptionId: string;
 	plan: Plan;
 	emailVerified: boolean;
+	picture: string;
 	accounts: [];
+	isOAuth: boolean;
 };
 
 declare module 'next-auth' {
@@ -27,6 +29,7 @@ export const {
 	auth,
 	signOut,
 	signIn,
+	update,
 } = NextAuth({
 	adapter: PrismaAdapter(db),
 	session: {
@@ -47,21 +50,45 @@ export const {
 		},
 	},
 	callbacks: {
-		jwt: async ({ token, user, account }) => {
-			if (account) {
-				token.accessToken = account.accessToken;
-			}
+		jwt: async ({ token }) => {
+			if (!token.sub) return token;
 
-			switch (account?.type) {
-				case 'credentials':
-					token.user = user;
-					break;
-			}
+			const existingUser = await db.user.findUnique({
+				where: {
+					id: token.sub,
+				},
+			});
+
+			if (!existingUser) return token;
+
+			const existingAccount = await db.account.findFirst({
+				where: {
+					id: existingUser.id,
+				},
+			});
+
+			token.isOAuth = !!existingAccount;
+			token.name = existingUser.name;
+			token.email = existingUser.email;
+			token.role = existingUser.role;
+			token.plan = existingUser.plan;
 
 			return token;
 		},
 		session: async ({ session, token }) => {
-			session.user = token.user as any;
+			if (token.sub && session.user) {
+				session.user.id = token.sub;
+			}
+
+			if (token.role && session.user) {
+				session.user.role = token.role as Role;
+			}
+
+			if (session.user) {
+				session.user.name = token.name;
+				session.user.email = token.email;
+				session.user.isOAuth = token.isOAuth as boolean;
+			}
 
 			return session;
 		},

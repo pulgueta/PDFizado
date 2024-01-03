@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 import { File } from '@prisma/client';
 
 import { db } from '~/database/db';
-import { auth } from '~/lib/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const revalidate = 1800;
 
@@ -13,11 +13,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			? 'http://localhost:3000'
 			: 'https://www.pdfizado.com';
 
-	const session = await auth();
+	const user = await currentUser();
 
 	const data = (await db.file.findMany({
 		where: {
-			userId: session?.user.email,
+			userId: user?.email,
 		},
 	})) as File[];
 

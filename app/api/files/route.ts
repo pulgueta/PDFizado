@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { db } from '~/database/db';
@@ -5,12 +6,13 @@ import { env } from '~/env/client.mjs';
 import { loadAWStoPinecone } from '~/lib/pinecone';
 import { awsSchema } from '~/schemas';
 import { s3 } from '~/lib/aws/s3.config';
-import { auth } from '~/lib/auth';
+import { update } from '~/lib/auth/auth';
+import { currentUser } from '~/lib/auth/currentUser';
 
 export const POST = async (req: NextRequest) => {
-	const session = await auth();
+	const user = await currentUser();
 
-	if (!session)
+	if (!user)
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
 	const body = await req.json();
@@ -29,9 +31,12 @@ export const POST = async (req: NextRequest) => {
 				awsKey: key,
 				name,
 				url,
-				userId: session.user.id,
+				userId: user.id,
 			},
 		});
+
+		revalidatePath('/dashboard');
+		update({ user });
 
 		return NextResponse.json(file, { status: 201 });
 	} catch (error) {
@@ -40,16 +45,16 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const GET = async () => {
-	const session = await auth();
+	const user = await currentUser();
 
-	if (!session) {
+	if (!user) {
 		return NextResponse.json('Unauthorized', { status: 401 });
 	}
 
 	try {
 		const files = await db.file.findMany({
 			where: {
-				userId: session?.user.id,
+				userId: user.id,
 			},
 			orderBy: {
 				createdAt: 'desc',
@@ -65,7 +70,7 @@ export const GET = async () => {
 export const DELETE = async (req: NextRequest) => {
 	const body = await req.json();
 
-	const session = await auth();
+	const user = await currentUser();
 
 	const params = {
 		Bucket: env.NEXT_PUBLIC_S3_BUCKET,
@@ -86,7 +91,7 @@ export const DELETE = async (req: NextRequest) => {
 			);
 		}
 
-		if (file.userId !== session?.user.id) {
+		if (file.userId !== user?.id) {
 			return NextResponse.json(
 				{ error: 'Unauthorized' },
 				{ status: 401 }
@@ -102,7 +107,7 @@ export const DELETE = async (req: NextRequest) => {
 		await db.message.deleteMany({
 			where: {
 				fileId: body.id,
-				userId: session?.user.id,
+				userId: user.id,
 			},
 		});
 
