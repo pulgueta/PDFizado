@@ -134,7 +134,7 @@ export const LoginForm = () => {
 							disabled={isPending}
 							id='submit-btn'
 						>
-							{isPending && form.formState.isSubmitting ? (
+							{form.formState.isSubmitting ? (
 								<Loader2Icon className='animate-spin' />
 							) : (
 								'Iniciar sesión'
@@ -154,11 +154,7 @@ export const LoginForm = () => {
 							disabled={isPending}
 							className='w-full'
 						>
-							{isPending ? (
-								<Loader2Icon className='animate-spin' />
-							) : (
-								<Google />
-							)}
+							<Google />
 						</Button>
 					</form>
 					<Button

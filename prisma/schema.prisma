@@ -58,7 +58,7 @@ model File {
     updatedAt DateTime  @updatedAt
     userId    String?
     awsKey    String
-    User      User?     @relation(fields: [userId], references: [id])
+    User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
     messages  Message[]
 }
 
@@ -70,8 +70,8 @@ model Message {
     updatedAt     DateTime @updatedAt
     userId        String?
     fileId        String?
-    File          File?    @relation(fields: [fileId], references: [id])
-    User          User?    @relation(fields: [userId], references: [id])
+    File          File?    @relation(fields: [fileId], references: [id], onDelete: Cascade)
+    User          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum Plan {

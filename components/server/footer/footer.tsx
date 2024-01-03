@@ -2,16 +2,10 @@
 
 import Link from 'next/link';
 
-import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react';
-import { useTheme } from 'next-themes';
-
 import { footerRoutes } from '~/constants/navbar';
-import { Button, buttonVariants } from '~/shadcn/button';
-import { cn } from '~/lib/utils';
+import { buttonVariants } from '~/shadcn/button';
 
 export const Footer = () => {
-	const { setTheme, theme } = useTheme();
-
 	return (
 		<footer className='flex h-full w-full flex-col items-center gap-8 border-t bg-secondary p-8 md:flex-row md:justify-between lg:justify-around dark:bg-[#0C0A09]'>
 			<Link
@@ -51,47 +45,6 @@ export const Footer = () => {
 				>
 					Copyright Andrés R. {new Date().getFullYear()}
 				</Link>
-				<div className='space-x-2'>
-					<Button
-						className={cn('hover:bg-secondary-foreground/10', {
-							'bg-secondary-foreground/10': theme === 'light',
-						})}
-						size='icon'
-						variant='ghost'
-						onClick={() => setTheme('light')}
-					>
-						<SunIcon
-							aria-label='Toggle light theme'
-							className='h-4 w-4'
-						/>
-					</Button>
-					<Button
-						className={cn('hover:bg-secondary-foreground/10', {
-							'bg-secondary-foreground/10': theme === 'dark',
-						})}
-						size='icon'
-						variant='ghost'
-						onClick={() => setTheme('dark')}
-					>
-						<MoonIcon
-							aria-label='Toggle dark theme'
-							className='h-4 w-4'
-						/>
-					</Button>
-					<Button
-						className={cn('hover:bg-secondary-foreground/10', {
-							'bg-secondary-foreground/10': theme === 'system',
-						})}
-						size='icon'
-						variant='ghost'
-						onClick={() => setTheme('system')}
-					>
-						<LaptopIcon
-							aria-label='Set system theme'
-							className='h-4 w-4'
-						/>
-					</Button>
-				</div>
 			</nav>
 		</footer>
 	);

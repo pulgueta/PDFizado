@@ -6,6 +6,7 @@ import { ThemeSwitcher } from '~/shadcn/theme-switcher';
 import { Sheet, SheetContent, SheetTrigger } from '~/shadcn/sheet';
 import { Button } from '~/shadcn/button';
 import { DesktopRoutes, MobileRoutes } from './routes';
+import { Profile } from '~/components/server/navbar/profile';
 import { currentUser } from '~/lib/auth/currentUser';
 
 export const Navbar = async () => {
@@ -22,25 +23,27 @@ export const Navbar = async () => {
 				<span className='text-primary'>PDF</span>izado
 			</Link>
 			<nav className='flex items-center gap-x-4 md:gap-x-6'>
-				<DesktopRoutes />
+				{user ? <Profile {...user} /> : <DesktopRoutes />}
 				<ThemeSwitcher />
-				<Sheet>
-					<SheetTrigger
-						asChild
-						className='flex md:hidden'
-						id='navbar-btn'
-					>
-						<Button
-							size='icon'
-							aria-label='Mobile navbar menu button'
+				{!user && (
+					<Sheet>
+						<SheetTrigger
+							asChild
+							className='flex md:hidden'
+							id='navbar-btn'
 						>
-							<MenuIcon aria-label='Mobile navbar menu button' />
-						</Button>
-					</SheetTrigger>
-					<SheetContent className='bg-white dark:bg-[#1C1917]'>
-						<MobileRoutes />
-					</SheetContent>
-				</Sheet>
+							<Button
+								size='icon'
+								aria-label='Mobile navbar menu button'
+							>
+								<MenuIcon />
+							</Button>
+						</SheetTrigger>
+						<SheetContent className='bg-white dark:bg-[#1C1917]'>
+							<MobileRoutes />
+						</SheetContent>
+					</Sheet>
+				)}
 			</nav>
 		</nav>
 	);
