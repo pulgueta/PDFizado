@@ -10,8 +10,13 @@ import { db } from '~/database/db';
 import VerifyEmailTemplate from '~/emails/verify-email';
 import { env } from '~/env/server.mjs';
 import { signIn } from '~/lib/auth/auth';
-import { loginSchema, registerSchema } from '~/schemas';
-import { Login, Provider, Register } from '~/types';
+import {
+	type Login,
+	type Register,
+	loginSchema,
+	registerSchema,
+} from '~/schemas';
+import { Provider } from '~/types';
 
 const { emails } = new Resend(env.RESEND_API_KEY);
 

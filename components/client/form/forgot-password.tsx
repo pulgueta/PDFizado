@@ -22,8 +22,7 @@ import {
 	CardTitle,
 } from '~/shadcn/card';
 import { Input } from '~/shadcn/input';
-import { forgotPasswordSchema } from '~/schemas';
-import type { ForgotPassword } from '~/types';
+import { type ForgotPassword, forgotPasswordSchema } from '~/schemas';
 
 export const ForgotPasswordForm = () => {
 	const form = useForm<ForgotPassword>({

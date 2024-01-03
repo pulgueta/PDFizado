@@ -28,12 +28,12 @@ import {
 import { Input } from '~/shadcn/input';
 import { Separator } from '~/shadcn/separator';
 import { Button, buttonVariants } from '~/shadcn/button';
-import { loginSchema } from '~/schemas';
-import type { Login, Provider } from '~/types';
+import { Login, loginSchema } from '~/schemas';
 import { login, loginWithProvider } from './actions/auth';
 import { Google } from '~/components/svg/google';
 import { Facebook } from '~/components/svg/facebook';
 import { Badge } from '~/components/ui/badge';
+import { Provider } from '~/types';
 
 export const LoginForm = () => {
 	const [isPending, startTransition] = useTransition();

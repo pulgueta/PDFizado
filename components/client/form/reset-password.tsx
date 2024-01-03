@@ -17,8 +17,7 @@ import {
 } from '~/shadcn/form';
 import { Input } from '~/shadcn/input';
 import { Button } from '~/shadcn/button';
-import { resetSchema } from '~/schemas';
-import type { ResetPassword as Reset } from '~/types';
+import { type ResetPassword as Reset, resetSchema } from '~/schemas';
 
 export const ResetPassword = () => {
 	const { get } = useSearchParams();

@@ -27,8 +27,7 @@ import {
 } from '~/shadcn/card';
 import { Input } from '~/shadcn/input';
 import { Button, buttonVariants } from '~/shadcn/button';
-import { registerSchema } from '~/schemas';
-import type { Register } from '~/types';
+import { type Register, registerSchema } from '~/schemas';
 import { register } from './actions/auth';
 
 export const RegisterForm = () => {
