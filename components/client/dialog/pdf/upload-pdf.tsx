@@ -31,7 +31,7 @@ export const UploadPDF = async () => {
 					Subir PDF
 				</Button>
 			</DialogTrigger>
-			<DialogContent className='max-w-xs rounded-xl md:max-w-lg lg:max-w-xl'>
+			<DialogContent className='w-11/12 rounded-xl md:max-w-lg lg:max-w-xl'>
 				<DialogHeader>
 					<DialogTitle>Subir PDF</DialogTitle>
 				</DialogHeader>

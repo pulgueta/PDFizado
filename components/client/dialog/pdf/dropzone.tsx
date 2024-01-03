@@ -21,7 +21,7 @@ export const Dropzone = () => {
 		<div
 			{...getRootProps({
 				className:
-					'mx-auto my-4 w-64 cursor-pointer rounded border border-dashed border-gray-300 bg-neutral-100 px-4 py-8 transition-colors duration-200 ease-in-out hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 md:w-full md:py-16',
+					'mx-auto my-4 w-full cursor-pointer rounded border border-dashed border-gray-300 bg-neutral-100 px-4 py-16 transition-colors duration-200 ease-in-out hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 md:py-24',
 			})}
 		>
 			<input {...getInputProps()} disabled={isPending || isSuccess} />
