@@ -4,7 +4,6 @@ import './env/server.mjs'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	poweredByHeader: false,
-	output: 'standalone',
 	experimental: {
 		serverComponentsExternalPackages: ['argon2'],
 	},
