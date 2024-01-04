@@ -4,7 +4,6 @@ import { Grid } from '@radix-ui/themes';
 
 import { PDFCard } from '~/components/client/user/pdf-card';
 import { PDFLoader } from '~/components/server/pdf-loaders';
-
 import { usePDF } from '~/hooks/user/use-pdf';
 
 import '@radix-ui/themes/styles.css';
@@ -45,18 +44,7 @@ export const UserFiles = () => {
 
 			{isSuccess &&
 				data.length > 0 &&
-				data.map((file) => (
-					<PDFCard
-						key={file.awsKey}
-						awsKey={file.awsKey}
-						createdAt={file.createdAt}
-						name={file.name}
-						id={file.id}
-						updatedAt={file.updatedAt}
-						userId={file.userId}
-						url={file.url}
-					/>
-				))}
+				data.map((file) => <PDFCard key={file.awsKey} {...file} />)}
 		</Grid>
 	);
 };

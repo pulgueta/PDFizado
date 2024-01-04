@@ -32,7 +32,7 @@ const Plan: NextPage<PlanPage> = async () => {
 	})) as User;
 
 	return (
-		<section className='container min-h-[calc(100vh-205px)]'>
+		<section className='container min-h-[calc(100vh-221px)]'>
 			<Card className='mx-auto mt-4 w-full sm:w-96 md:w-auto md:max-w-md'>
 				<CardHeader>
 					<CardTitle>Tu plan</CardTitle>
