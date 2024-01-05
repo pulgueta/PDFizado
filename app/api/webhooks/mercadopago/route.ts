@@ -7,6 +7,8 @@ import { Subscription, Webhook } from './types';
 export const POST = async (req: NextRequest) => {
 	const body = (await req.json()) as Webhook;
 
+	console.log('Preapproval ID', body.data.id);
+
 	try {
 		if (body.data.id.length > 1) {
 			const res = (await fetch(
