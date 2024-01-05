@@ -35,7 +35,7 @@ export const ResetPassword = () => {
 	});
 
 	const onSubmit = form.handleSubmit(async (data: Reset) => {
-		const res = await fetch('/api/email/forgot-password/change-password', {
+		const res = await fetch('/api/email/change-password', {
 			method: 'POST',
 			body: JSON.stringify({
 				...data,
