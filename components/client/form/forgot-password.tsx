@@ -66,7 +66,7 @@ export const ForgotPasswordForm = () => {
 			<CardFooter className='flex-col justify-center'>
 				<Separator />
 				<Link
-					href='/forgot-password'
+					href='/login'
 					className={buttonVariants({
 						variant: 'link',
 						size: 'sm',
