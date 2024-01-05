@@ -1,8 +1,8 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 import { buttonVariants } from '~/shadcn/button';
 import { db } from '~/database/db';
-import { Metadata } from 'next';
 
 type VerifyEmail = {
 	searchParams: {
@@ -11,14 +11,13 @@ type VerifyEmail = {
 };
 
 export const metadata: Metadata = {
-	title: 'Verificar tu email',
-	description: 'Verifica tu email de PDFizado para poder iniciar sesión.',
+	title: 'Verificar tu correo electrónico',
+	description:
+		'Verifica tu correo electrónico de PDFizado para poder iniciar sesión.',
 };
 
 const Verify = async ({ searchParams }: VerifyEmail) => {
-	if (!searchParams.id) {
-		return <NoIdProvided />;
-	}
+	if (!searchParams.id) return <NoIdProvided />;
 
 	const user = await db.user.findUnique({
 		where: {
@@ -26,11 +25,9 @@ const Verify = async ({ searchParams }: VerifyEmail) => {
 		},
 	});
 
-	if (!user) {
-		return <InvalidId />;
-	}
+	if (!user) return <InvalidId />;
 
-	if (!user?.emailVerified) {
+	if (!user?.emailVerified)
 		await db.user.update({
 			where: {
 				id: user.id,
@@ -39,10 +36,9 @@ const Verify = async ({ searchParams }: VerifyEmail) => {
 				emailVerified: true,
 			},
 		});
-	}
 
 	return (
-		<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+		<section className='container flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
 			<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 				Se ha verificado tu cuenta
 			</h1>
@@ -59,12 +55,12 @@ const Verify = async ({ searchParams }: VerifyEmail) => {
 export default Verify;
 
 const NoIdProvided = () => (
-	<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+	<section className='container flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No se ha proporcionado un id
 		</h1>
 		<h3 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
-			Necesitas un id válido para verificar tu email.
+			Necesitas un id válido para verificar tu correo electrónico.
 		</h3>
 		<Link className={buttonVariants({ variant: 'link' })} href='/register'>
 			Crear cuenta
@@ -73,12 +69,12 @@ const NoIdProvided = () => (
 );
 
 const InvalidId = () => (
-	<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+	<section className='container flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No es un id válido
 		</h1>
 		<h3 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
-			Necesitas un id válido para verificar tu email.
+			Necesitas un id válido para verificar tu correo electrónico.
 		</h3>
 		<Link className={buttonVariants({ variant: 'link' })} href='/register'>
 			Crear cuenta
