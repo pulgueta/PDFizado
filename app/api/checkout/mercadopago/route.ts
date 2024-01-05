@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest) => {
 		},
 		back_url:
 			process.env.NODE_ENV === 'development'
-				? 'https://3mx9jhl1-3000.use2.devtunnels.ms/dashboard/plan'
+				? 'https://61h2rm9w-3000.use.devtunnels.ms/dashboard/plan'
 				: 'https://pdfizado.com/dashboard/plan',
 		payer_email:
 			process.env.NODE_ENV === 'development'
