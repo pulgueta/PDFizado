@@ -1,20 +1,17 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-
 import { db } from '~/database/db';
 import { ResetPasswordEmail } from '~/emails/forgot-password';
 import { resend } from '~/lib/auth/resend.config';
 import { forgotPasswordSchema } from '~/schemas';
 
-export const forgotPassword = async (state: any, e: FormData) => {
+export const forgotPassword = async (_prevState: any, e: FormData) => {
 	const data = forgotPasswordSchema.safeParse(
 		Object.fromEntries(e.entries())
 	);
 
-	if (!data.success) {
-		return { error: 'Debes ingresar un correo electrónico válido' };
-	}
+	if (!data.success)
+		return { error: data.error.flatten().fieldErrors.email![0] };
 
 	const { email } = data.data;
 
@@ -45,11 +42,10 @@ export const forgotPassword = async (state: any, e: FormData) => {
 					: `https://www.pdfizado.com/reset-password?token=${token}`,
 			username: isUserCreated.name ?? 'usuario',
 		}),
+		tags: [{ name: 'category', value: 'reset_password' }],
 	});
 
 	if (error) return { error };
-
-	revalidatePath('/forgot-password');
 
 	return { status: 'success' };
 };
