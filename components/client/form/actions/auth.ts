@@ -4,11 +4,9 @@ import { revalidatePath } from 'next/cache';
 
 import { hash } from 'argon2';
 import { AuthError } from 'next-auth';
-import { Resend } from 'resend';
 
 import { db } from '~/database/db';
 import VerifyEmailTemplate from '~/emails/verify-email';
-import { env } from '~/env/server.mjs';
 import { signIn } from '~/lib/auth/auth';
 import {
 	type Login,
@@ -17,8 +15,7 @@ import {
 	registerSchema,
 } from '~/schemas';
 import { Provider } from '~/types';
-
-const { emails } = new Resend(env.RESEND_API_KEY);
+import { resend } from '~/lib/auth/resend.config';
 
 export const loginWithProvider = async (provider: Provider) => {
 	try {
@@ -108,7 +105,7 @@ export const register = async (data: Register) => {
 		},
 	});
 
-	const { data: emailId, error } = await emails.send({
+	const { data: emailId, error } = await resend.emails.send({
 		from: 'PDFizado <no-reply@pdfizado.com>',
 		to: [email],
 		subject: 'PDFizado - Verificación de correo electrónico',
