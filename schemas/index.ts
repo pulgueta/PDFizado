@@ -1,7 +1,9 @@
 import { TypeOf, z } from 'zod';
 
 export const loginSchema = z.object({
-	email: z.string().email({ message: 'Debes ingresar un email válido' }),
+	email: z
+		.string()
+		.email({ message: 'Debes ingresar un correo electrónico válido' }),
 	password: z
 		.string()
 		.min(4, 'La contraseña debe ser de al menos 4 caracteres.'),
@@ -14,8 +16,8 @@ export const registerSchema = z
 		name: z.string().min(6, 'El nombre debe tener al menos 6 caracteres.'),
 		email: z
 			.string()
-			.min(6, 'El email debe tener al menos 6 caracteres.')
-			.email({ message: 'Debes ingresar un email válido' }),
+			.min(6, 'El correo electrónico debe tener al menos 6 caracteres.')
+			.email({ message: 'Debes ingresar un correo electrónico válido' }),
 		password: z
 			.string()
 			.min(4, 'La contraseña debe ser de al menos 6 caracteres.'),
@@ -37,14 +39,16 @@ export const awsSchema = z.object({
 });
 
 export const emailSchema = z.object({
-	email: z.string().email({ message: 'Debes ingresar un email válido' }),
+	email: z
+		.string()
+		.email({ message: 'Debes ingresar un correo electrónico válido' }),
 });
 
 export const forgotPasswordSchema = z.object({
 	email: z
 		.string()
-		.min(6, 'El email debe tener al menos 6 caracteres')
-		.email({ message: 'Debes ingresar un email válido' }),
+		.min(6, 'El correo electrónico debe tener al menos 6 caracteres')
+		.email({ message: 'Debes ingresar un correo electrónico válido' }),
 });
 
 export type ForgotPassword = TypeOf<typeof forgotPasswordSchema>;
@@ -53,8 +57,8 @@ export const resetSchema = z
 	.object({
 		email: z
 			.string()
-			.min(6, 'El email debe tener al menos 6 caracteres')
-			.email({ message: 'Debes ingresar un email válido' }),
+			.min(6, 'El correo electrónico debe tener al menos 6 caracteres')
+			.email({ message: 'Debes ingresar un correo electrónico válido' }),
 		password: z
 			.string()
 			.min(6, 'La contraseña debe ser de al menos 6 caracteres.'),
