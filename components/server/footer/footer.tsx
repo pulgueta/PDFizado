@@ -11,7 +11,7 @@ export const Footer = () => {
 			<Link
 				href='/'
 				aria-label='PDFizado - Inicio'
-				className='text-5xl font-black tracking-tight text-black md:text-5xl lg:text-6xl dark:text-white'
+				className='text-4xl font-black tracking-tight text-black md:text-5xl lg:text-6xl dark:text-white'
 			>
 				<span className='text-primary'>PDF</span>izado
 			</Link>
