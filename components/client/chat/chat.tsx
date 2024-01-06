@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 
-import { useParams } from 'next/navigation';
 import { useChat } from 'ai/react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -13,9 +12,7 @@ import { Input } from '~/shadcn/input';
 import { MessageList } from './message-list';
 import { Message } from './types';
 
-export const Chat = () => {
-	const { fileId } = useParams();
-
+export const Chat = ({ fileId }: { fileId: string }) => {
 	const { data, isLoading } = useQuery<Message[]>({
 		queryKey: ['messages', fileId],
 		queryFn: async () => {
@@ -39,7 +36,7 @@ export const Chat = () => {
 		body: {
 			fileId,
 		},
-		initialMessages: data,
+		initialMessages: data || [],
 	});
 
 	useEffect(() => {
@@ -47,18 +44,19 @@ export const Chat = () => {
 			'scroller'
 		) as HTMLDivElement;
 
-		if (!messagesScroll) return;
-
-		messagesScroll.scrollIntoView({
-			behavior: 'smooth',
-			block: 'end',
-		});
+		if (messagesScroll)
+			messagesScroll.scrollTo({
+				behavior: 'smooth',
+				top: messagesScroll.scrollHeight,
+			});
 	}, [messages]);
 
 	return (
-		<div className='flex-1 p-2' id='scroller'>
-			<ScrollArea className='relative h-[calc(40vh)] max-h-svh py-2 md:h-[calc(100vh-140px)]'>
-				{/* @ts-ignore */}
+		<div className='flex-1 p-2'>
+			<ScrollArea
+				className='relative h-[calc(40vh)] max-h-svh py-2 md:h-[calc(100vh-140px)]'
+				id='scroller'
+			>
 				<MessageList messages={messages} />
 				{isLoading && (
 					<div className='relative mb-4 mr-auto flex w-max animate-fade-up rounded-lg bg-neutral-600 animate-duration-[400ms] animate-ease-in-out'>
