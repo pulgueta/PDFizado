@@ -1,9 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { Message, useChat } from 'ai/react';
-
 import { useQuery } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
 
@@ -36,24 +33,9 @@ export const Chat = ({ fileId }: { fileId: string }) => {
 		initialMessages: data || [],
 	});
 
-	useEffect(() => {
-		const messagesScroll = document.getElementById(
-			'scroller'
-		) as HTMLDivElement;
-
-		if (messagesScroll)
-			messagesScroll.scrollTo({
-				behavior: 'smooth',
-				top: messagesScroll.scrollHeight,
-			});
-	}, [messages]);
-
 	return (
 		<div className='flex-1 p-2'>
-			<ScrollArea
-				className='relative h-[calc(40vh)] max-h-svh py-2 md:h-[calc(100vh-140px)]'
-				id='scroller'
-			>
+			<ScrollArea className='relative h-[calc(40vh)] max-h-svh py-2 md:h-[calc(100vh-140px)]'>
 				<MessageList messages={messages} />
 				{isLoading && (
 					<div className='relative mb-4 mr-auto flex w-max animate-fade-up rounded-lg bg-neutral-600 animate-duration-[400ms] animate-ease-in-out'>
@@ -72,6 +54,7 @@ export const Chat = ({ fileId }: { fileId: string }) => {
 					<Input
 						className='bottom-0 h-full w-full'
 						value={input}
+						autoFocus
 						onChange={handleInputChange}
 						disabled={vercelLoading}
 						placeholder='Haz cualquier pregunta sobre el documento...'

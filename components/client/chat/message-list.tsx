@@ -1,39 +1,48 @@
 import { Message } from 'ai/react';
 import { ChatCompletionRequestMessageRoleEnum } from 'openai-edge';
+import { ElementRef, useEffect, useRef } from 'react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import { cn } from '~/lib/utils';
 
 export const MessageList = ({ messages }: { messages: Message[] }) => {
-	if (!messages) return <></>;
+	const msg = useRef<ElementRef<'div'>>(null);
 
-	// if (loading)
-	// 	return (
-	// 		<div
-	// 			key={`${messages[0].id}`}
-	// 			className='w-max animate-fade-up rounded-lg bg-neutral-600 px-4 py-2 animate-duration-300 md:max-w-md lg:max-w-lg'
-	// 		>
-	// 			<Loader2 className='size-4 animate-spin' />
-	// 		</div>
-	// 	);
+	useEffect(() => {
+		msg.current?.scrollIntoView({
+			behavior: 'smooth',
+		});
+	}, [messages]);
+
+	if (!messages) return <></>;
 
 	return messages.map((message) => (
 		<div
 			key={message.id}
+			id={message.role}
+			ref={msg}
 			className={cn(
-				'mb-4 flex w-max animate-fade-up rounded-lg animate-duration-[400ms] animate-ease-in-out',
+				'mb-4 flex w-max max-w-lg animate-fade-up rounded-lg px-4 py-2 text-white animate-duration-300 animate-ease-in-out md:max-w-sm lg:max-w-prose',
 				{
-					'ml-auto  bg-primary':
+					'ml-auto rounded-br-none bg-primary':
 						message.role ===
 						ChatCompletionRequestMessageRoleEnum.User,
-					'mr-auto bg-neutral-600':
+					'mr-auto rounded-bl-none bg-neutral-600':
 						message.role ===
 						ChatCompletionRequestMessageRoleEnum.Assistant,
 				}
 			)}
 		>
-			<div className='max-w-sm rounded-lg px-4 py-2 text-white md:max-w-md lg:max-w-lg'>
-				<p className='text-sm'>{message.content}</p>
-			</div>
+			<p className='text-sm'>
+				{typeof message.content === 'string' ? (
+					<Markdown remarkPlugins={[remarkGfm]}>
+						{message.content}
+					</Markdown>
+				) : (
+					message.content
+				)}
+			</p>
 		</div>
 	));
 };
