@@ -10,7 +10,7 @@ import { Toaster } from 'sonner';
 import { ThemeProvider } from '~/providers/theme-provider';
 import { ProgressProvider } from '~/providers/progress-bar';
 import { Footer } from '~/components/server/footer/footer';
-import { Navbar } from '~/components/client/navbar/navbar';
+import { Navbar } from '~/components/server/navbar/navbar';
 
 import '~/app/globals.css';
 
