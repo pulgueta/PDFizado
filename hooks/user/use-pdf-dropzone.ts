@@ -1,10 +1,10 @@
 import { useSession } from 'next-auth/react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
-import { $Enums } from '@prisma/client';
+import { Plan } from '@prisma/client';
 
 import { uploadToS3 } from '~/lib/aws/awsS3';
-import { maxSizeAllowed } from '~/lib/plan-allowance';
+import { maxSize } from '~/lib/plan-allowance';
 import { Mutation } from './types';
 
 export const useDropzonePDF = ({
@@ -15,15 +15,15 @@ export const useDropzonePDF = ({
 }) => {
 	const session = useSession();
 
-	const plan = session.data?.user.plan as $Enums.Plan;
+	const plan = session.data?.user.plan as Plan;
 
 	const dropzone = useDropzone({
 		accept: { 'application/pdf': ['.pdf'] },
 		maxFiles: 1,
 		multiple: false,
-		maxSize: maxSizeAllowed(plan),
+		maxSize: maxSize[plan],
 		validator: (file) => {
-			if (file.size > maxSizeAllowed(plan)) {
+			if (file.size > maxSize[plan]) {
 				return {
 					code: 'file-too-large',
 					message: 'El archivo excede el límite de tu plan',
