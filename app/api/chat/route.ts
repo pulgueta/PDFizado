@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { Message, OpenAIStream, StreamingTextResponse } from 'ai';
-import { Configuration, OpenAIApi } from 'openai-edge';
-import { $Enums } from '@prisma/client';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { Message } from 'ai/react';
+import {
+	ChatCompletionRequestMessageRoleEnum,
+	Configuration,
+	OpenAIApi,
+} from 'openai-edge';
 
 import { env } from '~/env/server.mjs';
-import { plan as Plan } from '~/lib/plan-allowance';
+import { model } from '~/lib/plan-allowance';
 import { getContext } from '~/lib/context';
 import { db } from '~/database/db';
 import { currentUser } from '~/lib/auth/currentUser';
@@ -18,19 +22,14 @@ const config = new Configuration({
 const gpt = new OpenAIApi(config);
 
 export const POST = async (req: NextRequest) => {
+	const user = await currentUser();
+
+	if (!user)
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
 	const body = await req.json();
 
 	const { messages, chatId, fileId } = body;
-
-	console.log('messages ->', messages);
-	console.log('chatId ->', chatId);
-	console.log('fileId ->', fileId);
-
-	const user = await currentUser();
-
-	if (!user) {
-		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-	}
 
 	const lastMessage = messages[messages.length - 1];
 	const context = await getContext(lastMessage.content, chatId);
@@ -43,12 +42,13 @@ export const POST = async (req: NextRequest) => {
             AI is a well-behaved and well-mannered individual.
             AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user.
             AI has the sum of all knowledge in their brain, and is able to accurately answer nearly any question about any topic in conversation.
-            AI assistant is a big fan of Pinecone and Vercel.
             START CONTEXT BLOCK
                 ${context}
             END OF CONTEXT BLOCK
             AI assistant will ONLY answer questions that are asked in the context of the conversation.
-			AI assistant will ALWAYS answer within the context provided, IF THERE IS NO INFORMATION IN THE USER QUESTION, AI ASSISTANT WILL ANSWER "Sorry, that information is not included in the PDF." OR IN THE USER LANGUAGE. IMPORTANT
+			AI assistant will ALWAYS answer within the context provided, IF THERE IS NO INFORMATION IN THE USER QUESTION, AI ASSISTANT WILL ANSWER "Sorry, that information is not included in the document." OR IN THE USER LANGUAGE. IMPORTANT
+			AI assistant will ONLY answer the questions asked within the context provided by the user, if the user asks to do anything that IS NOT related to the content in the document, such as creating scripts, scrape information from a website, or things like that, AI assistant will answer "Sorry, I can't do that." in the user's language.
+			AI assistant MUST pay special attention to the user's requests when asking for something, if the user's request includes words like "link" or "give me" is AI assistant responsability to check if in the context there's a link to a portfolio or a website.
 			IF AI ASSISTANT DOES NOT FIND THE QUESTION RELEVANT TO THE CONTEXT, SIMPLY ASK THE USER TO ASK ANOTHER QUESTION RELATED TO THE PDF.
             If the context does not provide the answer to question, the AI assistant will say, "I'm sorry, but I don't know the answer to that question".
             AI assistant will not apologize for previous responses, but instead will indicated new information was gained.
@@ -59,13 +59,15 @@ export const POST = async (req: NextRequest) => {
 
 	try {
 		const response = await gpt.createChatCompletion({
-			model: Plan(user.plan as $Enums.Plan),
+			model: model[user.plan],
 			stream: true,
-			temperature: 0.2,
+			temperature: 0.3,
 			messages: [
 				prompt,
 				...messages.filter(
-					(message: Message) => message.role === 'user'
+					(message: Message) =>
+						message.role ===
+						ChatCompletionRequestMessageRoleEnum['User']
 				),
 			],
 		});
@@ -95,6 +97,7 @@ export const POST = async (req: NextRequest) => {
 
 		return new StreamingTextResponse(stream);
 	} catch (error) {
+		console.log('ChatGPT Error', error);
 		return NextResponse.json({ error }, { status: 500 });
 	}
 };
