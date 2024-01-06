@@ -26,7 +26,7 @@ export const MessageList = ({ messages }: { messages: Message[] }) => {
 						message.role ===
 						ChatCompletionRequestMessageRoleEnum.User,
 					'mr-auto bg-neutral-600':
-						message.role !==
+						message.role ===
 						ChatCompletionRequestMessageRoleEnum.Assistant,
 				}
 			)}
