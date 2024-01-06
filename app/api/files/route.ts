@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 import { db } from '~/database/db';
 import { env } from '~/env/client.mjs';
-import { loadAWStoPinecone } from '~/lib/pinecone';
+import { loadAWStoPinecone } from '~/lib/pinecone/pinecone';
 import { awsSchema } from '~/schemas';
 import { s3 } from '~/lib/aws/s3.config';
 import { currentUser } from '~/lib/auth/currentUser';

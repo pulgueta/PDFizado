@@ -10,7 +10,7 @@ import {
 
 import { env } from '~/env/server.mjs';
 import { model } from '~/lib/plan-allowance';
-import { getContext } from '~/lib/context';
+import { getContext } from '~/lib/pinecone/context';
 import { db } from '~/database/db';
 import { currentUser } from '~/lib/auth/currentUser';
 
