@@ -13,7 +13,7 @@ export const getMatchesFromEmbeddings = async (
 	try {
 		const namespace = pineconeIndex.namespace(fileKey);
 		const queryResult = await namespace.query({
-			topK: 5,
+			topK: 10,
 			vector: embeddings,
 			includeMetadata: true,
 		});
