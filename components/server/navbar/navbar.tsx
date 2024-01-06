@@ -1,13 +1,11 @@
 import Link from 'next/link';
 
-import { MenuIcon } from 'lucide-react';
-
 import { ThemeSwitcher } from '~/shadcn/theme-switcher';
-import { Sheet, SheetContent, SheetTrigger } from '~/shadcn/sheet';
-import { Button } from '~/shadcn/button';
-import { DesktopRoutes, MobileRoutes } from './routes';
+
 import { Profile } from '~/components/server/navbar/profile';
 import { currentUser } from '~/lib/auth/currentUser';
+import { DesktopRoutes } from './routes';
+import { MobileMenu } from './mobile-menu';
 
 export const Navbar = async () => {
 	const user = await currentUser();
@@ -25,25 +23,7 @@ export const Navbar = async () => {
 			<nav className='flex items-center gap-x-4 md:gap-x-6'>
 				{user ? <Profile {...user} /> : <DesktopRoutes />}
 				<ThemeSwitcher />
-				{!user && (
-					<Sheet>
-						<SheetTrigger
-							asChild
-							className='flex md:hidden'
-							id='navbar-btn'
-						>
-							<Button
-								size='icon'
-								aria-label='Mobile navbar menu button'
-							>
-								<MenuIcon />
-							</Button>
-						</SheetTrigger>
-						<SheetContent className='bg-white dark:bg-[#1C1917]'>
-							<MobileRoutes />
-						</SheetContent>
-					</Sheet>
-				)}
+				{!user && <MobileMenu />}
 			</nav>
 		</nav>
 	);
