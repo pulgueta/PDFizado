@@ -3,12 +3,12 @@
 import { useTransition } from 'react';
 
 import { Button } from '~/shadcn/button';
-import { logout } from './action';
+import { logout } from '~/components/server/navbar/action';
 
 export const SignOut = () => {
 	const [isPending, startTransition] = useTransition();
 
-	const onLogout = () => startTransition(async () => logout());
+	const onLogout = () => startTransition(async () => await logout());
 
 	return (
 		<form action={onLogout} className='w-full'>
