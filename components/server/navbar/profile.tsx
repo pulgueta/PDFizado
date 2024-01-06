@@ -38,7 +38,7 @@ export const Profile: FC<ExtendedUser> = (user) => {
 				</Avatar>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-48'>
-				<DropdownMenuLabel className='truncate'>
+				<DropdownMenuLabel className='truncate text-lg'>
 					{user.name}
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
