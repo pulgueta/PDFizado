@@ -27,6 +27,7 @@ import {
 } from '~/shadcn/card';
 import { Input } from '~/shadcn/input';
 import { Button, buttonVariants } from '~/shadcn/button';
+import { Separator } from '~/shadcn/separator';
 import { type Register, registerSchema } from '~/schemas';
 import { register } from './actions/auth';
 
@@ -175,6 +176,7 @@ export const RegisterForm = () => {
 				</Form>
 			</CardContent>
 			<CardFooter className='flex flex-col items-center justify-center'>
+				<Separator className='mb-4' />
 				<span className='text-muted-foreground'>
 					Ya tienes cuenta?{' '}
 					<Link
