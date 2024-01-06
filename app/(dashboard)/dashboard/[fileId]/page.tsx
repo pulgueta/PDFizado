@@ -1,8 +1,17 @@
+import { NextPage } from 'next';
+import { notFound } from 'next/navigation';
+
 import { Chat } from '~/components/client/chat/chat';
 import { db } from '~/database/db';
 import { currentUser } from '~/lib/auth/currentUser';
 
-const ChatPage = async ({ params }: { params: { fileId: string } }) => {
+type ChatParams = {
+	params: {
+		fileId: string;
+	};
+};
+
+const ChatPage: NextPage<ChatParams> = async ({ params }) => {
 	const user = await currentUser();
 
 	const file = await db.file.findUnique({
@@ -12,14 +21,16 @@ const ChatPage = async ({ params }: { params: { fileId: string } }) => {
 		},
 	});
 
+	if (!file) notFound();
+
 	return (
 		<div className='flex h-[calc(100vh-80px)] flex-col md:flex-row'>
 			<iframe
-				src={`https://docs.google.com/gview?url=${file?.url}&embedded=true`}
+				src={`https://docs.google.com/gview?url=${file.url}&embedded=true`}
 				className='flex-1'
 			></iframe>
 
-			<Chat fileId={file!.id} />
+			<Chat fileId={file.id} />
 		</div>
 	);
 };
