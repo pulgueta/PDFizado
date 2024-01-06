@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { useChat } from 'ai/react';
+import { Message, useChat } from 'ai/react';
 
 import { useQuery } from '@tanstack/react-query';
 import { Loader2Icon } from 'lucide-react';
@@ -10,18 +10,15 @@ import { Loader2Icon } from 'lucide-react';
 import { ScrollArea } from '~/shadcn/scroll-area';
 import { Input } from '~/shadcn/input';
 import { MessageList } from './message-list';
-import { Message } from './types';
 
 export const Chat = ({ fileId }: { fileId: string }) => {
 	const { data, isLoading } = useQuery<Message[]>({
 		queryKey: ['messages', fileId],
 		queryFn: async () => {
-			const res = await fetch('/api/chat/messages', {
+			return await fetch('/api/chat/messages', {
 				method: 'POST',
 				body: JSON.stringify(fileId),
 			}).then((res) => res.json());
-
-			return res;
 		},
 	});
 
