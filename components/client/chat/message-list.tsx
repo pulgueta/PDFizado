@@ -1,6 +1,7 @@
+import { ElementRef, useEffect, useRef } from 'react';
+
 import { Message } from 'ai/react';
 import { ChatCompletionRequestMessageRoleEnum } from 'openai-edge';
-import { ElementRef, useEffect, useRef } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -12,6 +13,7 @@ export const MessageList = ({ messages }: { messages: Message[] }) => {
 	useEffect(() => {
 		msg.current?.scrollIntoView({
 			behavior: 'smooth',
+			block: 'end',
 		});
 	}, [messages]);
 
