@@ -48,7 +48,7 @@ export const useDropzonePDF = ({
 		onDropAccepted: (file) => {
 			toast.promise(
 				async () => {
-					const res = await uploadToS3(file[0]);
+					const res = await uploadToS3(file[0], 'uploads');
 
 					if (!res.key || !res.name) {
 						toast.error('Error al subir el PDF');

@@ -1,14 +1,16 @@
+import { PutObjectCommandInput } from '@aws-sdk/client-s3';
+
 import { env } from '~/env/client.mjs';
 import { s3 } from './s3.config';
 
-export const uploadToS3 = async (file: File) => {
+export const uploadToS3 = async (file: File, path: string) => {
 	try {
-		const key = `uploads/${Date.now().toString()}-${file.name.replace(
+		const key = `${path}/${Date.now().toString()}-${file.name.replace(
 			/\s/g,
 			'-'
 		)}`;
 
-		const params = {
+		const params: PutObjectCommandInput = {
 			Bucket: env.NEXT_PUBLIC_S3_BUCKET,
 			Key: key,
 			Body: file,
