@@ -11,7 +11,7 @@ export const useDeletePDF = ({ file }: { file: File }) => {
 	const mutation = useMutation({
 		mutationKey: ['deleteFile'],
 		mutationFn: (id: string) => {
-			const files = fetch('/api/files', {
+			const files = fetch('/api/pdf', {
 				method: 'DELETE',
 				body: JSON.stringify({ id, key: file.awsKey }),
 			}).then((res) => res.json());

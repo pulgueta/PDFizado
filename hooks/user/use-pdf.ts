@@ -5,7 +5,7 @@ export const usePDF = () => {
 	const query = useQuery<File[]>({
 		queryKey: ['files'],
 		queryFn: () => {
-			const data = fetch('/api/files').then((res) => res.json());
+			const data = fetch('/api/pdf').then((res) => res.json());
 
 			return data;
 		},
