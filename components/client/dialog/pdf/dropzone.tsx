@@ -7,14 +7,18 @@ import {
 	UploadCloudIcon,
 } from 'lucide-react';
 
-import { useDropzonePDF } from '~/hooks/user/use-pdf-dropzone';
-import { usePDFMutation } from '~/hooks/user/use-pdf-mutation';
+import { useDropzone } from '~/hooks/user/use-dropzone';
+import { useMutation } from '~/hooks/user/use-mutation';
 
 export const Dropzone = () => {
-	const { mutate, isPending, isSuccess } = usePDFMutation();
+	const { mutate, isPending, isSuccess } = useMutation({
+		endpoint: 'pdf',
+	});
 
-	const { getRootProps, getInputProps, acceptedFiles } = useDropzonePDF({
+	const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
 		mutate,
+		file: 'pdf',
+		path: 'uploads',
 	});
 
 	return (
