@@ -16,7 +16,7 @@ const Plan = async () => {
 			/>
 
 			<CardContent>
-				<p>To be defined</p>
+				<p>Form to be defined later on</p>
 			</CardContent>
 		</Card>
 	);
