@@ -1,12 +1,10 @@
 import { FC } from 'react';
 
 import Link from 'next/link';
-
-import { LoaderIcon, User2Icon } from 'lucide-react';
+import Image from 'next/image';
 
 import { SignOut } from '~/components/client/navbar/sign-out';
 import { authRoutes } from '~/constants/navbar';
-import { Avatar, AvatarFallback, AvatarImage } from '~/shadcn/avatar';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -16,26 +14,29 @@ import {
 	DropdownMenuTrigger,
 } from '~/shadcn/dropdown-menu';
 import { ExtendedUser } from '~/lib/auth/auth';
+import { base64Img } from '~/lib/base64-image';
 
-export const Profile: FC<ExtendedUser> = (user) => {
+export const Profile: FC<ExtendedUser> = async (user) => {
 	if (!user) return;
+
+	const blurDataURL = await base64Img(user.image!);
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Avatar className='cursor-pointer'>
-					<AvatarImage
-						src={user.image ?? ''}
-						alt={`Profile picture of ${user.name}`}
-					/>
-					<AvatarFallback>
-						{user.image ? (
-							<LoaderIcon className='animate-spin' />
-						) : (
-							<User2Icon />
-						)}
-					</AvatarFallback>
-				</Avatar>
+				<Image
+					src={
+						user.image
+							? user.image
+							: 'https://via.placeholder.com/150'
+					}
+					alt='Profile picture'
+					width={40}
+					height={40}
+					placeholder='blur'
+					blurDataURL={blurDataURL}
+					className='aspect-square cursor-pointer rounded-full'
+				/>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-48'>
 				<DropdownMenuLabel className='truncate text-lg'>
