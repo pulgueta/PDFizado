@@ -16,6 +16,7 @@ export const env = createEnv({
 		OPENAI_SECRET: z.string().min(8),
 		OPENAI_ORG: z.string().min(8),
 		RESEND_API_KEY: z.string().min(8),
+		CLOUDFRONT_HOST: z.string().url(),
 	},
 	runtimeEnv: {
 		DATABASE_URL: process.env.DATABASE_URL,
@@ -31,6 +32,7 @@ export const env = createEnv({
 		OPENAI_SECRET: process.env.OPENAI_SECRET,
 		OPENAI_ORG: process.env.OPENAI_ORG,
 		RESEND_API_KEY: process.env.RESEND_API_KEY,
+		CLOUDFRONT_HOST: process.env.CLOUDFRONT_HOST,
 	},
 	onValidationError: (error = ZodError) => {
 		console.error(
