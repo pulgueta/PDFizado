@@ -63,13 +63,14 @@ export const {
 
 			const existingAccount = await db.account.findFirst({
 				where: {
-					id: existingUser.id,
+					userId: existingUser.id,
 				},
 			});
 
 			token.isOAuth = !!existingAccount;
 			token.name = existingUser.name;
 			token.email = existingUser.email;
+			token.image = existingUser.image;
 			token.role = existingUser.role;
 			token.plan = existingUser.plan;
 
@@ -89,6 +90,7 @@ export const {
 				session.user.email = token.email;
 				session.user.isOAuth = token.isOAuth as boolean;
 				session.user.plan = token.plan as Plan;
+				session.user.image = token.image as string;
 			}
 
 			return session;
