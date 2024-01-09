@@ -1,19 +1,28 @@
 import { usePathname, useRouter } from 'next/navigation';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+	useMutation as useTanStackMutation,
+	useQueryClient,
+} from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { Mutation } from './types';
 
-export const usePDFMutation = () => {
+type Endpoint = 'pdf' | 'images';
+
+type HookOptions = {
+	endpoint: Endpoint;
+};
+
+export const useMutation = ({ endpoint }: HookOptions) => {
 	const { push, refresh } = useRouter();
 	const pathname = usePathname();
 
 	const queryClient = useQueryClient();
-	const mutation = useMutation({
+	const mutation = useTanStackMutation({
 		mutationKey: ['uploadToS3'],
 		mutationFn: ({ key, name, url }: Mutation) => {
-			const data = fetch('/api/files', {
+			const data = fetch(`/api/${endpoint}`, {
 				body: JSON.stringify({
 					key,
 					name,
@@ -25,17 +34,19 @@ export const usePDFMutation = () => {
 			return data;
 		},
 		onError: (err) => {
-			toast.error(err.message || 'Error al subir el PDF');
+			toast.error(err.message || 'Error al subir el archivo');
 		},
 		onSuccess: ({ id }) => {
-			toast.success(
-				'Tu PDF se ha procesado correctamente, serás redirigido en unos segundos'
-			);
+			if (endpoint === 'pdf') {
+				toast.success(
+					'Tu PDF se ha procesado correctamente, serás redirigido en unos segundos'
+				);
+			}
 			queryClient.invalidateQueries({
 				queryKey: ['uploadToS3'],
 			});
 			refresh();
-			push(`${pathname}/${id}`);
+			return endpoint === 'pdf' && push(`${pathname}/${id}`);
 		},
 		retry: 3,
 		retryDelay: 1000,
