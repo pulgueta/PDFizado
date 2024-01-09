@@ -2,22 +2,34 @@ import { ElementRef, useEffect, useRef } from 'react';
 
 import { Message } from 'ai/react';
 import { ChatCompletionRequestMessageRoleEnum } from 'openai-edge';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 import { cn } from '~/lib/utils';
 
-export const MessageList = ({ messages }: { messages: Message[] }) => {
+type Messages = {
+	messages: Message[];
+	loading: boolean;
+};
+
+export const MessageList = ({ messages, loading }: Messages) => {
 	const msg = useRef<ElementRef<'div'>>(null);
 
 	useEffect(() => {
-		msg.current?.scrollIntoView({
-			behavior: 'smooth',
-			block: 'end',
-		});
-	}, [messages]);
+		if (!loading)
+			msg.current?.scrollIntoView({
+				behavior: 'smooth',
+				block: 'end',
+			});
+	}, [messages, loading]);
 
-	if (!messages) return <></>;
+	if (messages && messages.length < 1)
+		return (
+			<div className='mb-2 mr-auto flex w-max max-w-lg animate-fade-up rounded-lg rounded-bl-none bg-neutral-600 px-4 py-2 text-white animate-duration-300 animate-ease-in-out md:max-w-sm lg:max-w-prose'>
+				<p className='text-sm'>
+					¡Haz tus preguntas y te responderé con la mejor claridad
+					posible!
+				</p>
+			</div>
+		);
 
 	return messages.map((message) => (
 		<div
@@ -36,15 +48,7 @@ export const MessageList = ({ messages }: { messages: Message[] }) => {
 				}
 			)}
 		>
-			<p className='text-sm'>
-				{typeof message.content === 'string' ? (
-					<Markdown remarkPlugins={[remarkGfm]}>
-						{message.content}
-					</Markdown>
-				) : (
-					message.content
-				)}
-			</p>
+			<p className='text-sm'>{message.content}</p>
 		</div>
 	));
 };

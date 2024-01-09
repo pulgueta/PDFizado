@@ -7,6 +7,8 @@ import { Loader2Icon } from 'lucide-react';
 import { ScrollArea } from '~/shadcn/scroll-area';
 import { Input } from '~/shadcn/input';
 import { MessageList } from './message-list';
+import { cn } from '~/lib/utils';
+import { ElementRef, useEffect, useRef } from 'react';
 
 export const Chat = ({ fileId }: { fileId: string }) => {
 	const { data, isLoading } = useQuery<Message[]>({
@@ -18,6 +20,8 @@ export const Chat = ({ fileId }: { fileId: string }) => {
 			}).then((res) => res.json());
 		},
 	});
+
+	const msg = useRef<ElementRef<'div'>>(null);
 
 	const {
 		input,
@@ -33,16 +37,35 @@ export const Chat = ({ fileId }: { fileId: string }) => {
 		initialMessages: data || [],
 	});
 
+	useEffect(() => {
+		msg.current?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'end',
+		});
+	}, [messages]);
+
 	return (
 		<div className='flex-1 p-2'>
 			<ScrollArea className='relative h-[calc(40vh)] max-h-svh py-2 md:h-[calc(100vh-140px)]'>
-				<MessageList messages={messages} />
+				<MessageList messages={messages} loading={vercelLoading} />
 				{isLoading && (
-					<div className='relative mb-4 mr-auto flex w-max animate-fade-up rounded-lg bg-neutral-600 animate-duration-[400ms] animate-ease-in-out'>
-						<div className='relative max-w-sm rounded-lg px-4 py-2 text-white md:max-w-md lg:max-w-lg'>
-							<Loader2Icon className='h-4 w-4 animate-spin' />
-							<div className='absolute bottom-0 left-1 h-3 w-3 rotate-45 bg-neutral-600' />
-						</div>
+					<div
+						className={cn(
+							'relative mb-4 mr-auto flex w-max animate-fade-up rounded-lg bg-neutral-600 px-4 py-2 animate-duration-[400ms] animate-ease-in-out',
+							{
+								'rounded-tl-none': isLoading,
+							}
+						)}
+					>
+						<Loader2Icon className='h-4 w-4 animate-spin' />
+					</div>
+				)}
+				{vercelLoading && (
+					<div
+						ref={msg}
+						className='relative mb-4 mr-auto flex w-max animate-fade-up rounded-lg rounded-tl-none bg-neutral-600 px-4 py-2 animate-duration-[400ms] animate-ease-in-out'
+					>
+						<Loader2Icon className='h-4 w-4 animate-spin' />
 					</div>
 				)}
 			</ScrollArea>
