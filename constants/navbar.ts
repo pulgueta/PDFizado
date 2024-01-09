@@ -25,10 +25,6 @@ export const authRoutes: NavbarRoutes = [
 		label: 'Dashboard',
 	},
 	{
-		href: '/dashboard/plan',
-		label: 'Tu plan',
-	},
-	{
 		href: '/dashboard/settings',
 		label: 'Ajustes',
 	},
