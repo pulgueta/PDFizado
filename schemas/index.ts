@@ -70,3 +70,12 @@ export const resetSchema = object({
 });
 
 export type ResetPassword = TypeOf<typeof resetSchema>;
+
+export const supportSchema = object({
+	issue: string({ required_error: 'Debes ingresar un mensaje' }).min(
+		10,
+		'El mensaje debe contener al menos 10 caracteres'
+	),
+});
+
+export type Support = TypeOf<typeof supportSchema>;
