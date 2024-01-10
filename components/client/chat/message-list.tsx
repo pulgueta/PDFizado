@@ -23,11 +23,8 @@ export const MessageList = ({ messages, loading }: Messages) => {
 
 	if (messages && messages.length < 1)
 		return (
-			<div className='mb-2 mr-auto flex w-max max-w-lg animate-fade-up rounded-lg rounded-bl-none bg-neutral-600 px-4 py-2 text-white animate-duration-300 animate-ease-in-out md:max-w-sm lg:max-w-prose'>
-				<p className='text-sm'>
-					¡Haz tus preguntas y te responderé con la mejor claridad
-					posible!
-				</p>
+			<div className='mb-2 mr-auto w-max animate-fade-up rounded-lg rounded-bl-none bg-neutral-600 px-4 py-2 text-white animate-duration-300'>
+				<p className='text-sm'>Cargando tus mensajes...</p>
 			</div>
 		);
 
@@ -37,7 +34,7 @@ export const MessageList = ({ messages, loading }: Messages) => {
 			id={message.role}
 			ref={msg}
 			className={cn(
-				'mb-4 flex w-max max-w-lg animate-fade-up rounded-lg px-4 py-2 text-white animate-duration-300 animate-ease-in-out md:max-w-sm lg:max-w-prose',
+				'mb-4 flex w-max max-w-xs animate-fade-up rounded-lg px-4 py-2 text-white animate-duration-300 animate-ease-in-out md:max-w-xs lg:max-w-lg',
 				{
 					'ml-auto rounded-br-none bg-primary':
 						message.role ===
