@@ -8,6 +8,7 @@ import { Separator } from '~/shadcn/separator';
 import { CardHeader } from '~/components/server/settings/card-header';
 import { currentUser } from '~/lib/auth/currentUser';
 import { UpdatePhoto } from './_components/profile/update-photo';
+import { DeleteAccount } from './_components/profile/delete-account';
 import { base64Img } from '~/lib/base64-image';
 
 const Profile = async () => {
@@ -52,10 +53,8 @@ const Profile = async () => {
 					</>
 				)}
 				<Separator />
-				<Label htmlFor='profile'>Eliminar cuenta</Label>
-				<Button className='w-max' variant='destructive'>
-					Eliminar mi cuenta
-				</Button>
+				<Label htmlFor='delete-account'>Zona de peligro</Label>
+				<DeleteAccount />
 			</CardContent>
 		</Card>
 	);
