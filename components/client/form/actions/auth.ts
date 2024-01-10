@@ -98,6 +98,7 @@ export const register = async (data: Register) => {
 			email,
 			password: hashedPassword,
 			name,
+			image: 'https://source.boringavatars.com/',
 		},
 		select: {
 			id: true,
