@@ -2,6 +2,7 @@ import { Card, CardContent } from '~/shadcn/card';
 
 import { CardHeader } from '~/components/server/settings/card-header';
 import { currentUser } from '~/lib/auth/currentUser';
+import { Form } from './_components/help-form';
 
 const Plan = async () => {
 	const user = await currentUser();
@@ -16,7 +17,7 @@ const Plan = async () => {
 			/>
 
 			<CardContent>
-				<p>Form to be defined later on</p>
+				<Form email={user.email!} />
 			</CardContent>
 		</Card>
 	);
