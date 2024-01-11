@@ -8,7 +8,7 @@ import { PriceCards } from '~/components/client/prices/card-details';
 const Home = () => {
 	return (
 		<>
-			<main className='min-h-screen bg-white p-2 dark:bg-[#1C1917]'>
+			<main className='min-h-svh bg-white p-2 dark:bg-[#1C1917]'>
 				<header>
 					<article className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-2xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out md:py-8 dark:bg-[#131110]'>
 						<h1
@@ -83,7 +83,7 @@ const Home = () => {
 						&iquest;Qué esperas para agilizar tu forma de estudiar?
 					</h3>
 					<Link href='/register' className={buttonVariants()}>
-						Empezar
+						Registrarme
 					</Link>
 				</section>
 			</section>
