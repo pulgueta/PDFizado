@@ -7,30 +7,13 @@ export default function manifest(): MetadataRoute.Manifest {
 		background_color: '#0C0A09',
 		display: 'standalone',
 		display_override: ['fullscreen', 'standalone'],
-		screenshots: [
-			{
-				src: './screenshots/screenshot',
-				sizes: '1028x2402',
-				type: 'image/png',
-			},
-			{
-				src: './screenshots/screenshot-2',
-				sizes: '1028x2402',
-				type: 'image/png',
-			},
-			{
-				src: './screenshots/screenshot-3',
-				sizes: '1028x2402',
-				type: 'image/png',
-			},
-		],
 		scope: '/',
 		start_url: '/',
 		name: 'PDFizado',
 		description:
 			'Una aplicaci\u00f3n para interactuar con el contenido de tus archivos PDF y poder hacer tu estudio m\u00e1s sencillo.',
 		short_name: 'PDFizado',
-		orientation: 'any',
+		orientation: 'portrait',
 		icons: [
 			{
 				src: '/icon-192x192.png',
