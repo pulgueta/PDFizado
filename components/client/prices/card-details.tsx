@@ -80,7 +80,7 @@ export const PriceCards = () => {
 						</CardContent>
 						<CardFooter>
 							<Link
-								href='/dashboard/plan'
+								href='/dashboard/settings'
 								className={buttonVariants({
 									className: 'w-full',
 								})}
@@ -118,7 +118,7 @@ export const PriceCards = () => {
 						</CardContent>
 						<CardFooter>
 							<Link
-								href='/dashboard/plan'
+								href='/dashboard/settings'
 								className={buttonVariants({
 									className: 'w-full',
 								})}
@@ -158,7 +158,7 @@ export const PriceCards = () => {
 						</CardContent>
 						<CardFooter>
 							<Link
-								href='/dashboard/plan'
+								href='/dashboard/settings'
 								className={buttonVariants({
 									className: 'w-full',
 								})}
