@@ -112,12 +112,7 @@ const RootLayout = ({ children }: PropsWithChildren) => (
 			<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 				<ProgressProvider>
 					<Navbar />
-					<Toaster
-						richColors
-						closeButton
-						position='top-center'
-						duration={1500}
-					/>
+					<Toaster richColors position='top-center' duration={1500} />
 					{children}
 					<Footer />
 				</ProgressProvider>
