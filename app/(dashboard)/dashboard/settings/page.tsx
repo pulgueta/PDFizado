@@ -54,7 +54,7 @@ const Profile = async () => {
 				)}
 				<Separator />
 				<Label htmlFor='delete-account'>Zona de peligro</Label>
-				<DeleteAccount />
+				<DeleteAccount {...user} />
 			</CardContent>
 		</Card>
 	);

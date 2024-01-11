@@ -1,3 +1,9 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import { ExtendedUser } from '~/lib/auth/auth';
+
 import { Button } from '~/shadcn/button';
 import {
 	Dialog,
@@ -9,7 +15,20 @@ import {
 	DialogTrigger,
 } from '~/shadcn/dialog';
 
-export const DeleteAccount = () => {
+export const DeleteAccount = (user: ExtendedUser) => {
+	const [pending, startTransition] = useTransition();
+
+	const { refresh } = useRouter();
+
+	const onDelete = () =>
+		startTransition(async () => {
+			await fetch('/api/user', {
+				method: 'DELETE',
+				body: JSON.stringify(user),
+			});
+			refresh();
+		});
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -27,7 +46,14 @@ export const DeleteAccount = () => {
 					</DialogDescription>
 				</DialogHeader>
 				<div className='grid grid-rows-1 gap-2 md:grid-cols-2'>
-					<Button variant='destructive'>Sí</Button>
+					<Button
+						onClick={onDelete}
+						variant='destructive'
+						disabled={pending}
+						aria-disabled={pending}
+					>
+						{pending ? 'Eliminando tu cuenta...' : 'Sí'}
+					</Button>
 					<DialogClose asChild>
 						<Button variant='secondary'>No</Button>
 					</DialogClose>
