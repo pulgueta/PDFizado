@@ -23,8 +23,10 @@ export const MessageList = ({ messages, loading }: Messages) => {
 
 	if (messages && messages.length < 1)
 		return (
-			<div className='mb-2 mr-auto w-max animate-fade-up rounded-lg rounded-bl-none bg-neutral-600 px-4 py-2 text-white animate-duration-300'>
-				<p className='text-sm'>Cargando tus mensajes...</p>
+			<div className='mb-2 mr-auto w-max max-w-xs animate-fade-up rounded-lg rounded-bl-none bg-neutral-600 px-4 py-2 text-white animate-duration-300'>
+				<p className='text-sm'>
+					¡Haz tus preguntas y te responderé lo más claro posible!
+				</p>
 			</div>
 		);
 
