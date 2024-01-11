@@ -30,7 +30,7 @@ export const Profile: FC<ExtendedUser> = async (user) => {
 							? user.image
 							: 'https://via.placeholder.com/150'
 					}
-					alt='Profile picture'
+					alt={`Foto de perfil de ${user.name}`}
 					width={40}
 					height={40}
 					placeholder='blur'
