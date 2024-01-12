@@ -16,6 +16,7 @@ export const POST = async (req: NextRequest) => {
 				{
 					headers: {
 						Authorization: `Bearer ${env.MERCADOPAGO_SECRET}`,
+						'Content-Type': 'application/json',
 					},
 				}
 			)
@@ -24,7 +25,7 @@ export const POST = async (req: NextRequest) => {
 
 			console.log(res);
 
-			console.log('mercadopago email:', res.payer_email);
+			console.log('MercadoPago payer_email:', res.payer_email);
 
 			switch (res.status) {
 				case 'authorized':

@@ -1,9 +1,12 @@
+import million from 'million/compiler'
+
 import './env/client.mjs'
 import './env/server.mjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	poweredByHeader: false,
+	reactStrictMode: true,
 	images: {
 		remotePatterns: [
 			{
@@ -28,4 +31,8 @@ const nextConfig = {
 	},
 }
 
-export default nextConfig
+export default million.next(nextConfig, {
+	auto: {
+		rsc: true,
+	}
+})
