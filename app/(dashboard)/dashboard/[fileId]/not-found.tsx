@@ -1,5 +1,8 @@
+'use client';
+
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import { buttonVariants } from '~/components/ui/button';
 
@@ -9,13 +12,15 @@ export const metadata: Metadata = {
 };
 
 const _404 = () => {
+	const { fileId } = useParams();
+
 	return (
-		<section className='flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-2'>
-			<h1 className='mb-2 text-center text-3xl font-bold'>
+		<section className='inset-0 -z-10 flex min-h-svh w-full flex-col items-center justify-start gap-y-4 px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#e11d48_100%)] md:min-h-[calc(100vh-205px)] md:justify-center'>
+			<h1 className='text-center text-3xl font-bold tracking-tight md:text-5xl'>
 				404 - No encontrado
 			</h1>
-			<p className='text-center text-muted-foreground'>
-				No hay un archivo con esa ID
+			<p className='text-center text-base text-muted-foreground md:text-lg'>
+				No hay un archivo con la id {fileId}
 			</p>
 			<Link
 				href='/dashboard'
