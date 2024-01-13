@@ -15,34 +15,47 @@ export default defineConfig({
 	use: {
 		baseURL: 'http://127.0.0.1:3000',
 		trace: 'on-first-retry',
+		screenshot: 'only-on-failure',
 	},
 
 	projects: [
 		{
 			name: 'chromium',
-			use: { ...devices['Desktop Chrome'] },
+			use: { ...devices['Desktop Chrome'], isMobile: false },
 		},
 
 		{
 			name: 'firefox',
-			use: { ...devices['Desktop Firefox'] },
+			use: { ...devices['Desktop Firefox'], isMobile: false },
 		},
 
 		{
 			name: 'webkit',
-			use: { ...devices['Desktop Safari'] },
+			use: { ...devices['Desktop Safari'], isMobile: false },
 		},
 		{
 			name: 'Mobile Chrome',
-			use: { ...devices['Pixel 5'] },
+			use: {
+				...devices['Pixel 2'],
+				isMobile: true,
+				viewport: { height: 732, width: 412 },
+			},
 		},
 		{
 			name: 'Mobile Safari',
-			use: { ...devices['iPhone 12'] },
+			use: {
+				...devices['iPhone X'],
+				isMobile: true,
+				viewport: { height: 812, width: 375 },
+			},
 		},
 		{
 			name: 'Microsoft Edge',
-			use: { ...devices['Desktop Edge'], channel: 'msedge' },
+			use: {
+				...devices['Desktop Edge'],
+				isMobile: false,
+				channel: 'msedge',
+			},
 		},
 	],
 
