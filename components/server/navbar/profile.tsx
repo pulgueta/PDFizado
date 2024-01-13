@@ -36,7 +36,7 @@ export const Profile: FC<ExtendedUser> = async (user) => {
 						className='aspect-square cursor-pointer rounded-full'
 					/>
 				) : (
-					<UserIcon />
+					<UserIcon className='size-10 cursor-pointer rounded-full bg-secondary p-2' />
 				)}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-48'>
