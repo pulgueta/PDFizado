@@ -15,28 +15,29 @@ import {
 } from '~/shadcn/dropdown-menu';
 import { ExtendedUser } from '~/lib/auth/auth';
 import { base64Img } from '~/lib/base64-image';
+import { UserIcon } from 'lucide-react';
 
 export const Profile: FC<ExtendedUser> = async (user) => {
 	if (!user) return;
 
-	const blurDataURL = await base64Img(user.image!);
+	const blurDataURL = user.image ? await base64Img(user.image) : '';
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Image
-					src={
-						user.image
-							? user.image
-							: 'https://via.placeholder.com/150'
-					}
-					alt={`Foto de perfil de ${user.name}`}
-					width={40}
-					height={40}
-					placeholder='blur'
-					blurDataURL={blurDataURL}
-					className='aspect-square cursor-pointer rounded-full'
-				/>
+				{user.image ? (
+					<Image
+						src={user.image!}
+						alt={`Foto de perfil de ${user.name}`}
+						width={40}
+						height={40}
+						placeholder='blur'
+						blurDataURL={blurDataURL}
+						className='aspect-square cursor-pointer rounded-full'
+					/>
+				) : (
+					<UserIcon />
+				)}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-48'>
 				<DropdownMenuLabel className='truncate text-lg'>

@@ -16,11 +16,14 @@ const nextConfig = {
 				pathname: '/pictures/**',
 			},
 			{
-				hostname: 'via.placeholder.com', protocol: 'https'
-			},
-			{
 				hostname: 'lh3.googleusercontent.com',
 				pathname: '/a/**',
+				protocol: 'https',
+				port: ''
+			},
+			{
+				hostname: 'source.boringavatars.com',
+				pathname: '/marble',
 				protocol: 'https',
 				port: ''
 			}

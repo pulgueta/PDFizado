@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { UserIcon } from 'lucide-react';
+
 import { Label } from '~/shadcn/label';
 import { Card, CardContent } from '~/shadcn/card';
 import { Input } from '~/shadcn/input';
@@ -16,7 +18,7 @@ const Profile = async () => {
 
 	if (!user) return;
 
-	const blurDataURL = await base64Img(user.image!);
+	const blurDataURL = user.image ? await base64Img(user.image) : '';
 
 	return (
 		<Card className='container mb-4 max-w-lg px-0'>
@@ -35,19 +37,20 @@ const Profile = async () => {
 						<Separator />
 						<Label htmlFor='profile'>Foto de perfil</Label>
 						<div className='relative'>
-							<Image
-								src={
-									user.image
-										? user.image
-										: 'https://via.placeholder.com/150'
-								}
-								alt='Profile picture'
-								width={128}
-								height={128}
-								placeholder='blur'
-								blurDataURL={blurDataURL}
-								className='aspect-square rounded-full'
-							/>
+							{user.image ? (
+								<Image
+									src={user.image}
+									alt={`Foto de perfil de ${user.name}`}
+									width={40}
+									height={40}
+									quality={100}
+									placeholder='blur'
+									blurDataURL={blurDataURL}
+									className='size-32 cursor-pointer rounded-full object-cover shadow'
+								/>
+							) : (
+								<UserIcon className='size-32 rounded-full bg-secondary p-4' />
+							)}
 							<UpdatePhoto />
 						</div>
 					</>
