@@ -31,15 +31,15 @@ model User {
     email                     String    @unique
     password                  String?
     image                     String?
+    plan                      Plan      @default(FREE)
+    mercadopagoSubscriptionId String?   @unique
     createdAt                 DateTime  @default(now())
     updatedAt                 DateTime  @updatedAt
-    mercadopagoSubscriptionId String?   @unique
-    plan                      Plan      @default(FREE)
     emailVerified             Boolean?  @default(false)
+    role                      Role      @default(USER)
     accounts                  Account[]
     File                      File[]
     Message                   Message[]
-    role                      Role      @default(USER)
 }
 
 model VerificationToken {
@@ -92,4 +92,5 @@ enum Plan {
 enum Role {
     USER
     ADMIN
+    MODERATOR
 }
