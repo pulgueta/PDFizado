@@ -3,6 +3,8 @@ import { FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import { UserIcon } from 'lucide-react';
+
 import { SignOut } from '~/components/client/navbar/sign-out';
 import { authRoutes } from '~/constants/navbar';
 import {
@@ -15,7 +17,6 @@ import {
 } from '~/shadcn/dropdown-menu';
 import { ExtendedUser } from '~/lib/auth/auth';
 import { base64Img } from '~/lib/base64-image';
-import { UserIcon } from 'lucide-react';
 
 export const Profile: FC<ExtendedUser> = async (user) => {
 	if (!user) return;
