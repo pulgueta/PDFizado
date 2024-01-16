@@ -33,7 +33,7 @@ export const Profile: FC<ExtendedUser> = async (user) => {
 						height={40}
 						placeholder='blur'
 						blurDataURL={blurDataURL}
-						className='aspect-square cursor-pointer rounded-full'
+						className='aspect-square cursor-pointer rounded-full object-cover'
 					/>
 				) : (
 					<UserIcon className='size-10 cursor-pointer rounded-full bg-secondary p-2' />
