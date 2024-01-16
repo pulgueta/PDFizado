@@ -4,6 +4,11 @@ import { notFound } from 'next/navigation';
 import { Chat } from '~/components/client/chat/chat';
 import { db } from '~/database/db';
 import { currentUser } from '~/lib/auth/currentUser';
+import {
+	ResizableHandle,
+	ResizablePanel,
+	ResizablePanelGroup,
+} from '~/shadcn/resizable';
 
 type ChatParams = {
 	params: {
@@ -24,14 +29,18 @@ const ChatPage: NextPage<ChatParams> = async ({ params }) => {
 	if (!file) notFound();
 
 	return (
-		<div className='flex h-[calc(100vh-80px)] flex-col md:flex-row'>
-			<iframe
-				src={`https://docs.google.com/gview?url=${file.url}&embedded=true`}
-				className='flex-1'
-			></iframe>
-
-			<Chat fileId={file.id} />
-		</div>
+		<ResizablePanelGroup direction='horizontal'>
+			<ResizablePanel className='flex-1'>
+				<iframe
+					src={`https://docs.google.com/gview?url=${file.url}&embedded=true`}
+					className='h-full w-full'
+				></iframe>
+			</ResizablePanel>
+			<ResizableHandle withHandle />
+			<ResizablePanel>
+				<Chat fileId={file.id} />
+			</ResizablePanel>
+		</ResizablePanelGroup>
 	);
 };
 export default ChatPage;
