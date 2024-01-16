@@ -8,6 +8,8 @@ const nextConfig = {
 	poweredByHeader: false,
 	reactStrictMode: true,
 	images: {
+		dangerouslyAllowSVG: true,
+		contentSecurityPolicy: "script-src 'none';",
 		remotePatterns: [
 			{
 				protocol: 'https',
