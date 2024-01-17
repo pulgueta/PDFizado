@@ -1,12 +1,16 @@
-import { FC } from 'react';
-
+import { Metadata, NextPage } from 'next';
 import Link from 'next/link';
 
 import { buttonVariants } from '~/shadcn/button';
-import { Card, CardContent, CardHeader, CardTitle } from '~/shadcn/card';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '~/shadcn/card';
 import { ResetPassword as ResetPasswordForm } from '~/components/client/form/reset-password';
 import { db } from '~/database/db';
-import { Metadata } from 'next';
 
 type ResetToken = {
 	searchParams: {
@@ -22,7 +26,9 @@ export const metadata: Metadata = {
 	},
 };
 
-const ResetPassword: FC<ResetToken> = async ({ searchParams: { token } }) => {
+const ResetPassword: NextPage<ResetToken> = async ({
+	searchParams: { token },
+}) => {
 	if (!token) {
 		return <NoTokenProvided />;
 	}
@@ -43,22 +49,17 @@ const ResetPassword: FC<ResetToken> = async ({ searchParams: { token } }) => {
 	return (
 		<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
 			{!isTokenExpired ? (
-				<>
-					<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
-						Reestablecer contraseña
-					</h1>
-					<h2 className='scroll-m-20 text-center text-2xl font-semibold tracking-tight'>
-						Escribe tu nueva contraseña y confírmala
-					</h2>
-					<Card className='w-full max-w-lg'>
-						<CardHeader>
-							<CardTitle>Reestablecer contraseña</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<ResetPasswordForm />
-						</CardContent>
-					</Card>
-				</>
+				<Card className='w-full max-w-md'>
+					<CardHeader>
+						<CardTitle>Reestablecer contraseña</CardTitle>
+						<CardDescription>
+							Escribe tu nueva contraseña y confírmala.
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<ResetPasswordForm />
+					</CardContent>
+				</Card>
 			) : (
 				<>
 					<h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
