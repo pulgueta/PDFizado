@@ -38,38 +38,21 @@ export const awsSchema = object({
 	url: string().url({ message: 'Debes ingresar una url válida' }),
 });
 
-export const emailSchema = object({
-	email: string().email({
-		message: 'Debes ingresar un correo electrónico válido',
-	}),
-});
-
-export const forgotPasswordSchema = object({
-	email: string()
-		.min(6, 'El correo electrónico debe tener al menos 6 caracteres')
-		.email({ message: 'Debes ingresar un correo electrónico válido' }),
-});
-
-export type ForgotPassword = TypeOf<typeof forgotPasswordSchema>;
-
 export const resetSchema = object({
 	email: string()
 		.min(6, 'El correo electrónico debe tener al menos 6 caracteres')
-		.email({ message: 'Debes ingresar un correo electrónico válido' }),
-	password: string().min(
-		6,
-		'La contraseña debe ser de al menos 6 caracteres.'
-	),
-	confirmPassword: string().min(
-		6,
-		'La contraseña debe ser de al menos 6 caracteres.'
-	),
+		.email({ message: 'Debes ingresar un correo electrónico válido' })
+		.optional(),
+	password: string()
+		.min(6, 'La contraseña debe ser de al menos 6 caracteres.')
+		.optional(),
+	confirmPassword: string()
+		.min(6, 'La contraseña debe ser de al menos 6 caracteres.')
+		.optional(),
 }).refine(({ password, confirmPassword }) => password === confirmPassword, {
 	message: 'Las contraseñas deben coincidir',
 	path: ['confirmPassword'],
 });
-
-export type ResetPassword = TypeOf<typeof resetSchema>;
 
 export const supportSchema = object({
 	issue: string({ required_error: 'Debes ingresar un mensaje' }).min(
