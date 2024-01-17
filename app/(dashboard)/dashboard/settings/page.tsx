@@ -1,24 +1,18 @@
-import Image from 'next/image';
-
-import { UserIcon } from 'lucide-react';
-
-import { Label } from '~/shadcn/label';
 import { Card, CardContent } from '~/shadcn/card';
+import { Label } from '~/shadcn/label';
 import { Input } from '~/shadcn/input';
-import { Button } from '~/shadcn/button';
 import { Separator } from '~/shadcn/separator';
+import { Button } from '~/shadcn/button';
 import { CardHeader } from '~/components/server/settings/card-header';
 import { currentUser } from '~/lib/auth/currentUser';
-import { UpdatePhoto } from './_components/profile/update-photo';
-import { DeleteAccount } from './_components/profile/delete-account';
-import { base64Img } from '~/lib/base64-image';
+import { ParentDialog } from '~/components/client/dialog/dialog-component';
+import { DeleteButton } from './_components/profile/delete-button';
+import { NoOAuthSettings } from './_components/profile/no-oauth-settings';
 
 const Profile = async () => {
 	const user = await currentUser();
 
 	if (!user) return;
-
-	const blurDataURL = user.image ? await base64Img(user.image) : '';
 
 	return (
 		<Card className='container mb-4 max-w-lg px-0'>
@@ -30,34 +24,23 @@ const Profile = async () => {
 			<CardContent className='flex flex-col gap-y-4'>
 				<Label htmlFor='email'>Correo electrónico</Label>
 				<Input disabled value={user.email!} />
-				{!user.isOAuth && (
-					<>
-						<Label htmlFor='password'>Contraseña</Label>
-						<Button className='w-max'>Cambiar contrasñea</Button>
-						<Separator />
-						<Label htmlFor='profile'>Foto de perfil</Label>
-						<div className='relative'>
-							{user.image ? (
-								<Image
-									src={user.image}
-									alt={`Foto de perfil de ${user.name}`}
-									width={40}
-									height={40}
-									quality={100}
-									placeholder='blur'
-									blurDataURL={blurDataURL}
-									className='size-32 cursor-pointer rounded-full object-cover shadow'
-								/>
-							) : (
-								<UserIcon className='size-32 rounded-full bg-secondary p-4' />
-							)}
-							<UpdatePhoto />
-						</div>
-					</>
-				)}
+				{!user.isOAuth && <NoOAuthSettings />}
 				<Separator />
 				<Label htmlFor='delete-account'>Zona de peligro</Label>
-				<DeleteAccount {...user} />
+				<ParentDialog
+					trigger={
+						<Button
+							variant='destructive'
+							className='w-full md:w-max'
+						>
+							Eliminar mi cuenta
+						</Button>
+					}
+					title='Eliminar mi cuenta'
+					description='Este proceso no podrá revertirse luego'
+				>
+					<DeleteButton user={user} />
+				</ParentDialog>
 			</CardContent>
 		</Card>
 	);
