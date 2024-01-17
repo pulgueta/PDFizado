@@ -1,14 +1,13 @@
 'use client';
 
 import { ElementRef, useEffect, useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 
 import Link from 'next/link';
 
 import { toast } from 'sonner';
-import { Loader2Icon } from 'lucide-react';
 
-import { Button, buttonVariants } from '~/shadcn/button';
+import { buttonVariants } from '~/shadcn/button';
 import {
 	Card,
 	CardContent,
@@ -21,6 +20,7 @@ import { Input } from '~/shadcn/input';
 import { Label } from '~/shadcn/label';
 import { Separator } from '~/shadcn/separator';
 import { forgotPassword } from './actions/password';
+import { SubmitButton } from './submit-button';
 
 export const ForgotPasswordForm = () => {
 	const [state, action] = useFormState(forgotPassword, undefined);
@@ -60,7 +60,7 @@ export const ForgotPasswordForm = () => {
 						name='email'
 						className='mb-4 mt-2'
 					/>
-					<Submit />
+					<SubmitButton label='Recuperar contraseña' />
 				</form>
 			</CardContent>
 			<CardFooter className='flex-col justify-center'>
@@ -77,24 +77,5 @@ export const ForgotPasswordForm = () => {
 				</Link>
 			</CardFooter>
 		</Card>
-	);
-};
-
-const Submit = () => {
-	const { pending } = useFormStatus();
-
-	return (
-		<Button
-			type='submit'
-			className='w-full'
-			id='submit-btn'
-			disabled={pending}
-		>
-			{pending ? (
-				<Loader2Icon className='animate-spin' />
-			) : (
-				'Recuperar contraseña'
-			)}
-		</Button>
 	);
 };
