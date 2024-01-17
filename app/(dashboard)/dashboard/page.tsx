@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 
-import { UploadPDF } from '~/components/client/dialog/pdf/upload-pdf';
 import { UserFiles } from '~/components/client/user/user-files';
 import { Skeleton } from '~/shadcn/skeleton';
 import { currentUser } from '~/lib/auth/currentUser';
-
-export const dynamic = 'force-dynamic';
+import { ParentDialog } from '~/components/client/dialog/dialog-component';
+import { Button } from '~/components/ui/button';
+import { db } from '~/database/db';
+import { Dropzone } from '~/components/client/dialog/pdf/dropzone';
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://pdfizado.com/dashboard'),
@@ -16,6 +17,15 @@ export const metadata: Metadata = {
 
 const Dashboard = async () => {
 	const user = await currentUser();
+
+	const files = await db.file.findMany({
+		where: {
+			userId: user?.id,
+		},
+		orderBy: {
+			createdAt: 'desc',
+		},
+	});
 
 	return (
 		<>
@@ -34,7 +44,20 @@ const Dashboard = async () => {
 					Bienvenido a tu dashboard, aquí podrás acceder a todas las
 					funcionalidades de PDFizado
 				</p>
-				<UploadPDF />
+				<ParentDialog
+					title='Subir PDF'
+					trigger={
+						<Button
+							disabled={
+								user?.plan === 'FREE' && files.length >= 6
+							}
+						>
+							Subir PDF
+						</Button>
+					}
+				>
+					<Dropzone />
+				</ParentDialog>
 			</header>
 
 			<main className='container min-h-screen md:min-h-[calc(100vh-390px)]'>
