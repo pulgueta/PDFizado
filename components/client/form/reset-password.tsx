@@ -1,140 +1,51 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { ElementRef, useEffect, useRef } from 'react';
+import { useFormState } from 'react-dom';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Loader2Icon } from 'lucide-react';
 
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '~/shadcn/form';
 import { Input } from '~/shadcn/input';
-import { Button } from '~/shadcn/button';
-import { type ResetPassword as Reset, resetSchema } from '~/schemas';
+import { Label } from '~/shadcn/label';
+import { updatePassword } from './actions/password';
+import { SubmitButton } from './submit-button';
 
 export const ResetPassword = () => {
-	const { get } = useSearchParams();
-	const { push } = useRouter();
+	const [state, action] = useFormState(updatePassword, undefined);
 
-	const token = get('token');
+	const form = useRef<ElementRef<'form'>>(null);
 
-	const form = useForm<Reset>({
-		resolver: zodResolver(resetSchema),
-		defaultValues: {
-			password: '',
-			confirmPassword: '',
-			email: '',
-		},
-	});
+	useEffect(() => {
+		if (state?.success) {
+			toast.success('Tu contraseña ha sido actualizada');
 
-	const onSubmit = form.handleSubmit(async (data: Reset) => {
-		const res = await fetch('/api/email/change-password', {
-			method: 'POST',
-			body: JSON.stringify({
-				...data,
-				token,
-			}),
-		});
-
-		if (!res.ok) {
-			switch (res.status) {
-				case 400:
-					toast.error('El token ha expirado');
-					return;
-				case 401:
-					toast.error('El token es inválido');
-					return;
-				default:
-					toast.error('Ha ocurrido un error');
-					return;
-			}
+			form.current?.reset();
 		}
 
-		toast.success('Cambio de contraseña', {
-			description: 'Contraseña reestablecida con éxito',
-		});
-		push(res.url);
-	});
+		if (state?.error) {
+			toast.error(`${state.error}`);
+		}
+	}, [state]);
 
 	return (
-		<Form {...form}>
-			<form onSubmit={onSubmit} className='space-y-6'>
-				<FormField
-					control={form.control}
-					name='email'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Correo electrónico</FormLabel>
-							<FormControl>
-								<Input
-									disabled={form.formState.isSubmitting}
-									autoComplete='Correo electrónico'
-									placeholder='Tu correo electrónico'
-									type='email'
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='password'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Nueva contraseña</FormLabel>
-							<FormControl>
-								<Input
-									disabled={form.formState.isSubmitting}
-									autoComplete='Contraseña'
-									placeholder='Tu nueva contraseña'
-									type='password'
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='confirmPassword'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Confirma tu nueva contraseña</FormLabel>
-							<FormControl>
-								<Input
-									disabled={form.formState.isSubmitting}
-									autoComplete='Confirmar contraseña'
-									placeholder='Confirma tu nueva contraseña'
-									type='password'
-									{...field}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button
-					type='submit'
-					className='w-full'
-					disabled={form.formState.isSubmitting}
-				>
-					{form.formState.isSubmitting ? (
-						<Loader2Icon className='animate-spin' />
-					) : (
-						'Reestablecer contraseña'
-					)}
-				</Button>
-			</form>
-		</Form>
+		<form action={action} className='flex flex-col gap-4' ref={form}>
+			<Label>Nueva contraseña</Label>
+			<Input
+				autoComplete='Contraseña'
+				placeholder='Tu nueva contraseña'
+				name='password'
+				type='password'
+			/>
+
+			<Label>Confirma tu nueva contraseña</Label>
+			<Input
+				autoComplete='Confirmar contraseña'
+				placeholder='Confirma tu nueva contraseña'
+				name='confirmPassword'
+				type='password'
+			/>
+
+			<SubmitButton label='Actualizar contraseña' />
+		</form>
 	);
 };
