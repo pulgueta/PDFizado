@@ -27,7 +27,7 @@ export const POST = async (req: NextRequest) => {
 		);
 	}
 
-	const newPassword = await hash(password);
+	const newPassword = await hash(password ?? '');
 
 	try {
 		const { id } = (await db.user.findUnique({
