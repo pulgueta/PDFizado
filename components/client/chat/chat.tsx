@@ -14,7 +14,7 @@ export const Chat = ({ fileId }: { fileId: string }) => {
 
 	return (
 		<section className='p-2'>
-			<ScrollArea className='relative h-[calc(80vh)] max-h-svh py-2 md:h-[calc(100vh-140px)]'>
+			<ScrollArea className='relative h-[calc(80dvh)] max-h-dvh py-2 md:h-[calc(100dvh-140px)]'>
 				<MessageList
 					messages={vercel.messages}
 					loading={vercel.isLoading}

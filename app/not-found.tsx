@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const _404 = () => {
 	return (
-		<section className='flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-2'>
+		<section className='flex min-h-[calc(100dvh-205px)] flex-col items-center justify-center gap-y-2'>
 			<FrownIcon
 				aria-label='Cara triste'
 				className='h-12 w-12 text-muted-foreground'

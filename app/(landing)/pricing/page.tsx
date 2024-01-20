@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const Pricing = () => {
 	return (
-		<div className='relative min-h-[calc(100vh-205px)] bg-white p-4 dark:bg-[#1C1917]'>
+		<div className='relative min-h-[calc(100dvh-205px)] bg-white p-4 dark:bg-[#1C1917]'>
 			<div className='mx-auto my-8 max-w-7xl'>
 				<h3 className='mb-4 border-b pb-4 text-center text-4xl font-black leading-snug text-black md:mb-8 dark:text-white'>
 					Tenemos 3 planes para que puedas utilizar{' '}

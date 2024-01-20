@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const TOS: NextPage = () => {
 	return (
-		<section className='min-h-[calc(100vh-205px)] w-full bg-white p-4 dark:bg-[#131110]'>
+		<section className='min-h-[calc(100dvh-205px)] w-full bg-white p-4 dark:bg-[#131110]'>
 			<div className='mx-auto max-w-6xl '>
 				<Link
 					href='/'

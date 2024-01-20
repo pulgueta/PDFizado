@@ -38,7 +38,7 @@ const Verify = async ({ searchParams }: VerifyEmail) => {
 		});
 
 	return (
-		<section className='container flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
+		<section className='container flex min-h-[calc(100dvh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
 			<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 				Se ha verificado tu cuenta
 			</h1>
@@ -55,7 +55,7 @@ const Verify = async ({ searchParams }: VerifyEmail) => {
 export default Verify;
 
 const NoIdProvided = () => (
-	<section className='container flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
+	<section className='container flex min-h-[calc(100dvh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No se ha proporcionado un id
 		</h1>
@@ -69,7 +69,7 @@ const NoIdProvided = () => (
 );
 
 const InvalidId = () => (
-	<section className='container flex min-h-[calc(100vh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
+	<section className='container flex min-h-[calc(100dvh-205px)] flex-col items-center justify-center gap-y-4 p-2'>
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No es un id válido
 		</h1>

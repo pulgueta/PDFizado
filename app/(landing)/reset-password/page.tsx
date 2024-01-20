@@ -47,7 +47,7 @@ const ResetPassword: NextPage<ResetToken> = async ({
 		dbToken.expires.toISOString() < new Date().toISOString();
 
 	return (
-		<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+		<section className='mx-auto flex min-h-[calc(100dvh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
 			{!isTokenExpired ? (
 				<Card className='w-full max-w-md'>
 					<CardHeader>
@@ -83,7 +83,7 @@ const ResetPassword: NextPage<ResetToken> = async ({
 export default ResetPassword;
 
 const NoTokenProvided = () => (
-	<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+	<section className='mx-auto flex min-h-[calc(100dvh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No se ha proporcionado un token
 		</h1>
@@ -100,7 +100,7 @@ const NoTokenProvided = () => (
 );
 
 const InvalidToken = () => (
-	<section className='mx-auto flex min-h-[calc(100vh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
+	<section className='mx-auto flex min-h-[calc(100dvh-205px)] max-w-2xl flex-col items-center justify-center gap-y-4 p-2'>
 		<h1 className='scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl'>
 			No es un token válido
 		</h1>

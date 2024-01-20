@@ -15,7 +15,7 @@ const _404 = () => {
 	const { fileId } = useParams();
 
 	return (
-		<section className='inset-0 -z-10 flex min-h-svh w-full flex-col items-center justify-start gap-y-4 px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#e11d48_100%)] md:min-h-[calc(100vh-205px)] md:justify-center'>
+		<section className='inset-0 -z-10 flex min-h-dvh w-full flex-col items-center justify-start gap-y-4 px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#e11d48_100%)] md:min-h-[calc(100dvh-205px)] md:justify-center'>
 			<h1 className='text-center text-3xl font-bold tracking-tight md:text-5xl'>
 				404 - No encontrado
 			</h1>

@@ -1,12 +1,12 @@
-import { Metadata } from 'next';
+import { Metadata, NextPage } from 'next';
 
-import { UserFiles } from '~/components/client/user/user-files';
 import { Skeleton } from '~/shadcn/skeleton';
-import { currentUser } from '~/lib/auth/currentUser';
+import { Button } from '~/shadcn/button';
+import { UserFiles } from '~/components/client/user/user-files';
 import { ParentDialog } from '~/components/client/dialog/dialog-component';
-import { Button } from '~/components/ui/button';
-import { db } from '~/database/db';
 import { Dropzone } from '~/components/client/dialog/pdf/dropzone';
+import { currentUser } from '~/lib/auth/currentUser';
+import { db } from '~/database/db';
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://pdfizado.com/dashboard'),
@@ -15,17 +15,38 @@ export const metadata: Metadata = {
 	},
 };
 
-const Dashboard = async () => {
+type DashboardPage = {
+	searchParams: {
+		page: string;
+	};
+};
+
+const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
+	const page = Number(searchParams.page) || 1;
+	const take = 6;
+	const skip = page <= 1 ? 0 : Math.abs(page - 1 * take);
+
 	const user = await currentUser();
 
-	const files = await db.file.findMany({
+	const filesCountPromise = db.file.count();
+
+	const filesPromise = db.file.findMany({
 		where: {
 			userId: user?.id,
 		},
 		orderBy: {
 			createdAt: 'desc',
 		},
+		take,
+		skip,
 	});
+
+	const [files, filesCount] = await Promise.all([
+		filesPromise,
+		filesCountPromise,
+	]);
+
+	const totalPages = Math.ceil(filesCount / take);
 
 	return (
 		<>
@@ -60,13 +81,16 @@ const Dashboard = async () => {
 				</ParentDialog>
 			</header>
 
-			<main className='container min-h-screen md:min-h-[calc(100vh-390px)]'>
-				<div className='rounded'>
-					<h2 className='mt-6 text-2xl font-bold tracking-tight'>
-						Tus PDFs:
-					</h2>
-					<UserFiles />
-				</div>
+			<main className='container min-h-dvh md:min-h-[calc(100dvh-390px)]'>
+				<h2 className='mt-6 text-2xl font-bold tracking-tight'>
+					Tus PDFs:
+				</h2>
+				<UserFiles
+					files={files}
+					page={page}
+					hasNextPage={skip + take < filesCount}
+					totalPages={totalPages}
+				/>
 			</main>
 		</>
 	);

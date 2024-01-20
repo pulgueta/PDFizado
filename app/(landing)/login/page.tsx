@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const Login = () => {
 	return (
-		<div className='flex min-h-[calc(100vh-205px)] items-center justify-center bg-white p-2 dark:bg-[#131110]'>
+		<div className='flex min-h-[calc(100dvh-205px)] items-center justify-center bg-white p-2 dark:bg-[#131110]'>
 			<LoginForm />
 		</div>
 	);

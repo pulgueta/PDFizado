@@ -12,7 +12,7 @@ type Layout = {
 
 const SettingsLayout: NextPage<Layout> = ({ children, plan, help }) => {
 	return (
-		<div className='min-h-svh md:min-h-[calc(100vh-221px)]'>
+		<div className='min-h-dvh md:min-h-[calc(100dvh-221px)]'>
 			<div className='container'>
 				<h1
 					id='settings-title'
