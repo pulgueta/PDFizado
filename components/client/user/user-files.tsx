@@ -1,17 +1,27 @@
-'use client';
+import { FC } from 'react';
 
 import { Grid } from '@radix-ui/themes';
+import { File } from '@prisma/client';
 
 import { PDFCard } from '~/components/client/user/pdf-card';
-import { PDFLoader } from '~/components/server/pdf-loaders';
-import { usePDF } from '~/hooks/user/use-pdf';
+import { PaginationLinks } from './pagination-links';
 
 import '@radix-ui/themes/styles.css';
 
-export const UserFiles = () => {
-	const { data, error, isLoading, isSuccess } = usePDF();
+type Files = {
+	files: File[];
+	page: number;
+	totalPages: number;
+	hasNextPage: boolean;
+};
 
-	if (data && data.length === 0) {
+export const UserFiles: FC<Files> = ({
+	files,
+	page,
+	hasNextPage,
+	totalPages,
+}) => {
+	if (files && files.length === 0) {
 		return (
 			<div className='mt-8 w-full rounded-lg border px-4 py-8'>
 				<p className='text-center text-base font-semibold'>
@@ -21,30 +31,24 @@ export const UserFiles = () => {
 		);
 	}
 
-	if (error) {
-		<div className='mt-8 flex w-[22rem] flex-col items-center gap-4 rounded-lg border p-4'>
-			<p className='text-center text-lg font-semibold'>
-				Error al cargar tus PDFs
-			</p>
-			<p className='text-center'>{error.name}</p>
-			<p className='text-center'>{error.message}</p>
-			<p className='text-center'>{error.stack}</p>
-		</div>;
-	}
-
 	return (
-		<Grid
-			columns={{ initial: '1', md: '2', lg: '3' }}
-			style={{
-				gap: 16,
-				margin: '32px 0px',
-			}}
-		>
-			{isLoading && <PDFLoader />}
-
-			{isSuccess &&
-				data.length > 0 &&
-				data.map((file) => <PDFCard key={file.awsKey} {...file} />)}
-		</Grid>
+		<section className='flex min-h-[calc(100dvh-421px)] flex-col justify-between gap-2'>
+			<Grid
+				columns={{ initial: '1', md: '2', lg: '3' }}
+				style={{
+					gap: 16,
+					margin: '16px 0px',
+				}}
+			>
+				{files.map((file) => (
+					<PDFCard key={file.awsKey} {...file} />
+				))}
+			</Grid>
+			<PaginationLinks
+				hasNextPage={hasNextPage}
+				totalPages={totalPages}
+				page={page}
+			/>
+		</section>
 	);
 };
