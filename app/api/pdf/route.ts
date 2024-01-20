@@ -42,29 +42,6 @@ export const POST = async (req: NextRequest) => {
 	}
 };
 
-export const GET = async () => {
-	const user = await currentUser();
-
-	if (!user) {
-		return NextResponse.json('Unauthorized', { status: 401 });
-	}
-
-	try {
-		const files = await db.file.findMany({
-			where: {
-				userId: user.id,
-			},
-			orderBy: {
-				createdAt: 'desc',
-			},
-		});
-
-		return NextResponse.json(files, { status: 200 });
-	} catch (error) {
-		return NextResponse.json({ error }, { status: 500 });
-	}
-};
-
 export const DELETE = async (req: NextRequest) => {
 	const body = await req.json();
 
