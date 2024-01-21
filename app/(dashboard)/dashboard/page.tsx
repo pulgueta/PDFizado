@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 	},
 };
 
+export const dynamic = 'force-dynamic';
+
 type DashboardPage = {
 	searchParams: {
 		page: string;
@@ -54,7 +56,7 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 				{user?.name ? (
 					<h1
 						id='dashboard-title'
-						className='mt-4 scroll-m-20 text-pretty text-4xl font-extrabold tracking-tighter lg:text-5xl'
+						className='mt-4 scroll-m-20 text-pretty text-4xl font-extrabold tracking-tighter md:text-5xl'
 					>
 						Dashboard de {user.name}
 					</h1>
@@ -69,9 +71,7 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 					title='Subir PDF'
 					trigger={
 						<Button
-							disabled={
-								user?.plan === 'FREE' && files.length >= 6
-							}
+							disabled={user?.plan === 'FREE' && filesCount >= 6}
 						>
 							Subir PDF
 						</Button>
