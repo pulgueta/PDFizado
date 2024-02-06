@@ -12,7 +12,7 @@ type Layout = {
 
 const SettingsLayout: NextPage<Layout> = ({ children, plan, help }) => {
 	return (
-		<div className='min-h-dvh md:min-h-[calc(100dvh-221px)]'>
+		<div className='min-h-dvh md:min-h-[calc(100dvh-100px)]'>
 			<div className='container'>
 				<h1
 					id='settings-title'
@@ -26,7 +26,7 @@ const SettingsLayout: NextPage<Layout> = ({ children, plan, help }) => {
 					defaultValue='profile'
 					className='mx-auto max-w-2xl'
 				>
-					<TabsList className='grid grid-cols-3'>
+					<TabsList className='mb-6 grid grid-cols-3'>
 						<TabsTrigger value='profile'>Perfil</TabsTrigger>
 						<TabsTrigger value='plan'>Plan</TabsTrigger>
 						<TabsTrigger value='help'>Ayuda</TabsTrigger>
