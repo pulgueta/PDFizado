@@ -1,3 +1,5 @@
+import { UrlObject } from 'node:url';
+
 import { FC } from 'react';
 
 import Link from 'next/link';
@@ -51,7 +53,10 @@ export const Profile: FC<ExtendedUser> = async (user) => {
 						asChild
 						className='cursor-pointer'
 					>
-						<Link href={href} id={href.replace('/', '')}>
+						<Link
+							href={href as unknown as UrlObject}
+							id={href.replace('/', '')}
+						>
 							{label}
 						</Link>
 					</DropdownMenuItem>

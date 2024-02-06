@@ -1,3 +1,5 @@
+import { UrlObject } from 'node:url';
+
 import Link from 'next/link';
 
 import { SheetTrigger } from '~/shadcn/sheet';
@@ -10,7 +12,7 @@ export const DesktopRoutes = () => {
 			{noAuthRoutes.map(({ href, label }) => (
 				<li key={href}>
 					<Link
-						href={href}
+						href={href as unknown as UrlObject}
 						id={href.replace('/', '')}
 						aria-label={label}
 						className={buttonVariants({
@@ -33,7 +35,7 @@ export const MobileRoutes = () => {
 				<li key={href}>
 					<SheetTrigger asChild>
 						<Link
-							href={href}
+							href={href as unknown as UrlObject}
 							aria-label={label}
 							id={href.replace('/', '')}
 							className='text-center text-lg font-semibold leading-loose duration-200 ease-in-out hover:text-primary'
