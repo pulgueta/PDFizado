@@ -1,5 +1,3 @@
-import { UrlObject } from 'node:url';
-
 import { FC } from 'react';
 
 import {
@@ -56,11 +54,7 @@ export const PaginationLinks: FC<Pagination> = ({
 				>
 					<PaginationNext
 						prefetch={false}
-						href={
-							`${
-								hasNextPage ? `?page=${page + 1}` : ''
-							}` as unknown as UrlObject
-						}
+						href={`${hasNextPage ? `?page=${page + 1}` : ''}`}
 					/>
 				</PaginationItem>
 			</PaginationContent>

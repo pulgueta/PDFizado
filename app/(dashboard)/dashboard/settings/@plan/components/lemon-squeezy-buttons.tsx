@@ -1,5 +1,3 @@
-import { UrlObject } from 'url';
-
 import { FC } from 'react';
 
 import Link from 'next/link';
@@ -23,7 +21,7 @@ export const LemonSqueezyButtons: FC<Buttons> = async ({ plans, user }) => {
 				return (
 					<Link
 						key={plan.id}
-						href={href as unknown as UrlObject}
+						href={href}
 						className={buttonVariants()}
 					>
 						Actualizar a {plan.name.toLowerCase()}

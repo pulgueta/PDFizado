@@ -1,5 +1,3 @@
-import { UrlObject } from 'url';
-
 import { FC } from 'react';
 
 import Link from 'next/link';
@@ -63,7 +61,7 @@ export const PriceCard: FC<PriceCardMetadata> = ({
 				</span>
 				<Separator className='my-6' />
 				<Link
-					href={url as unknown as UrlObject}
+					href={url}
 					className={buttonVariants({
 						className: 'mb-6 w-full',
 						size: 'lg',

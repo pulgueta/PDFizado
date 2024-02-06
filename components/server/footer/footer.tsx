@@ -1,7 +1,5 @@
 'use client';
 
-import { UrlObject } from 'node:url';
-
 import Link from 'next/link';
 
 import { footerRoutes } from '~/constants/navbar';
@@ -23,7 +21,7 @@ export const Footer = () => {
 					{footerRoutes.map((route) => (
 						<li key={route.label}>
 							<Link
-								href={route.href as unknown as UrlObject}
+								href={route.href}
 								className={buttonVariants({
 									variant: 'link',
 									className:
