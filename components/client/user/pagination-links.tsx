@@ -1,3 +1,5 @@
+import { UrlObject } from 'node:url';
+
 import { FC } from 'react';
 
 import {
@@ -22,10 +24,6 @@ export const PaginationLinks: FC<Pagination> = ({
 	totalPages,
 	hasNextPage,
 }) => {
-	const currentPage = Math.min(Math.max(page, 1), totalPages);
-
-	const pages = Array.from({ length: totalPages }) as [];
-
 	return (
 		<Pagination className='mb-4'>
 			<PaginationContent>
@@ -36,11 +34,12 @@ export const PaginationLinks: FC<Pagination> = ({
 				>
 					<PaginationPrevious href={`?page=${page - 1}`} />
 				</PaginationItem>
-				{pages.map((_, i) => (
+				{Array.from({ length: totalPages }).map((_, i) => (
 					<PaginationLink
 						key={i}
-						href={`?page=${i + 1}`}
-						isActive={currentPage === i + 1}
+						href={page === 1 ? '/dashboard' : `?page=${i + 1}`}
+						isActive={page === i + 1}
+						prefetch={false}
 					>
 						{i + 1}
 					</PaginationLink>
@@ -56,7 +55,12 @@ export const PaginationLinks: FC<Pagination> = ({
 					})}
 				>
 					<PaginationNext
-						href={`${hasNextPage ? `?page=${page + 1}` : ''}`}
+						prefetch={false}
+						href={
+							`${
+								hasNextPage ? `?page=${page + 1}` : ''
+							}` as unknown as UrlObject
+						}
 					/>
 				</PaginationItem>
 			</PaginationContent>
