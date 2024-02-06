@@ -85,16 +85,16 @@ model Issue {
 
 model Plans {
     id               String   @id @default(cuid())
-    name             String
-    description      String
     plan             Plan
     benefits         String[]
-    lemonSqueezyHref String?
-    paddleHref       String?
-    monthlyPrice     Int
-    yearlyPrice      Int
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
+    lemonSqueezyHref String?
+    monthlyPrice     Int
+    paddleHref       String?
+    yearlyPrice      Int
+    name             String
+    description      String
 }
 
 enum Plan {
