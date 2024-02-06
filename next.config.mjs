@@ -33,6 +33,7 @@ const nextConfig = {
 	},
 	experimental: {
 		serverComponentsExternalPackages: ['argon2'],
+		typedRoutes: true,
 	},
 }
 
