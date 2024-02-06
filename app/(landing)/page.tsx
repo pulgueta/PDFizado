@@ -3,17 +3,24 @@ import Link from 'next/link';
 
 import { Badge } from '~/shadcn/badge';
 import { buttonVariants } from '~/shadcn/button';
-import { PriceCards } from '~/components/client/prices/card-details';
+import { PriceCard } from '~/components/client/prices/card-details';
+import { getSubscriptions } from '~/lib/products/get-plans';
+import { currentUser } from '~/lib/auth/currentUser';
 
-const Home = () => {
+const Home = async () => {
+	const plansPromise = getSubscriptions();
+	const userPromise = currentUser();
+
+	const [user, plans] = await Promise.all([userPromise, plansPromise]);
+
 	return (
 		<>
 			<main className='min-h-dvh bg-white p-2 dark:bg-[#1C1917]'>
 				<header>
-					<article className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-2xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out md:py-8 dark:bg-[#131110]'>
+					<article className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-2xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out dark:bg-[#131110] md:py-8'>
 						<h1
 							id='landing-title'
-							className='mb-4 text-5xl font-black tracking-tight text-black md:mb-8 md:text-7xl dark:text-white'
+							className='mb-4 text-5xl font-black tracking-tight text-black dark:text-white md:mb-8 md:text-7xl'
 						>
 							<span className='text-primary'>PDF</span>izado
 						</h1>
@@ -70,16 +77,26 @@ const Home = () => {
 					</div>
 				</section>
 			</main>
-			<section className='bg-white px-2 pb-8 md:px-0 dark:bg-[#1C1917]'>
+			<section className='bg-white px-2 pb-8 dark:bg-[#1C1917] md:px-0'>
 				<div className='container animate-fade-up py-8'>
-					<h2 className='mb-4 border-b pb-4 text-center text-4xl font-extrabold tracking-tight text-black md:mb-8 lg:text-5xl dark:text-white'>
+					<h3 className='mb-8 text-balance text-center text-4xl font-black tracking-tight text-black dark:text-white md:mb-16 md:text-5xl'>
 						Tenemos 3 planes para que puedas utilizar{' '}
 						<span className='text-primary'>PDF</span>izado
-					</h2>
-					<PriceCards />
+					</h3>
+					<div className='container'>
+						<div className='grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3'>
+							{plans.map((plan) => (
+								<PriceCard
+									{...plan}
+									email={user?.email!}
+									key={plan.id}
+								/>
+							))}
+						</div>
+					</div>
 				</div>
-				<section className='flex w-full flex-col items-center justify-center gap-8 bg-secondary px-2 py-8 shadow-sm md:py-12 dark:bg-[#131110]'>
-					<h3 className='text-center text-4xl font-extrabold tracking-tight lg:text-5xl dark:text-white'>
+				<section className='flex w-full flex-col items-center justify-center gap-8 bg-secondary px-2 py-8 shadow-sm dark:bg-[#131110] md:py-12'>
+					<h3 className='text-center text-4xl font-extrabold tracking-tight dark:text-white lg:text-5xl'>
 						&iquest;Qué esperas para agilizar tu forma de estudiar?
 					</h3>
 					<Link href='/register' className={buttonVariants()}>

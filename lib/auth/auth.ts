@@ -9,8 +9,9 @@ import { db } from '~/database/db';
 
 export type ExtendedUser = DefaultSession['user'] & {
 	role: Role;
-	mercadopagoSubscriptionId: string;
 	plan: Plan;
+	lemonSqueezyHref: string;
+	paddleHref: string;
 	emailVerified: boolean;
 	picture: string;
 	accounts: [];

@@ -37,11 +37,6 @@ export const useMutation = ({ endpoint }: HookOptions) => {
 			toast.error(err.message || 'Error al subir el archivo');
 		},
 		onSuccess: ({ id }) => {
-			if (endpoint === 'pdf') {
-				toast.success(
-					'Tu PDF se ha procesado correctamente, serás redirigido en unos segundos'
-				);
-			}
 			queryClient.invalidateQueries({
 				queryKey: ['uploadToS3'],
 			});

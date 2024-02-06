@@ -21,7 +21,7 @@ export const PDFCard: FC<File> = (file) => {
 	});
 
 	return (
-		<article className='mx-auto flex w-full flex-col rounded-xl border bg-secondary p-4 shadow sm:w-96 md:w-96 dark:bg-popover'>
+		<article className='mx-auto flex w-full flex-col rounded-xl border bg-secondary p-4 shadow dark:bg-popover sm:w-96 md:w-96'>
 			<header>
 				<h3 className='truncate text-xl font-bold'>{file.name}</h3>
 				<p className='text-muted-foreground'>

@@ -7,3 +7,5 @@ export const currentUser = async () => {
 
 	return user.user;
 };
+
+export type CurrentUser = Awaited<ReturnType<typeof currentUser>>;
