@@ -1,11 +1,12 @@
-import { File } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 
-export const usePDF = () => {
-	const query = useQuery<File[]>({
-		queryKey: ['files'],
-		queryFn: () => {
-			const data = fetch('/api/pdf').then((res) => res.json());
+export const usePDF = <T>({ skip }: { skip: number }) => {
+	const query = useQuery<T[] | T>({
+		queryKey: ['files', skip],
+		queryFn: async () => {
+			const data = await fetch('/api/pdf', {
+				body: JSON.stringify(skip),
+			}).then((res) => res.json());
 
 			return data;
 		},
