@@ -75,12 +75,26 @@ model Message {
 }
 
 model Issue {
-    id        String   @id @default(uuid())
+    id        String   @id @default(cuid())
     issue     String
     from      String
     solved    Boolean  @default(false)
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    updatedAt DateTime
+}
+
+model Plans {
+    id               String   @id @default(cuid())
+    name             String
+    description      String
+    plan             Plan
+    benefits         String[]
+    lemonSqueezyHref String?
+    paddleHref       String?
+    monthlyPrice     Int
+    yearlyPrice      Int
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
 }
 
 enum Plan {
