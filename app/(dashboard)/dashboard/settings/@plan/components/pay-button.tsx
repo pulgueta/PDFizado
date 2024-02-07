@@ -6,12 +6,12 @@ import { PaddleButtons } from './paddle-buttons';
 import { currentUser } from '~/lib/auth/currentUser';
 import { env } from '~/env/server.mjs';
 
-const { lookup } = new IPData(env.IPDATA_KEY);
+const ipData = new IPData(env.IPDATA_KEY);
 
 export const PayButton = async () => {
 	const plansPromise = getPaidSubscriptions();
 	const userPromise = currentUser();
-	const countryPromise = lookup();
+	const countryPromise = ipData.lookup();
 
 	const [user, plans, country] = await Promise.all([
 		userPromise,
