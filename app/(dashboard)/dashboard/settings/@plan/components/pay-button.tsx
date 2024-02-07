@@ -6,18 +6,20 @@ import { PaddleButtons } from './paddle-buttons';
 import { currentUser } from '~/lib/auth/currentUser';
 import { env } from '~/env/server.mjs';
 
-const ipData = new IPData(env.IPDATA_KEY);
+const { lookup } = new IPData(env.IPDATA_KEY);
 
 export const PayButton = async () => {
 	const plansPromise = getPaidSubscriptions();
 	const userPromise = currentUser();
-	const countryPromise = ipData.lookup();
+	const countryPromise = lookup();
 
 	const [user, plans, country] = await Promise.all([
 		userPromise,
 		plansPromise,
 		countryPromise,
 	]);
+
+	console.log(country);
 
 	const isColombia = country.country_code === 'CO';
 
