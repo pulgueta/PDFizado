@@ -5,6 +5,11 @@ import './env/server.mjs'
 const nextConfig = {
 	poweredByHeader: false,
 	reactStrictMode: true,
+	logging: {
+		fetches: {
+			fullUrl: true,
+		}
+	},
 	images: {
 		dangerouslyAllowSVG: true,
 		contentSecurityPolicy: "script-src 'none';",
