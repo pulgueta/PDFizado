@@ -28,6 +28,7 @@ const Pricing = async () => {
 							{...plan}
 							email={user?.email!}
 							key={plan.id}
+							user_plan={user?.plan!}
 						/>
 					))}
 				</div>
