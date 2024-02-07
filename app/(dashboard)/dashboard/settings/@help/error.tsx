@@ -18,7 +18,7 @@ const Error = ({ error }: { error: Error & { digest?: string } }) => {
 	return (
 		<Card className='container max-w-md px-0'>
 			<CardHeader>
-				<CardTitle>Error cargando tu plan</CardTitle>
+				<CardTitle>Error cargando el formulario de ayuda</CardTitle>
 				<CardDescription>{error.name}</CardDescription>
 			</CardHeader>
 			<CardContent>{error.message}</CardContent>
