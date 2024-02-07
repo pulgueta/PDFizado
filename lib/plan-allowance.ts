@@ -12,3 +12,15 @@ export const model: Record<Plan, CreateChatCompletionRequest['model']> = {
 	PROFESSIONAL: 'gpt-4-1106-preview',
 	STANDARD: 'gpt-4-32k',
 };
+
+export const maxFiles: Record<Plan, number> = {
+	FREE: 6,
+	PROFESSIONAL: 12,
+	STANDARD: Number.MAX_SAFE_INTEGER,
+};
+
+export const plan: Record<Plan, Plan> = {
+	FREE: 'FREE',
+	PROFESSIONAL: 'PROFESSIONAL',
+	STANDARD: 'STANDARD',
+};

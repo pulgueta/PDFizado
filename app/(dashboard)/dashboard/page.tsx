@@ -10,6 +10,7 @@ import { Dropzone } from '~/components/client/dialog/pdf/dropzone';
 import { currentUser } from '~/lib/auth/currentUser';
 import { db } from '~/database/db';
 import { PDFLoader } from '~/components/server/pdf-loaders';
+import { maxFiles, plan } from '~/lib/plan-allowance';
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://pdfizado.com/dashboard'),
@@ -55,7 +56,10 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 					title='Subir PDF'
 					trigger={
 						<Button
-							disabled={user.plan === 'FREE' && filesCount >= 6}
+							disabled={
+								user.plan === plan[user.plan] &&
+								filesCount >= maxFiles[user.plan]
+							}
 						>
 							Subir PDF
 						</Button>
