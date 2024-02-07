@@ -1,8 +1,10 @@
+'use client';
+
 import { FC } from 'react';
 
 import Link from 'next/link';
 
-import { Plans } from '@prisma/client';
+import { Plan, Plans } from '@prisma/client';
 import { CheckIcon } from 'lucide-react';
 
 import {
@@ -14,9 +16,13 @@ import {
 } from '~/shadcn/card';
 import { Separator } from '~/shadcn/separator';
 import { buttonVariants } from '~/shadcn/button';
+import { Badge } from '~/shadcn/badge';
+import { cn } from '~/lib/utils';
+import { useCountry } from '~/hooks/use-country';
 
 type PriceCardMetadata = Plans & {
 	email: string;
+	user_plan: Plan;
 };
 
 export const PriceCard: FC<PriceCardMetadata> = ({
@@ -27,24 +33,43 @@ export const PriceCard: FC<PriceCardMetadata> = ({
 	lemonSqueezyHref,
 	monthlyPrice,
 	name,
+	plan,
+	user_plan,
 }) => {
+	const country = useCountry();
+
 	const formattedPrice = new Intl.NumberFormat('es-CO', {
 		style: 'currency',
 		currency: 'COP',
 	});
 
-	const href =
+	const isColombia = country?.country.iso_code === 'CO';
+
+	const paddle = '/dashboard/settings';
+	const lemonSqueezy =
 		lemonSqueezyHref === ''
 			? '/dashboard/settings'
 			: `${lemonSqueezyHref}?checkout[email]=${email}`;
+
+	const href = isColombia ? lemonSqueezy : paddle;
 
 	const url = email !== undefined ? href : '/login';
 
 	return (
 		<Card
-			className='mx-auto w-full bg-neutral-50 dark:bg-[#131110] sm:w-96 md:w-[25rem]'
+			className={cn(
+				'mx-auto w-full bg-neutral-50 dark:bg-[#131110] sm:w-96 md:w-[25rem]',
+				{
+					'relative border-2 border-primary': plan === user_plan,
+				}
+			)}
 			key={id}
 		>
+			{plan === user_plan && (
+				<Badge className='absolute left-1/2 top-0 z-40 -translate-x-1/2 -translate-y-1/2'>
+					Plan actual
+				</Badge>
+			)}
 			<CardHeader>
 				<CardTitle className='text-4xl font-bold'>{name}</CardTitle>
 				<CardDescription className='text-pretty text-muted-foreground'>
@@ -63,7 +88,10 @@ export const PriceCard: FC<PriceCardMetadata> = ({
 				<Link
 					href={url}
 					className={buttonVariants({
-						className: 'mb-6 w-full',
+						className: cn('mb-6 w-full', {
+							'pointer-events-none opacity-50':
+								plan === user_plan,
+						}),
 						size: 'lg',
 					})}
 				>
