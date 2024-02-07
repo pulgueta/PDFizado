@@ -25,8 +25,6 @@ export const PayButton: FC<$PayButton> = ({ plans, user }) => {
 			.then((res) => setCountry(res));
 	}, []);
 
-	console.log(country?.country);
-
 	const isColombia = country?.country.iso_code === 'CO';
 
 	return isColombia ? (
