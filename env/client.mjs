@@ -16,7 +16,7 @@ export const env = createEnv({
 		NEXT_PUBLIC_S3_BUCKET: process.env.NEXT_PUBLIC_S3_BUCKET,
 		NEXT_PUBLIC_S3_REGION: process.env.NEXT_PUBLIC_S3_REGION,
 		NEXT_PUBLIC_PADDLE_CLIENT: process.env.NEXT_PUBLIC_PADDLE_CLIENT,
-		NEXT_PUBLIC_GEOLOCATION: process.env.GEOLOCATION,
+		NEXT_PUBLIC_GEOLOCATION: process.env.NEXT_PUBLIC_GEOLOCATION,
 	},
 	onValidationError: (error = ZodError) => {
 		throw new Error(`[*] Missing environment varibales: ${error.flatten().fieldErrors}`);
