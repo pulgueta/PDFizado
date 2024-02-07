@@ -1,6 +1,6 @@
 import { getPaidSubscriptions } from '~/lib/products/get-plans';
 import { LemonSqueezyButtons } from './lemon-squeezy-buttons';
-import { PaddleButtons } from './paddle-buttons';
+// import { PaddleButtons } from './paddle-buttons';
 import { currentUser } from '~/lib/auth/currentUser';
 
 export const PayButton = async () => {
@@ -9,12 +9,8 @@ export const PayButton = async () => {
 
 	const [user, plans] = await Promise.all([userPromise, plansPromise]);
 
-	const isColombia =
-		Intl.DateTimeFormat().resolvedOptions().timeZone === 'America/Bogota';
+	// const isColombia =
+	// 	Intl.DateTimeFormat().resolvedOptions().timeZone === 'America/Bogota';
 
-	return isColombia ? (
-		<LemonSqueezyButtons user={user} plans={plans} />
-	) : (
-		<PaddleButtons user={user} plans={plans} />
-	);
+	return <LemonSqueezyButtons user={user} plans={plans} />;
 };
