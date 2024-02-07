@@ -1,27 +1,33 @@
-import IPData from 'ipdata';
+'use client';
 
-import { getPaidSubscriptions } from '~/lib/products/get-plans';
+import { FC, useEffect, useState } from 'react';
+
+import { PaidSubscriptionPlans } from '~/lib/products/get-plans';
 import { LemonSqueezyButtons } from './lemon-squeezy-buttons';
 import { PaddleButtons } from './paddle-buttons';
-import { currentUser } from '~/lib/auth/currentUser';
-import { env } from '~/env/server.mjs';
+import { CurrentUser } from '~/lib/auth/currentUser';
+import { env } from '~/env/client.mjs';
+import { FetchCountry } from './types';
 
-const ipData = new IPData(env.IPDATA_KEY);
+type $PayButton = {
+	user: CurrentUser;
+	plans: PaidSubscriptionPlans;
+};
 
-export const PayButton = async () => {
-	const plansPromise = getPaidSubscriptions();
-	const userPromise = currentUser();
-	const countryPromise = ipData.lookup();
+export const PayButton: FC<$PayButton> = ({ plans, user }) => {
+	const [country, setCountry] = useState<FetchCountry>();
 
-	const [user, plans, country] = await Promise.all([
-		userPromise,
-		plansPromise,
-		countryPromise,
-	]);
+	useEffect(() => {
+		fetch(
+			`https://api.geoapify.com/v1/ipinfo?apiKey=${env.NEXT_PUBLIC_GEOLOCATION}`
+		)
+			.then((response) => response.json())
+			.then((res) => setCountry(res));
+	}, []);
 
-	console.log(country);
+	console.log(country?.country);
 
-	const isColombia = country.country_code === 'CO';
+	const isColombia = country?.country.iso_code === 'CO';
 
 	return isColombia ? (
 		<LemonSqueezyButtons user={user} plans={plans} />

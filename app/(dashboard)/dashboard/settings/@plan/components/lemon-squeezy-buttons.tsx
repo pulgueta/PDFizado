@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 
 import Link from 'next/link';
@@ -11,7 +13,7 @@ type Buttons = {
 	plans: PaidSubscriptionPlans;
 };
 
-export const LemonSqueezyButtons: FC<Buttons> = async ({ plans, user }) => {
+export const LemonSqueezyButtons: FC<Buttons> = ({ plans, user }) => {
 	return (
 		<div className='flex w-full flex-col items-center justify-between gap-4 md:flex-row'>
 			{plans.map((plan) => {

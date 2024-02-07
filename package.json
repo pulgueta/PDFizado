@@ -57,7 +57,6 @@
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.0.0",
 		"geist": "^1.2.0",
-		"ipdata": "^2.2.4",
 		"langchain": "^0.0.172",
 		"lucide-react": "^0.294.0",
 		"md5": "^2.3.0",

@@ -8,6 +8,7 @@ export const env = createEnv({
 		NEXT_PUBLIC_S3_BUCKET: string().min(4),
 		NEXT_PUBLIC_S3_REGION: string().min(4),
 		NEXT_PUBLIC_PADDLE_CLIENT: string().min(8),
+		NEXT_PUBLIC_GEOLOCATION: string().min(8),
 	},
 	runtimeEnv: {
 		NEXT_PUBLIC_S3_PUBLIC: process.env.NEXT_PUBLIC_S3_PUBLIC,
@@ -15,6 +16,7 @@ export const env = createEnv({
 		NEXT_PUBLIC_S3_BUCKET: process.env.NEXT_PUBLIC_S3_BUCKET,
 		NEXT_PUBLIC_S3_REGION: process.env.NEXT_PUBLIC_S3_REGION,
 		NEXT_PUBLIC_PADDLE_CLIENT: process.env.NEXT_PUBLIC_PADDLE_CLIENT,
+		NEXT_PUBLIC_GEOLOCATION: process.env.GEOLOCATION,
 	},
 	onValidationError: (error = ZodError) => {
 		throw new Error(`[*] Missing environment varibales: ${error.flatten().fieldErrors}`);
