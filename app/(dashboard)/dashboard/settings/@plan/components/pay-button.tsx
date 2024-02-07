@@ -1,4 +1,4 @@
-import ipdata from 'ipdata';
+import IPData from 'ipdata';
 
 import { getPaidSubscriptions } from '~/lib/products/get-plans';
 import { LemonSqueezyButtons } from './lemon-squeezy-buttons';
@@ -6,7 +6,7 @@ import { PaddleButtons } from './paddle-buttons';
 import { currentUser } from '~/lib/auth/currentUser';
 import { env } from '~/env/server.mjs';
 
-const ipData = new ipdata(env.IPDATA_KEY);
+const ipData = new IPData(env.IPDATA_KEY);
 
 export const PayButton = async () => {
 	const plansPromise = getPaidSubscriptions();
