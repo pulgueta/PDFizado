@@ -38,6 +38,9 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 
 	if (!user) redirect('/login');
 
+	const disabled =
+		user.plan === plan[user.plan] && filesCount >= maxFiles[user.plan];
+
 	return (
 		<>
 			<header className='container space-y-4'>
@@ -54,16 +57,7 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 				</p>
 				<ParentDialog
 					title='Subir PDF'
-					trigger={
-						<Button
-							disabled={
-								user.plan === plan[user.plan] &&
-								filesCount >= maxFiles[user.plan]
-							}
-						>
-							Subir PDF
-						</Button>
-					}
+					trigger={<Button disabled={disabled}>Subir PDF</Button>}
 				>
 					<Dropzone />
 				</ParentDialog>
