@@ -26,20 +26,23 @@ model Account {
 }
 
 model User {
-    id                        String    @id @default(cuid())
-    name                      String
-    email                     String    @unique
-    password                  String?
-    image                     String?
-    plan                      Plan      @default(FREE)
-    mercadopagoSubscriptionId String?   @unique
-    createdAt                 DateTime  @default(now())
-    updatedAt                 DateTime  @updatedAt
-    emailVerified             Boolean?  @default(false)
-    role                      Role      @default(USER)
-    accounts                  Account[]
-    File                      File[]
-    Message                   Message[]
+    id                         String    @id @default(cuid())
+    name                       String
+    email                      String
+    password                   String?
+    image                      String?
+    plan                       Plan      @default(FREE)
+    lemonSqueezySubscriptionId String?
+    paddleSubscriptionId       String?
+    emailVerified              Boolean?  @default(false)
+    role                       Role      @default(USER)
+    accounts                   Account[]
+    File                       File[]
+    Message                    Message[]
+    createdAt                  DateTime  @default(now())
+    updatedAt                  DateTime  @updatedAt
+
+    @@unique([email])
 }
 
 model VerificationToken {
@@ -51,7 +54,7 @@ model VerificationToken {
 }
 
 model File {
-    id        String    @unique @default(uuid())
+    id        String    @id @default(uuid())
     name      String
     url       String
     createdAt DateTime  @default(now())
@@ -85,16 +88,16 @@ model Issue {
 
 model Plans {
     id               String   @id @default(cuid())
-    plan             Plan
-    benefits         String[]
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @updatedAt
-    lemonSqueezyHref String?
-    monthlyPrice     Int
-    paddleHref       String?
-    yearlyPrice      Int
     name             String
     description      String
+    plan             Plan
+    benefits         String[]
+    monthlyPrice     Int
+    yearlyPrice      Int
+    lemonSqueezyHref String?
+    paddleHref       String?
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
 }
 
 enum Plan {
