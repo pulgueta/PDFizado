@@ -56,7 +56,12 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 	const disabled =
 		user.plan === plan[user.plan] && filesCount >= maxFiles[user.plan];
 
-	console.log(files);
+	console.log({
+		user,
+		files,
+		filesCount,
+		disabled,
+	});
 
 	return (
 		<>
