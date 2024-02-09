@@ -19,6 +19,6 @@ export const env = createEnv({
 		NEXT_PUBLIC_GEOLOCATION: process.env.NEXT_PUBLIC_GEOLOCATION,
 	},
 	onValidationError: (error = ZodError) => {
-		throw new Error(`[*] Missing environment varibales: ${error.flatten().fieldErrors}`);
+		throw new Error('[*] Missing environment variables:', error.flatten().fieldErrors);
 	},
 });
