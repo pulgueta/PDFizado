@@ -15,7 +15,7 @@ const _404 = () => {
 		<section className='flex min-h-[calc(100dvh-205px)] flex-col items-center justify-center gap-y-2'>
 			<FrownIcon
 				aria-label='Cara triste'
-				className='h-12 w-12 text-muted-foreground'
+				className='size-12 text-muted-foreground'
 			/>
 			<h1 className='mb-2 text-center text-3xl font-bold'>
 				404 - Página no encontrada
