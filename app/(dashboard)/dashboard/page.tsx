@@ -61,6 +61,10 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 		files,
 		filesCount,
 		disabled,
+		userPlan: user.plan,
+		plan: plan[user.plan],
+		isPlanSame: user.plan === plan[user.plan],
+		isFilesExceeded: filesCount >= maxFiles[user.plan],
 	});
 
 	return (
