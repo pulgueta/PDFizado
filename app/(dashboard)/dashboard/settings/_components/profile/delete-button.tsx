@@ -11,14 +11,15 @@ import { ExtendedUser } from '~/lib/auth/auth';
 export const DeleteButton = ({ user }: { user: ExtendedUser }) => {
 	const [pending, startTransition] = useTransition();
 
-	const { refresh } = useRouter();
+	const { refresh, push } = useRouter();
 
 	const onDelete = () =>
 		startTransition(async () => {
-			await fetch('/api/user', {
+			const res = await fetch('/api/user', {
 				method: 'DELETE',
 				body: JSON.stringify(user),
 			});
+			push(res.url);
 			refresh();
 		});
 
