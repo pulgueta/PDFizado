@@ -34,8 +34,7 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 	const take = 6;
 	const skip = page <= 1 ? 0 : Math.abs(page - 1 * take);
 
-	const filesCountPromise = db.file.count();
-	const filesPromise = db.file.findMany({
+	const files = await db.file.findMany({
 		where: {
 			userId: user.id,
 		},
@@ -46,27 +45,10 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 		skip,
 	});
 
-	const [filesCount, files] = await Promise.all([
-		filesCountPromise,
-		filesPromise,
-	]);
-
-	const totalPages = Math.ceil(filesCount / take);
+	const totalPages = Math.ceil(files.length / take);
 
 	const disabled =
-		user.plan === plan[user.plan] && filesCount === maxFiles[user.plan];
-
-	console.log({
-		user,
-		files,
-		filesCount,
-		disabled,
-		userPlan: user.plan,
-		plan: plan[user.plan],
-		isPlanSame: user.plan === plan[user.plan],
-		isFilesExceeded: filesCount >= maxFiles[user.plan],
-		maxFiles: maxFiles[user.plan],
-	});
+		user.plan === plan[user.plan] && files.length === maxFiles[user.plan];
 
 	return (
 		<>
@@ -97,7 +79,7 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 				<Suspense fallback={<PDFLoader />}>
 					<UserFiles
 						page={page}
-						filesCount={filesCount}
+						filesCount={files.length}
 						files={files}
 						skip={skip}
 						take={take}
