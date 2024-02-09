@@ -46,7 +46,7 @@ export const Chat = ({ fileId }: { fileId: string }) => {
 					className='sticky inset-x-0 bottom-0 flex w-full items-center'
 				>
 					<Input
-						className='bottom-0 h-full w-full'
+						className='bottom-0 size-full'
 						value={vercel.input}
 						autoFocus
 						onChange={vercel.handleInputChange}
@@ -55,7 +55,7 @@ export const Chat = ({ fileId }: { fileId: string }) => {
 					/>
 					<Button
 						size='icon'
-						className='absolute right-2 h-6 w-6 rounded-sm md:h-7 md:w-7'
+						className='absolute right-2 size-6 rounded-sm md:size-7'
 					>
 						<SendIcon className='size-3 md:size-4' />
 					</Button>

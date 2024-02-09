@@ -7,7 +7,7 @@ import { buttonVariants } from '~/shadcn/button';
 
 export const Footer = () => {
 	return (
-		<footer className='flex h-full w-full flex-col items-center gap-8 border-t bg-secondary p-8 dark:bg-[#0C0A09] md:flex-row md:justify-between lg:justify-around'>
+		<footer className='flex size-full flex-col items-center gap-8 border-t bg-secondary p-8 dark:bg-[#0C0A09] md:flex-row md:justify-between lg:justify-around'>
 			<Link
 				href='/'
 				aria-label='PDFizado - Inicio'

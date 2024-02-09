@@ -30,7 +30,7 @@ const TOS: NextPage = () => {
 						className: 'mb-4',
 					})}
 				>
-					<ArrowLeftCircleIcon className='mr-2 h-4 w-4' /> Volver al
+					<ArrowLeftCircleIcon className='mr-2 size-4' /> Volver al
 					inicio
 				</Link>
 				<h1 className='mb-8 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>

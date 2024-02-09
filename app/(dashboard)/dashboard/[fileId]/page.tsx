@@ -33,7 +33,7 @@ const ChatPage: NextPage<ChatParams> = async ({ params }) => {
 			<ResizablePanel className='flex-1'>
 				<iframe
 					src={`https://docs.google.com/gview?url=${file.url}&embedded=true`}
-					className='h-full w-full'
+					className='size-full'
 				></iframe>
 			</ResizablePanel>
 			<ResizableHandle withHandle />

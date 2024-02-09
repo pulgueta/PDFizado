@@ -30,7 +30,7 @@ export const {
 	auth,
 	signOut,
 	signIn,
-	update,
+	unstable_update: update,
 } = NextAuth({
 	adapter: PrismaAdapter(db),
 	session: {
@@ -88,7 +88,7 @@ export const {
 
 			if (session.user) {
 				session.user.name = token.name;
-				session.user.email = token.email;
+				session.user.email = token.email!;
 				session.user.isOAuth = token.isOAuth as boolean;
 				session.user.plan = token.plan as Plan;
 				session.user.image = token.image as string;

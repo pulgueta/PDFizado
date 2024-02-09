@@ -27,14 +27,14 @@ export const Dropzone = () => {
 			<>
 				{isSuccess ? (
 					<>
-						<CheckCircle2Icon className='mx-auto h-8 w-8 text-green-400' />
+						<CheckCircle2Icon className='mx-auto size-8 text-green-400' />
 						<p className='mt-2 text-center font-medium'>
 							¡Tu foto de perfil se ha actualizado correctamente!
 						</p>
 					</>
 				) : !isPending ? (
 					<>
-						<UploadCloudIcon className='mx-auto h-8 w-8' />
+						<UploadCloudIcon className='mx-auto size-8' />
 						<p className='my-2 text-center font-medium'>
 							Arrastra aquí tu nueva foto, o haz clic aquí para
 							seleccionarla
@@ -42,7 +42,7 @@ export const Dropzone = () => {
 					</>
 				) : (
 					<>
-						<Loader2Icon className='mx-auto h-8 w-8 animate-spin' />
+						<Loader2Icon className='mx-auto size-8 animate-spin' />
 						<p className='my-2 text-center font-medium'>
 							Actualizando tu foto...
 						</p>
