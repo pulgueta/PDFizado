@@ -70,5 +70,7 @@ export const DELETE = async (req: NextRequest) => {
 
 	await signOut({ redirectTo: '/login', redirect: true });
 
-	return NextResponse.json({ message: 'User deleted' }, { status: 200 });
+	return NextResponse.redirect(new URL('/login', req.nextUrl), {
+		status: 308,
+	});
 };

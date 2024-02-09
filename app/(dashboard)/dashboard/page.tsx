@@ -56,6 +56,8 @@ const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 	const disabled =
 		user.plan === plan[user.plan] && filesCount >= maxFiles[user.plan];
 
+	console.log(files);
+
 	return (
 		<>
 			<header className='container space-y-4'>
