@@ -4,6 +4,7 @@ import { CardHeader } from '~/components/server/settings/card-header';
 import { currentUser } from '~/lib/auth/currentUser';
 import { PayButton } from './components/pay-button';
 import { getPaidSubscriptions } from '~/lib/products/get-plans';
+import { ManageSubscription } from './components/manage-subscription';
 
 const Plan = async () => {
 	const plansPromise = getPaidSubscriptions();
@@ -26,8 +27,10 @@ const Plan = async () => {
 				</p>
 			</CardContent>
 			<CardFooter className='flex flex-col items-center justify-between gap-4'>
-				{user.plan === 'FREE' && (
+				{user.plan === 'FREE' ? (
 					<PayButton user={user} plans={plans} />
+				) : (
+					<ManageSubscription user={user} plans={plans} />
 				)}
 			</CardFooter>
 		</Card>
