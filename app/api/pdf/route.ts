@@ -43,9 +43,12 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const DELETE = async (req: NextRequest) => {
-	const body = await req.json();
-
 	const user = await currentUser();
+
+	if (!user)
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+	const body = await req.json();
 
 	const params = {
 		Bucket: env.NEXT_PUBLIC_S3_BUCKET,
