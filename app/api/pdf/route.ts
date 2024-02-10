@@ -23,9 +23,9 @@ export const POST = async (req: NextRequest) => {
 	const { key, name, url } = validatedBody.data;
 
 	try {
-		const pineconePromise = loadAWStoPinecone(key);
+		await loadAWStoPinecone(key);
 
-		const filePromise = db.file.create({
+		const file = await db.file.create({
 			data: {
 				awsKey: key,
 				name,
@@ -33,8 +33,6 @@ export const POST = async (req: NextRequest) => {
 				userId: user.id,
 			},
 		});
-
-		const [file] = await Promise.all([filePromise, pineconePromise]);
 
 		revalidatePath('/dashboard', 'page');
 
