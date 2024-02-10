@@ -25,6 +25,8 @@ type DashboardPage = {
 	};
 };
 
+export const revalidate = 0;
+
 const Dashboard: NextPage<DashboardPage> = async ({ searchParams }) => {
 	const user = await currentUser();
 
