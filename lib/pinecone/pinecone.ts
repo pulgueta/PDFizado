@@ -1,15 +1,14 @@
-import { Pinecone, PineconeRecord } from '@pinecone-database/pinecone';
+import { PineconeRecord } from '@pinecone-database/pinecone';
 import {
 	Document,
 	RecursiveCharacterTextSplitter,
 } from '@pinecone-database/doc-splitter';
-
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import md5 from 'md5';
 
-import { env } from '~/env/server.mjs';
 import { downloadFromS3 } from '~/lib/aws/awsS3-server';
 import { getEmbeddings } from './embeds';
+import { index } from './pinecone.config';
 
 type PDFPage = {
 	pageContent: string;
@@ -19,11 +18,6 @@ type PDFPage = {
 		};
 	};
 };
-
-export const pineconeIndex = new Pinecone({
-	apiKey: env.PINECONE_API_KEY,
-	environment: env.PINECONE_ENVIRONMENT,
-}).Index(env.PINECONE_INDEX);
 
 export const loadAWStoPinecone = async (fileKey: string) => {
 	const file = await downloadFromS3(fileKey);
@@ -39,7 +33,9 @@ export const loadAWStoPinecone = async (fileKey: string) => {
 
 	const vectors = await Promise.all(documents.flat().map(embedDocument));
 
-	await pineconeIndex.upsert(vectors);
+	const namespace = index.namespace(fileKey);
+
+	await namespace.upsert(vectors);
 
 	return documents[0];
 };
@@ -79,7 +75,7 @@ export const prepareDocument = async (page: PDFPage) => {
 			pageContent,
 			metadata: {
 				pageNumber: metadata.loc.pageNumber,
-				text: truncate(pageContent, 36000),
+				text: truncate(pageContent, 72000),
 			},
 		}),
 	]);

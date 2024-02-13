@@ -11,6 +11,7 @@ export const DesktopRoutes = () => {
 				<li key={href}>
 					<Link
 						href={href}
+						prefetch={false}
 						id={href.replace('/', '')}
 						aria-label={label}
 						className={buttonVariants({
@@ -34,6 +35,7 @@ export const MobileRoutes = () => {
 					<SheetTrigger asChild>
 						<Link
 							href={href}
+							prefetch={false}
 							aria-label={label}
 							id={href.replace('/', '')}
 							className='text-center text-lg font-semibold leading-loose duration-200 ease-in-out hover:text-primary'

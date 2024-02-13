@@ -1,38 +1,33 @@
 import { FC } from 'react';
 
 import { Grid } from '@radix-ui/themes';
+import { File } from '@prisma/client';
 
 import { PDFCard } from '~/components/client/user/pdf-card';
-import { db } from '~/database/db';
-import { ExtendedUser } from '~/lib/auth/auth';
 import { PaginationLinks } from './pagination-links';
 
 import '@radix-ui/themes/styles.css';
 
 type Files = {
 	page: number;
-	user: ExtendedUser;
 	filesCount: number;
+	files: File[];
+	skip: number;
+	take: number;
+	totalPages: number;
 };
 
 export const revalidate = 0;
 
-export const UserFiles: FC<Files> = async ({ page, filesCount, user }) => {
-	const take = 6;
-	const skip = page <= 1 ? 0 : Math.abs(page - 1 * take);
-
-	const files = await db.file.findMany({
-		where: {
-			userId: user?.id,
-		},
-		orderBy: {
-			createdAt: 'desc',
-		},
-		take,
-		skip,
-	});
-
-	const totalPages = Math.ceil(filesCount / take);
+export const UserFiles: FC<Files> = async ({
+	page,
+	filesCount,
+	files,
+	skip,
+	take,
+	totalPages,
+}) => {
+	const hasNextPage = skip + take < filesCount;
 
 	if (filesCount === 0) {
 		return (
@@ -56,7 +51,7 @@ export const UserFiles: FC<Files> = async ({ page, filesCount, user }) => {
 				{files?.map((file) => <PDFCard key={file.awsKey} {...file} />)}
 			</Grid>
 			<PaginationLinks
-				hasNextPage={skip + take < filesCount}
+				hasNextPage={hasNextPage}
 				totalPages={totalPages}
 				page={page}
 			/>

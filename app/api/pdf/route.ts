@@ -23,9 +23,9 @@ export const POST = async (req: NextRequest) => {
 	const { key, name, url } = validatedBody.data;
 
 	try {
-		const pineconePromise = loadAWStoPinecone(key);
+		await loadAWStoPinecone(key);
 
-		const filePromise = db.file.create({
+		const file = await db.file.create({
 			data: {
 				awsKey: key,
 				name,
@@ -34,20 +34,22 @@ export const POST = async (req: NextRequest) => {
 			},
 		});
 
-		const [file] = await Promise.all([filePromise, pineconePromise]);
-
 		revalidatePath('/dashboard', 'page');
 
 		return NextResponse.json(file, { status: 201 });
 	} catch (error) {
+		console.error(error)
 		return NextResponse.json(error, { status: 500 });
 	}
 };
 
 export const DELETE = async (req: NextRequest) => {
-	const body = await req.json();
-
 	const user = await currentUser();
+
+	if (!user)
+		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+	const body = await req.json();
 
 	const params = {
 		Bucket: env.NEXT_PUBLIC_S3_BUCKET,

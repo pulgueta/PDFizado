@@ -17,7 +17,7 @@ const Home = async () => {
 		<>
 			<main className='min-h-dvh bg-white p-2 dark:bg-[#1C1917]'>
 				<header>
-					<article className='relative z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-2xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out dark:bg-[#131110] md:py-8'>
+					<article className='z-40 mx-auto mt-8 max-w-4xl animate-fade-up rounded-2xl border bg-white px-4 py-8 text-center shadow animate-once animate-ease-out dark:bg-[#131110] md:py-8'>
 						<h1
 							id='landing-title'
 							className='mb-4 text-5xl font-black tracking-tight text-black dark:text-white md:mb-8 md:text-7xl'
@@ -40,13 +40,6 @@ const Home = async () => {
 							&iexcl;Solamente arrastra tu archivo y puedes
 							empezar a preguntar lo que necesites!
 						</p>
-						<Badge
-							className='absolute left-1/2 top-0 z-40 -translate-x-1/2 -translate-y-1/2'
-							aria-label='Demostración'
-						>
-							En desarrollo a día de{' '}
-							{new Date().toLocaleDateString()}
-						</Badge>
 					</article>
 				</header>
 

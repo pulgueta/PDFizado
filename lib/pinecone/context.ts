@@ -1,5 +1,5 @@
 import { getEmbeddings } from './embeds';
-import { pineconeIndex } from './pinecone';
+import { index } from './pinecone.config';
 
 type Metadata = {
 	text: string;
@@ -11,7 +11,8 @@ export const getMatchesFromEmbeddings = async (
 	fileKey: string
 ) => {
 	try {
-		const namespace = pineconeIndex.namespace(fileKey);
+		const namespace = index.namespace(fileKey);
+
 		const queryResult = await namespace.query({
 			topK: 10,
 			vector: embeddings,
