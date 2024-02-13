@@ -25,6 +25,11 @@ export const POST = async (req: NextRequest) => {
 	try {
 		await loadAWStoPinecone(key);
 
+		console.log('Not working on Safari or Chrome (mobile):', {
+			...validatedBody.data,
+			userId: user.id,
+		});
+
 		const file = await db.file.create({
 			data: {
 				awsKey: key,
@@ -38,7 +43,7 @@ export const POST = async (req: NextRequest) => {
 
 		return NextResponse.json(file, { status: 201 });
 	} catch (error) {
-		console.error(error)
+		console.error(error);
 		return NextResponse.json(error, { status: 500 });
 	}
 };
