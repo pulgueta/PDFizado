@@ -35,6 +35,7 @@ export const env = createEnv({
 		CLOUDFRONT_HOST: process.env.CLOUDFRONT_HOST,
 	},
 	onValidationError: (error = ZodError) => {
+		console.error(error);
 		throw new Error('[*] Invalid environment variables', error.flatten().fieldErrors);
 	},
 	isServer: typeof window === 'undefined',
