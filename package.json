@@ -14,7 +14,7 @@
 		"start": "next start",
 		"lint": "next lint",
 		"test": "playwright test",
-		"vercel-build": "pnpm run migrate && pnpm run build",
+		"vercel-build": "pnpm run db:push && pnpm run db:generate && pnpm run build",
 		"migrate": "prisma migrate deploy --preview-feature && prisma generate"
 	},
 	"dependencies": {
