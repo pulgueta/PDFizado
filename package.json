@@ -63,7 +63,7 @@
 		"lucide-react": "^0.294.0",
 		"md5": "^2.3.0",
 		"next": "^14.2.3",
-		"next-auth": "5.0.0-beta.9",
+		"next-auth": "5.0.0-beta.17",
 		"next-nprogress-bar": "^2.1.2",
 		"next-themes": "^0.2.1",
 		"openai-edge": "^1.2.2",
