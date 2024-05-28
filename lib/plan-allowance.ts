@@ -8,7 +8,7 @@ export const maxSize: Record<Plan, number> = {
 };
 
 export const model: Record<Plan, CreateChatCompletionRequest['model']> = {
-	FREE: 'gpt-3.5-turbo-1106',
+	FREE: 'gpt-4o',
 	PROFESSIONAL: 'gpt-4-1106-preview',
 	STANDARD: 'gpt-4-32k',
 };
