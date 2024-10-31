@@ -2,13 +2,14 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 import { streamText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { createOpenAI } from '@ai-sdk/openai';
 import { Message } from 'ai/react';
 
 import { model } from '~/lib/plan-allowance';
 import { getContext } from '~/lib/pinecone/context';
 import { db } from '~/database/db';
 import { currentUser } from '~/lib/auth/currentUser';
+import { env } from '~/env/server.mjs';
 
 export const POST = async (req: NextRequest) => {
 	const user = await currentUser();
@@ -18,7 +19,11 @@ export const POST = async (req: NextRequest) => {
 
 	const body = await req.json();
 
-	const gpt = openai(model[user.plan]);
+	const ai = createOpenAI({
+		apiKey: env.OPENAI_SECRET,
+	});
+
+	const gpt = ai(model[user.plan]);
 
 	const { messages, chatId, fileId } = body;
 
