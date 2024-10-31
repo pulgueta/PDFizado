@@ -63,7 +63,7 @@ export const POST = async (req: NextRequest) => {
 			},
 		});
 
-		const { toDataStreamResponse } = await streamText({
+		const { toTextStreamResponse } = await streamText({
 			onFinish: async (t) => {
 				await db.message.create({
 					data: {
@@ -84,7 +84,7 @@ export const POST = async (req: NextRequest) => {
 			temperature: 0.3,
 		});
 
-		return toDataStreamResponse();
+		return toTextStreamResponse();
 	} catch (error) {
 		console.log('Error', error);
 		return NextResponse.json({ error }, { status: 500 });
