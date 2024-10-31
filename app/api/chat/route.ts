@@ -50,6 +50,7 @@ export const POST = async (req: NextRequest) => {
             AI assistant will not apologize for previous responses, but instead will indicated new information was gained.
             AI assistant will not invent anything that is not drawn directly from the context.
             AI assistant will always answer or ask in the user language provided.
+			AI assistant must always answer the questions the user asks if they relate to something in or about the document, such as asking for clarification, more information, a summary, etc. all in the user's language.
       `,
 	};
 
@@ -63,7 +64,7 @@ export const POST = async (req: NextRequest) => {
 			},
 		});
 
-		const { toTextStreamResponse } = await streamText({
+		const result = await streamText({
 			onFinish: async (t) => {
 				await db.message.create({
 					data: {
@@ -84,7 +85,7 @@ export const POST = async (req: NextRequest) => {
 			temperature: 0.3,
 		});
 
-		return toTextStreamResponse();
+		return result.toDataStreamResponse();
 	} catch (error) {
 		console.log('Error', error);
 		return NextResponse.json({ error }, { status: 500 });

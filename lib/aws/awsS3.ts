@@ -1,4 +1,4 @@
-import { PutObjectCommandInput } from '@aws-sdk/client-s3';
+import type { PutObjectCommandInput } from '@aws-sdk/client-s3';
 
 import { env } from '~/env/client.mjs';
 import { s3 } from './s3.config';

@@ -1,6 +1,8 @@
-import { ElementRef, useEffect, useRef } from 'react';
+import type { ElementRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { Message, useChat } from 'ai/react';
+import type { Message } from 'ai/react';
+import { useChat } from 'ai/react';
 import { useQuery } from '@tanstack/react-query';
 
 export const useMessages = (fileId: string) => {
