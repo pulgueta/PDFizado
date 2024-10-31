@@ -1,5 +1,6 @@
 import { revalidatePath } from 'next/cache';
-import { type NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { db } from '~/database/db';
 import { env } from '~/env/client.mjs';

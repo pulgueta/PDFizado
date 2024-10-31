@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { hash } from 'argon2';
+import { hash } from '@node-rs/argon2';
 import { AuthError } from 'next-auth';
 
 import { db } from '~/database/db';

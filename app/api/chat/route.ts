@@ -1,25 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
 import { Message } from 'ai/react';
-import {
-	ChatCompletionRequestMessageRoleEnum,
-	Configuration,
-	OpenAIApi,
-} from 'openai-edge';
 
-import { env } from '~/env/server.mjs';
 import { model } from '~/lib/plan-allowance';
 import { getContext } from '~/lib/pinecone/context';
 import { db } from '~/database/db';
 import { currentUser } from '~/lib/auth/currentUser';
-
-const config = new Configuration({
-	apiKey: env.OPENAI_SECRET,
-	organization: env.OPENAI_ORG,
-});
-
-const gpt = new OpenAIApi(config);
 
 export const POST = async (req: NextRequest) => {
 	const user = await currentUser();
@@ -28,6 +17,8 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
 	const body = await req.json();
+
+	const gpt = openai(model[user.plan]);
 
 	const { messages, chatId, fileId } = body;
 
@@ -58,46 +49,39 @@ export const POST = async (req: NextRequest) => {
 	};
 
 	try {
-		const response = await gpt.createChatCompletion({
-			model: model[user.plan],
-			stream: true,
-			temperature: 0.3,
+		await db.message.create({
+			data: {
+				text: lastMessage.content,
+				fileId,
+				userId: user.id,
+				isUserMessage: true,
+			},
+		});
+
+		const { toDataStreamResponse } = await streamText({
+			onFinish: async (t) => {
+				await db.message.create({
+					data: {
+						isUserMessage: false,
+						text: t.text,
+						userId: user.id,
+						fileId,
+					},
+				});
+			},
+			model: gpt,
 			messages: [
 				prompt,
 				...messages.filter(
-					(message: Message) =>
-						message.role ===
-						ChatCompletionRequestMessageRoleEnum['User']
+					(message: Message) => message.role === 'user'
 				),
 			],
+			temperature: 0.3,
 		});
 
-		const stream = OpenAIStream(response, {
-			onStart: async () => {
-				await db.message.create({
-					data: {
-						text: lastMessage.content,
-						fileId,
-						userId: user.id,
-						isUserMessage: true,
-					},
-				});
-			},
-			onCompletion: async (completion) => {
-				await db.message.create({
-					data: {
-						text: completion,
-						fileId,
-						userId: user.id,
-						isUserMessage: false,
-					},
-				});
-			},
-		});
-
-		return new StreamingTextResponse(stream);
+		return toDataStreamResponse();
 	} catch (error) {
-		console.log('ChatGPT Error', error);
+		console.log('Error', error);
 		return NextResponse.json({ error }, { status: 500 });
 	}
 };

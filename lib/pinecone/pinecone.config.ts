@@ -5,7 +5,6 @@ import { env } from '~/env/server.mjs';
 const pineconeClient = () =>
 	new Pinecone({
 		apiKey: env.PINECONE_API_KEY,
-		environment: env.PINECONE_ENVIRONMENT,
 	});
 
 export const pinecone = pineconeClient();

@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-
-import { Plan } from '@prisma/client';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { db } from '~/database/db';
 import { env } from '~/env/server.mjs';
@@ -33,7 +32,7 @@ export const POST = async (req: NextRequest) => {
 			);
 
 			await Promise.all([
-				await db.user.update({
+				db.user.update({
 					where: {
 						email: body.data.attributes.user_email,
 					},
@@ -44,7 +43,7 @@ export const POST = async (req: NextRequest) => {
 						),
 					},
 				}),
-				await update({
+				update({
 					user: {
 						email: body.data.attributes.user_email,
 						plan: webhookPlan[res.data.attributes.product_name],
@@ -61,7 +60,7 @@ export const POST = async (req: NextRequest) => {
 			);
 
 			await Promise.all([
-				await db.user.update({
+				db.user.update({
 					where: {
 						email: body.data.attributes.user_email,
 					},
@@ -69,10 +68,10 @@ export const POST = async (req: NextRequest) => {
 						plan: 'FREE',
 					},
 				}),
-				await update({
+				update({
 					user: {
 						email: body.data.attributes.user_email,
-						plan: Plan.FREE,
+						plan: 'FREE',
 						lemonSqueezyHref: undefined,
 					},
 				}),

@@ -1,5 +1,4 @@
-import { Plan } from '@prisma/client';
-import { CreateChatCompletionRequest } from 'openai-edge';
+import type { Plan } from '@prisma/client';
 
 export const maxSize: Record<Plan, number> = {
 	FREE: 8000000,
@@ -7,10 +6,10 @@ export const maxSize: Record<Plan, number> = {
 	STANDARD: 32000000,
 };
 
-export const model: Record<Plan, CreateChatCompletionRequest['model']> = {
+export const model: Record<Plan, string> = {
 	FREE: 'gpt-4o',
-	PROFESSIONAL: 'gpt-4-1106-preview',
-	STANDARD: 'gpt-4-32k',
+	PROFESSIONAL: 'o1-preview',
+	STANDARD: 'o1-mini',
 };
 
 export const maxFiles: Record<Plan, number> = {

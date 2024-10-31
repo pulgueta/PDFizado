@@ -1,7 +1,8 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { User } from '@prisma/client';
-import { hash } from 'argon2';
+import { hash } from '@node-rs/argon2';
 
 import { db } from '~/database/db';
 import { resetSchema } from '~/schemas';
@@ -59,7 +60,8 @@ export const POST = async (req: NextRequest) => {
 		return NextResponse.redirect(new URL('/login', req.nextUrl), {
 			status: 308,
 		});
-	} catch (error) {
+	} catch (e) {
+		console.log(e);
 		return NextResponse.json(
 			{
 				message: 'Something went wrong',

@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 
 import { Plan, Role } from '@prisma/client';
-import NextAuth, { type DefaultSession } from 'next-auth';
+import type { DefaultSession } from 'next-auth';
+import NextAuth from 'next-auth';
+import type { Adapter } from 'next-auth/adapters';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 
 import authConfig from './auth.config';
@@ -32,7 +34,7 @@ export const {
 	signIn,
 	unstable_update: update,
 } = NextAuth({
-	adapter: PrismaAdapter(db),
+	adapter: PrismaAdapter(db) as Adapter,
 	session: {
 		strategy: 'jwt',
 		maxAge: 60 * 60 * 24 * 7,

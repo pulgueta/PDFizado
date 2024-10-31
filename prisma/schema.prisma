@@ -26,21 +26,22 @@ model Account {
 }
 
 model User {
-    id                         String    @id @default(cuid())
+    id                         String          @id @default(cuid())
     name                       String
     email                      String
     password                   String?
     image                      String?
-    plan                       Plan      @default(FREE)
+    plan                       Plan            @default(FREE)
     lemonSqueezySubscriptionId String?
     paddleSubscriptionId       String?
-    emailVerified              Boolean?  @default(false)
-    role                       Role      @default(USER)
+    emailVerified              Boolean?        @default(false)
+    role                       Role            @default(USER)
     accounts                   Account[]
     File                       File[]
     Message                    Message[]
-    createdAt                  DateTime  @default(now())
-    updatedAt                  DateTime  @updatedAt
+    createdAt                  DateTime        @default(now())
+    updatedAt                  DateTime        @updatedAt
+    Authenticator              Authenticator[]
 
     @@unique([email])
 }
@@ -51,6 +52,21 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Authenticator {
+    credentialID         String  @unique
+    userId               String
+    providerAccountId    String
+    credentialPublicKey  String
+    counter              Int
+    credentialDeviceType String
+    credentialBackedUp   Boolean
+    transports           String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([userId, credentialID])
 }
 
 model File {

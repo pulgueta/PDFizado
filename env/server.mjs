@@ -4,12 +4,9 @@ import { ZodError, string } from 'zod';
 export const env = createEnv({
 	server: {
 		DATABASE_URL: string().url(),
-		AUTH_URL: string().url(),
-		AUTH_SECRET: string().min(8),
 		GOOGLE_PUBLIC: string().min(8),
 		GOOGLE_SECRET: string().min(8),
 		LEMON_SQUEEZY_SECRET: string().min(8),
-		PINECONE_ENVIRONMENT: string().min(4),
 		PINECONE_API_KEY: string().min(4),
 		PINECONE_REGION: string().min(4),
 		PINECONE_INDEX: string().min(4),
@@ -20,12 +17,9 @@ export const env = createEnv({
 	},
 	runtimeEnv: {
 		DATABASE_URL: process.env.DATABASE_URL,
-		AUTH_URL: process.env.AUTH_URL,
-		AUTH_SECRET: process.env.AUTH_SECRET,
 		GOOGLE_PUBLIC: process.env.GOOGLE_PUBLIC_ID,
 		GOOGLE_SECRET: process.env.GOOGLE_SECRET_ID,
 		LEMON_SQUEEZY_SECRET: process.env.LEMON_SQUEEZY_SECRET,
-		PINECONE_ENVIRONMENT: process.env.PINECONE_ENVIRONMENT,
 		PINECONE_API_KEY: process.env.PINECONE_API_KEY,
 		PINECONE_REGION: process.env.PINECONE_REGION,
 		PINECONE_INDEX: process.env.PINECONE_INDEX,
@@ -35,6 +29,7 @@ export const env = createEnv({
 		CLOUDFRONT_HOST: process.env.CLOUDFRONT_HOST,
 	},
 	onValidationError: (error = ZodError) => {
+		console.error(error.flatten().fieldErrors)
 		throw new Error('[*] Invalid environment variables', error.flatten().fieldErrors);
 	},
 	isServer: typeof window === 'undefined',

@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { Message } from 'ai/react';
-
-import { ChatCompletionResponseMessageRoleEnum } from 'openai-edge';
 
 import { db } from '~/database/db';
 import { currentUser } from '~/lib/auth/currentUser';
@@ -26,9 +25,7 @@ export const POST = async (req: NextRequest) => {
 	const streamedMessages: Message[] = messages.map((message) => ({
 		id: message.id,
 		content: message.text,
-		role: message.isUserMessage
-			? ChatCompletionResponseMessageRoleEnum.User
-			: ChatCompletionResponseMessageRoleEnum.Assistant,
+		role: message.isUserMessage ? 'user' : 'assistant',
 		createdAt: message.createdAt,
 	}));
 

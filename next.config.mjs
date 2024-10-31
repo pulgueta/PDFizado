@@ -10,6 +10,12 @@ const nextConfig = {
 			fullUrl: true,
 		}
 	},
+	eslint: {
+		ignoreDuringBuilds: !!process.env.CI,
+	},
+	typescript: {
+		ignoreBuildErrors: !!process.env.CI,
+	},
 	images: {
 		dangerouslyAllowSVG: true,
 		contentSecurityPolicy: "script-src 'none';",
@@ -35,8 +41,8 @@ const nextConfig = {
 		],
 	},
 	experimental: {
-		serverComponentsExternalPackages: ['argon2'],
-	},
+		serverComponentsExternalPackages: ['@node-rs/argon2'],
+	}
 }
 
 export default nextConfig

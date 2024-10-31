@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { currentUser } from '~/lib/auth/currentUser';
 import { s3 } from '~/lib/aws/s3.config';
@@ -42,17 +43,18 @@ export const DELETE = async (req: NextRequest) => {
 		})
 	);
 
-	await db.issue.deleteMany({
-		where: {
-			from: body.email!,
-		},
-	});
-
-	const accounts = await db.account.findFirst({
-		where: {
-			userId: body.id,
-		},
-	});
+	const [, accounts] = await Promise.all([
+		db.issue.deleteMany({
+			where: {
+				from: body.email!,
+			},
+		}),
+		db.account.findFirst({
+			where: {
+				userId: body.id,
+			},
+		}),
+	]);
 
 	if (accounts) {
 		await db.account.deleteMany({
